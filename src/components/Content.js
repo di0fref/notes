@@ -1,4 +1,4 @@
-import Editor from "./Editor.jsx"
+import Editor from "./Editor.tsx"
 import React, {useEffect, useState} from "react";
 
 function Content(props) {
@@ -11,18 +11,12 @@ function Content(props) {
 
 
     return (
-        <>
-            {/*<div className={"flex w-full justify-between"}>*/}
-                {/*<div>Woot</div>*/}
-                <div className={"mx-auto lg:w-2/3 w-full h-full"}>
-                    <Editor/>
-                </div>
-                {/*<div>Moot</div>*/}
-            {/*</div>*/}
-            {/*{props.note.id*/}
-            {/*    ? <Editor note={note}/>*/}
-            {/*    : null}*/}
-        </>
+        <div className={"w-full"}>
+           {/*{props.note.id*/}
+           {/*     ? <Editor note={note}/>*/}
+           {/*     : null}*/}
+            <Editor/>
+        </div>
 
     )
 }

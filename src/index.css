@@ -303,6 +303,32 @@ input {
 
 }
 
-.editor-toolbar, .EasyMDEContainer .CodeMirror{
-	/*border: none;*/
+.ProseMirror.remirror-editor, .remirror-editor-wrapper {
+	overflow-y: auto;
+	height: 100vh;
+	/*width: calc(100vw - 20rem);*/
+}
+
+/*@media only screen and (max-width: 1024px) {*/
+/*	.ProseMirror.remirror-editor, .remirror-editor-wrapper {*/
+/*		width: 100vw;*/
+/*	}*/
+/*}*/
+
+.prose * {
+	color: var(--text-normal)
+}
+
+.prose {
+	max-width: none !important;
+}
+
+.ed{
+	height: calc(100vh - 2.5rem);
+}
+
+@media only screen and (max-width: 1024px) {
+	.ed-wrapper{
+	height: calc(100vh - 3rem);
+	}
 }

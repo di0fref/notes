@@ -115,7 +115,7 @@ function SidebarItem(props, {isDragging, tool}) {
                     placement={"right"}
                     arrow
                     title={
-                        (props.items.type == "note")
+                        (props.items.type === "note")
                             ? (
                                 <div className={"text-center"}>
                                     <p>Last modified at: {formatDate(props.items.date)}</p>
