@@ -3,13 +3,33 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.4.2",
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.2.1",
+    "@mui/material": "^5.2.3",
+    "@mui/styles": "^5.2.3",
+    "@remirror/pm": "^1.0.9",
+    "@remirror/react": "^1.0.18",
+    "@remirror/styles": "^1.1.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.12",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
+    "react-dnd": "^14.0.4",
+    "react-dnd-html5-backend": "^14.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "react-icons": "^3.6.0-beta2",
+    "react-moment": "^1.1.1",
+    "react-router-dom": "^6.0.2",
+    "react-scripts": "next",
+    "remirror": "^1.0.48",
+    "typescript": "^4.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,5 +54,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.0-alpha.3",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.4",
+    "tailwindcss": "^3.0.0"
   }
 }

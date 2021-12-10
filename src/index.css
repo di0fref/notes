@@ -1,13 +1,445 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html[data-theme='dark'] {
+    --background-primary: #202020;
+    --background-secondary: #161616;
+    --text-accent: #7f6df2;
+    --background-primary-alt: #1a1a1a;
+    --background-secondary-alt: #000000;
+    --background-modifier-border: #333;
+    --background-modifier-form-field: rgba(0, 0, 0, 0.3);
+    --background-modifier-form-field-highlighted: rgba(0, 0, 0, 0.22);
+    --background-modifier-box-shadow: rgba(0, 0, 0, 0.3);
+    --background-modifier-success: #197300;
+    --background-modifier-error: #3d0000;
+    --background-modifier-error-rgb: 61, 0, 0;
+    --background-modifier-error-hover: #470000;
+    --background-modifier-cover: rgba(0, 0, 0, 0.8);
+    --text-accent-hover: #8875ff;
+    --text-normal: #dcddde;
+    --text-muted: #999;
+    --text-muted-rgb: 153, 153, 153;
+    --text-faint: #666;
+    --text-error: #ff3333;
+    --text-error-hover: #990000;
+    --text-highlight-bg: rgba(255, 255, 0, 0.4);
+    --text-highlight-bg-active: rgba(255, 128, 0, 0.4);
+    --text-selection: rgba(23, 48, 77, 0.99);
+    --text-on-accent: #dcddde;
+    --interactive-normal: #2a2a2a;
+    --interactive-hover: #303030;
+    --interactive-accent: #483699;
+    --interactive-accent-rgb: 72, 54, 153;
+    --interactive-accent-hover: #4d3ca6;
+    --interactive-success: #197300;
+    --scrollbar-active-thumb-bg: rgba(255, 255, 255, 0.2);
+    --scrollbar-bg: rgba(255, 255, 255, 0.05);
+    --scrollbar-thumb-bg: rgba(255, 255, 255, 0.1);
+    --highlight-mix-blend-mode: lighten;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root,
+html[data-theme='light'] {
+    --background-primary: #ffffff;
+    --background-primary-alt: #f5f6f8;
+    --background-secondary: #f2f3f5;
+    --background-secondary-alt: #e3e5e8;
+    --background-modifier-border: #ddd;
+    --background-modifier-form-field: #fff;
+    --background-modifier-form-field-highlighted: #fff;
+    --background-modifier-box-shadow: rgba(0, 0, 0, 0.1);
+    --background-modifier-success: #A4E7C3;
+    --background-modifier-error: #990000;
+    --background-modifier-error-rgb: 230, 135, 135;
+    --background-modifier-error-hover: #bb0000;
+    --background-modifier-cover: rgba(0, 0, 0, 0.8);
+    --text-accent: #705dcf;
+    --text-accent-hover: #7a6ae6;
+    --text-normal: #2e3338;
+    --text-muted: #888888;
+    --text-muted-rgb: 136, 136, 136;
+    --text-faint: #999999;
+    --text-error: #800000;
+    --text-error-hover: #990000;
+    --text-highlight-bg: rgba(255, 255, 0, 0.4);
+    --text-highlight-bg-active: rgba(255, 128, 0, 0.4);
+    --text-selection: rgba(204, 230, 255, 0.99);
+    --text-on-accent: #f2f2f2;
+    --interactive-normal: #f2f3f5;
+    --interactive-hover: #e9e9e9;
+    --interactive-accent: #7b6cd9;
+    --interactive-accent-rgb: 123, 108, 217;
+    --interactive-accent-hover: #8273e6;
+    --interactive-success: #197300;
+    --scrollbar-active-thumb-bg: rgba(0, 0, 0, 0.2);
+    --scrollbar-bg: rgba(0, 0, 0, 0.05);
+    --scrollbar-thumb-bg: rgba(0, 0, 0, 0.1);
+    --highlight-mix-blend-mode: darken;
+}
+
+
+/*@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');*/
+.bg-primary {
+    background: var(--background-primary);
+}
+
+.bg-secondary {
+    background: var(--background-secondary);
+}
+
+.bg-primary-alt {
+    background: var(--background-primary-alt)
+}
+
+.bg-secondary-alt {
+    background: var(--background-secondary-alt)
+}
+
+
+/*:root {*/
+/*	--default-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Microsoft YaHei Light", sans-serif;*/
+/*	--mermaid-font: var(--default-font);*/
+/*	--reveal-font: var(--default-font);*/
+/*	--font-monospace: 'Source Code Pro', monospace;*/
+/*}*/
+
+body {
+    /*font-family: var(--default-font);*/
+    color: var(--text-normal);
+    background: var(--background-primary);
+    /*font-family: 'Poppins', sans-serif;*/
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.hover\:text-hover:hover {
+    color: var(--text-normal);
+}
+
+.hover\:bg-hover:hover {
+    background: var(--text-accent-hover);
+}
+
+html[data-theme='light'] .d-block-light,
+html[data-theme='dark'] .d-block-dark {
+    display: block !important;
+}
+
+.d-none {
+    display: none !important;
+}
+
+button {
+    cursor: pointer;
+}
+
+.header {
+    background-color: var(--background-secondary);
+    color: var(--text-normal);
+}
+
+.side {
+    background-color: var(--background-secondary);
+    height: 100vh;
+    color: var(--text-normal);
+    overflow-y: auto;
+}
+
+.sidetop {
+    background-color: var(--background-secondary);
+}
+
+.content {
+    background: var(--background-primary);
+    /*height: calc(100vh - 2.5em);*/
+    color: var(--text-normal);
+    /*color: var(--text-muted);*/
+    /*transition: all 700ms ease-in-out;*/
+}
+
+.icon {
+    color: var(--text-muted);
+}
+
+.bg-accent {
+    background: var(--text-accent);
+}
+
+.text-accent {
+    color: var(--text-accent);
+}
+
+.hover\:text-hover-accent:hover {
+    color: var(--text-accent);
+}
+
+/*.icon:hover {*/
+/*	color: var(--text-accent-hover);*/
+/*}*/
+
+.menu-title {
+    background: var(--background-primary);
+}
+
+.css-cveggr-MuiListItemIcon-root {
+    min-width: 25px !important;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.MuiListItem-button:hover {
+    background: var(--background-primary) !important;
+    /*color: var(--text-accent);*/
+}
+
+.css-tlelie-MuiListItemText-root {
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+}
+
+/* Toggle B */
+input:checked ~ .dot {
+    transform: translateX(2rem);
+}
+
+.Mui-selected {
+    background: var(--background-primary) !important;
+}
+
+.sidebar-avatar {
+    border-top: 1px solid var(--background-modifier-border);
+}
+
+input {
+    background: var(--background-primary);
+}
+
+/*.content-editor{*/
+/*    max-width: 45rem;*/
+/*}*/
+.-translate-x-92 {
+    --tw-translate-x: 24rem;
+}
+
+/* Works on Firefox */
+* {
+    scrollbar-color: var(--scrollbar-bg);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    background-color: var(--scrollbar-bg);
+}
+
+*::-webkit-scrollbar-track {
+    background-color: var(--scrollbar-bg);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-bg);
+}
+
+.content-header {
+    /*background: var(--background-modifier-border);*/
+    /*border-bottom: 1px solid var(--background-modifier-border);*/
+}
+
+/*.css-et1ao3-MuiTypography-root {*/
+/*	font-family: var(--default-font) !important;*/
+/*}*/
+
+.text-s {
+    font-size: 0.90rem;
+    line-height: 1.5rem;
+}
+
+.text-normal {
+    color: var(--text-normal);
+}
+
+.modal {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50vw;
+    background-color: var(--background-primary-alt);
+    border: 1px solid var(--background-modifier-border);
+    box-shadow: var(--background-modifier-box-shadow);
+}
+
+@media screen and (max-width: 768px) {
+    .modal {
+        width: 100vw;
+        /*left: 0;*/
+    }
+}
+
+.sidebar-active {
+    background-color: var(--text-accent-hover) !important;
+}
+
+.sidebar {
+    background-color: var(--background-secondary);
+}
+
+.text-more-muted {
+    opacity: 0.5;
+    color: var(--text-muted)
+}
+
+
+.MuiTooltip-tooltip {
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+    background-color: var(--background-modifier-cover) !important;
+    padding-left: 1em !important;
+    padding-right: 1em !important;
+
+}
+
+/*ul{*/
+/*	list-style-type: disc;*/
+/*	margin-left: 3em;*/
+/*}*/
+/*p{*/
+/*	margin-bottom:1em*/
+/*}*/
+
+.remirror-editor{
+	padding: 0 3em 0;
+}
+
+.ProseMirror-focused, .note-title {
+    border: 0 !important;
+    resize: none;
+    border: none !important;
+    outline: none !important;
+    caret-color: var(--text-accent);
+    box-shadow: none !important;
+}
+.note-title{
+    /*padding: 0;*/
+    /*background-color: #2e3338;*/
+    /*margin: 0;*/
+    line-height: 0;
+}
+
+.prose {
+    height: 100vh;
+    /*overflow-y: auto;*/
+}
+.prose *{
+    color: var(--text-normal) !important;
+
+}
+.remirror-toolbar {
+    background-color: transparent !important;
+}
+
+.remirror-group {
+    background-color: transparent !important;
+}
+
+.remirror-button {
+    background-color: var(--background-modifier-form-field-highlighted) !important;
+    color: var(--text-normal) !important;
+}
+
+.remirror-separator {
+    border: 1px solid var(--background-modifier-border) !important;
+}
+
+.remirror-editor {
+    height: 100vh !important;
+    /*overflow-y: auto !important;*/
+}
+
+.ProseMirror {
+    /*padding: 2em !important;*/
+    box-shadow: none !important;
+}
+
+.prose {
+    /*width: 65ch!important;*/
+    max-width: none !important;
+}
+
+.border-normal-b {
+    border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.toc-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.toc-list li {
+    counter-increment: step-counter;
+    margin-bottom: 5px;
+}
+
+.toc-list li::before {
+    content: counter(step-counter);
+    margin-right: 10px;
+}
+
+.editor-header {
+    background-color: var(--background-secondary-alt);
+}
+
+.editor-main {
+
+}
+
+.remirror-editor-wrapper {
+    padding: 0 !important;
+    height: 100vh!important;
+    overflow-y: auto;
+}
+
+.remirror-tooltip {
+    opacity: 1;
+    transform: none;
+    /*transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 133ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;*/
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+    background-color: var(--background-modifier-cover) !important;
+    padding-left: 1em !important;
+    padding-right: 1em !important;
+    color: white;
+    border-radius: 4px !important;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    padding: 4px 8px !important;
+    font-size: 0.6875rem;
+    max-width: 300px;
+    margin: 2px;
+    word-wrap: break-word;
+    font-weight: 500;
+}
+
+.remirror-theme * {
+    color: var(--text-normal) !important;
+}
+
+.h-120{
+    height: 55rem;
+}
+
+.note-title{
+    font-size: 2.5em;
+}
+
+.editor-toolbar{
+    background-color: var(--background-secondary-alt);
+}
+
+.prose div{
+    /*border:1px solid red;*/
 }
