@@ -12,10 +12,9 @@ function Content(props) {
 
     return (
         <div className={"w-full"}>
-           {/*{props.note.id*/}
-           {/*     ? <Editor note={note}/>*/}
-           {/*     : null}*/}
-            <Editor/>
+           {props.note.id
+                ? <Editor note={note}/>
+                : null}
         </div>
 
     )

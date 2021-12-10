@@ -228,7 +228,7 @@ function Sidebar(props) {
     }
 
     return (
-        <div className={`sidebar z-10 flex flex-col w-full md:w-60 lg:w-80 flex-shrink-0 ${openSm ? "_absolute" : ""}`}>
+        <div className={`sidebar z-10 flex flex-col w-full md:w-60 lg:w-80 flex-shrink-0 ${openSm ? "absolute" : ""}`}>
             <div className={`flex-shrink-0 px-8 py-3 flex flex-row items-center justify-between `}>
                 Menu <button id="theme-toggle" className="" type="button">
                 <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
@@ -241,7 +241,7 @@ function Sidebar(props) {
                     }
                 </button>
             </div>
-            <nav className={`ease-in-out transition-height transform duration-700  flex-grow md:block md:pb-0 md:overflow-y-auto  ${openSm ? " h-120 overflow-hidden" : "h-0 overflow-hidden "}`}>
+            <nav className={`ease-in-out transition-all transform duration-700  flex-grow md:block md:pb-0 md:overflow-y-auto  ${openSm ? " h-120 overflow-hidden" : "h-0 overflow-hidden "}`}>
                 <div className={"p-2"}>
                     <h2 className={"py-2 text-xs pl-4 text-muted uppercase tracking-widest font-bold mt-4"}>Bookmarks</h2>
                     <NotebookHeader text={"Notebooks"}/>
