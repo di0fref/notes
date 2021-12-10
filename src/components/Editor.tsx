@@ -34,9 +34,9 @@ const saveToBackend = (id: string, state: any, title: string) => {
     NotesService.update(id, {
         text: prosemirrorNodeToHtml(state.state.doc),
         name: title
-    }).then((result) => {
+    }).then((result: any) => {
 
-    }).catch((err) => {
+    }).catch((err: any) => {
         console.log(err);
     });
 
@@ -157,7 +157,7 @@ const ImperativeHandle = forwardRef((_: unknown, ref: Ref<EditorRef>) => {
 
     return <></>;
 });
-const ReplaceContentImperative = (props: any): JSX.Element => {
+const Editor = (props: any): JSX.Element => {
 
     const [dateModified, setDateModified] = useState("")
     const [title, setTitle] = useState("")
@@ -191,30 +191,32 @@ const ReplaceContentImperative = (props: any): JSX.Element => {
     }
 
     return (
-        <div className={"prose"}>
-            <Remirror
-                manager={manager}
-                initialContent={state}
-                autoRender='end'
-                // hooks={hooks}
-                onChange={
-                    (parameter) => {
-                        // if (props.note.id) {
-                        //     clearTimeout(timer);
-                        //     timer = setTimeout(() => {
-                        saveToBackend(props.note.id, parameter, title)
-                        setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
-                        //     }, 2000);
-                        // }
-                    }}
-            >
-                {/*<AllStyledComponent>*/}
-                {/*    <ThemeProvider>*/}
-                {/*        <div className={"px-8 py-2 editor-toolbar shadow shadow-sm"}>*/}
-                {/*            <Toolbar items={toolbarItems} refocusEditor label="Top Toolbar"/>*/}
-                {/*        </div>*/}
-                {/*    </ThemeProvider>*/}
-                {/*</AllStyledComponent>*/}
+        <>
+
+            <div className={"flex flex-col w-full"}>
+                <Remirror
+                    manager={manager}
+                    initialContent={state}
+                    autoRender='end'
+                    // hooks={hooks}
+                    onChange={
+                        (parameter) => {
+                            // if (props.note.id) {
+                            //     clearTimeout(timer);
+                            //     timer = setTimeout(() => {
+                            saveToBackend(props.note.id, parameter, title)
+                            setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
+                            //     }, 2000);
+                            // }
+                        }}
+                >
+                    {/*<AllStyledComponent>*/}
+                    {/*    <ThemeProvider>*/}
+                    {/*        <div className={"px-8 py-2 editor-toolbar shadow shadow-sm"}>*/}
+                    {/*            <Toolbar items={toolbarItems} refocusEditor label="Top Toolbar"/>*/}
+                    {/*        </div>*/}
+                    {/*    </ThemeProvider>*/}
+                    {/*</AllStyledComponent>*/}
                     {/*<div className={"flex justify-center items-center"}>*/}
                     {/*    <div className={"editor-date text-sm text-more-muted pt-2"}>*/}
                     {/*        <Moment date={dateModified} format={"D MMMM YYYY [at] HH:mm"}/>*/}
@@ -233,11 +235,17 @@ const ReplaceContentImperative = (props: any): JSX.Element => {
                     {/*        />*/}
                     {/*    </div>*/}
                     {/*</div>*/}
-                    <ImperativeHandle ref={editorRef}/>
-            </Remirror>
+                    {/*<div className={"toolbar h-10"}>Toolbar</div>*/}
+                    {/*<div className={"datebar h-10"}>Date</div>*/}
+                    {/*<div className={"editor-part h-full"}>*/}
+                        <ImperativeHandle ref={editorRef}/>
+                    {/*</div>*/}
 
-        </div>
+                </Remirror>
+
+            </div>
+        </>
     );
 };
 
-export default ReplaceContentImperative;
+export default Editor;

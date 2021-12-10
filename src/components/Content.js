@@ -1,4 +1,4 @@
-import ReplaceContentImperative from "./Editor.tsx"
+import Editor from "./Editor.jsx"
 import React, {useEffect, useState} from "react";
 
 function Content(props) {
@@ -12,15 +12,17 @@ function Content(props) {
 
     return (
         <>
-<div className={"flex-grow"}>
-
-                    {note
-                    ? <ReplaceContentImperative
-                        note={note}
-                    />
-                    : ""}
-    </div>
-            </>
+            {/*<div className={"flex w-full justify-between"}>*/}
+                {/*<div>Woot</div>*/}
+                <div className={"mx-auto lg:w-2/3 w-full h-full"}>
+                    <Editor/>
+                </div>
+                {/*<div>Moot</div>*/}
+            {/*</div>*/}
+            {/*{props.note.id*/}
+            {/*    ? <Editor note={note}/>*/}
+            {/*    : null}*/}
+        </>
 
     )
 }
