@@ -323,12 +323,12 @@ input::placeholder{
 	width: 680px;
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 768px) {
 
 	.quill {
-		width: 100%;
-		padding-left: 2em;
-		padding-right: 2em;
+		/*width: 100%;*/
+		padding-left: 1em;
+		padding-right: 1em;
 	}
 }
 ._flex, ._quill{

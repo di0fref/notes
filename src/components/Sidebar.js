@@ -43,7 +43,7 @@ function SidebarItem(props, {isDragging, tool}) {
                 if (item && dropResult) {
                     switch (item.type) {
                         case "note":
-                            // console.log(`Moving note ${item.id} into folder ${dropResult.id}`);
+                            console.log(`Moving note ${item.id} into folder ${dropResult.id}`);
 
                             if (item.id !== dropResult.id) {
                                 NotesService.updateFolder(item.id, {folder_id: dropResult.id}).then((result) => {
@@ -55,7 +55,7 @@ function SidebarItem(props, {isDragging, tool}) {
                             }
                             break;
                         case "folder":
-                            // console.log(`Moving folder ${item.id} into folder ${dropResult.id}`);
+                            console.log(`Moving folder ${item.id} into folder ${dropResult.id}`);
                             if (item.id !== dropResult.id) {
                                 FolderService.updateFolder(item.id, {folder_id: dropResult.id}).then((result) => {
                                     /* Send signal to update sidebar */

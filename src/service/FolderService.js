@@ -38,19 +38,19 @@ class FolderService {
 
     fetchJson = (url) => fetch(url).then((r) => r.json());
 
-    getBread = (id) => {
-        return this.fetchJson(`http://localhost:4000/folders/p/${id}`).then(
-            (items) => Promise.all(
-                items.map(this.getBreadAux)
+    getBread = (folder_id) => {
+        return this.fetchJson(`http://localhost:4000/folders/p/${folder_id}`).then(
+            (parent) => Promise.all(
+                parent.map(this.getBreadAux)
             )
         );
     }
 
     getBreadAux = async (t = {}) => {
-        const items = await this.getBread(t.id)
+        const parent = await this.getBread(t.parent_id)
         return {
             ...t,
-            items,
+            parent,
         };
     };
 

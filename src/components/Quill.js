@@ -12,6 +12,7 @@ const Quill = (props) => {
     const [title, setTitle] = useState(props.note.name)
     let timer = setTimeout(null)
     const el = useRef(null);
+    const [breadCrumb, setBreadCrumb] = useState([])
 
     const saveToBackend = (range, type, editor) => {
         const data = {
@@ -26,6 +27,20 @@ const Quill = (props) => {
             t("error", "Could not save note")
             console.log(err);
         });
+    }
+
+    const p = []
+
+    const getBreadCrumbs = (data) => {
+        data.forEach((el, index) => {
+            p.push(el.label)
+            if (el.parent) {
+                getBreadCrumbs(el.parent)
+            }
+        })
+
+        let s = p.reverse()
+        setBreadCrumb(s);
     }
 
     const save = (content, delta, source, editor) => {
@@ -46,8 +61,10 @@ const Quill = (props) => {
 
     useEffect(() => {
         if (props.note.id) {
-            FolderService.getBread(3).then((result) => {
-                console.log(result)
+            FolderService.getBread(props.note.folder_id).then((result) => {
+                getBreadCrumbs(result)
+                console.log(breadCrumb)
+
             })
             setValue(JSON.parse(props.note.text))
             setTitle(props.note.name)
@@ -80,8 +97,8 @@ const Quill = (props) => {
                 </div>
             </div>
             <div className={"flex justify-between editor overflow-y-auto"}>
-                <div className={"mx-auto"}>
-                    <div className={"h-16 flex mt-6 mb-4 pl-3"}>
+                <div className={"mx-auto px-2"}>
+                    <div className={"h-16 flex mt-6 mb-4 px-6 md:px-2"}>
                         <input value={title} onBlur={titleChange} onChange={(e) => setTitle(e.target.value)} className={"w-full _bg-gray-900 text-4xl font-bold"} placeholder={"Give your note a title"}/>
                     </div>
                     <ReactQuill onBlur={saveToBackend} placeholder="Click here to start writing" theme="bubble" value={value} onChange={setValue} ref={el}/>
