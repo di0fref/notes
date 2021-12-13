@@ -23,8 +23,9 @@ import {useDrop} from "react-dnd";
 import NotesService from "../service/NotesService";
 import ArrowTooltips from "./Tooltip";
 import MyLink from "./Link";
+import BookMarks from "./BookMarks";
 
-var moment = require('moment');
+let moment = require('moment');
 
 
 function SidebarItem(props, {isDragging, tool}) {
@@ -109,7 +110,6 @@ function SidebarItem(props, {isDragging, tool}) {
     return (
 
         <>
-
             <MyLink type={props.items.type} id={props.items.id}>
                 <ArrowTooltips
                     placement={"right"}
@@ -140,7 +140,7 @@ function SidebarItem(props, {isDragging, tool}) {
                               className={`${isActive ? "sidebar-active" : ""} pointer`}
                     >
 
-                        <ListItemText style={{paddingLeft: props.depth * props.depthStep * 3}} key={`cc-${props.items.id}`}>
+                        <ListItemText style={{paddingLeft: props.depth * props.depthStep * 2}} key={`cc-${props.items.id}`}>
                             <div className={'flex justify-start items-center'}>
 
                                 {(props.icon === true)
@@ -153,7 +153,7 @@ function SidebarItem(props, {isDragging, tool}) {
 
                                 <div className={`ml-2 text-s ${props.class}`}>
 
-                                    {props.items.label}{isActive}
+                                    {props.items.label}
 
                                     {/*{isDragging?"Dragging": "not"}*/}
                                 </div>
@@ -228,12 +228,17 @@ function Sidebar(props) {
     }
 
     return (
-        <div className={`sidebar z-10 flex flex-col w-full md:w-60 lg:w-80 flex-shrink-0 ${openSm ? "absolute" : ""}`}>
-            <div className={`flex-shrink-0 px-8 py-3 flex flex-row items-center justify-between `}>
-                Menu <button id="theme-toggle" className="" type="button">
-                <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
-                <span className="d-block-dark d-none hover:text-hover-accent"><FaSun/></span>
-            </button>
+        <div className={`sidebar z-10 flex flex-col w-full md:w-72 flex-shrink-0 absolute md:static`}>
+            <div className={`flex-shrink-0 h-14 mx-5 flex flex-row items-center justify-between `}>
+                Search
+                <button id="theme-toggle" className="" type="button">
+                    <Tooltip title={"Dark theme"}>
+                        <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
+                    </Tooltip>
+                    <Tooltip title={"Light theme"}>
+                        <span className="d-block-dark d-none hover:text-hover-accent"><FaSun/></span>
+                    </Tooltip>
+                </button>
                 <button className={`rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
                     {!openSm
                         ? <FaBars className={""}/>
@@ -241,9 +246,16 @@ function Sidebar(props) {
                     }
                 </button>
             </div>
-            <nav className={`ease-in-out transition-all transform duration-700  flex-grow md:block md:pb-0 md:overflow-y-auto  ${openSm ? " h-120 overflow-hidden" : "h-0 overflow-hidden "}`}>
+            <nav className={`ease-in-out transition-all transform duration-500  flex-grow md:block md:pb-0 md:overflow-y-auto  ${openSm ? " h-360 overflow-y-auto" : "h-0 overflow-hidden "}`}>
                 <div className={"p-2"}>
-                    <h2 className={"py-2 text-xs pl-4 text-muted uppercase tracking-widest font-bold mt-4"}>Bookmarks</h2>
+                    <h2 className={"py-2 text-xs pl-4 text-muted uppercase tracking-widest font-bold mt-4"}>Favourites</h2>
+                    {/*{props.bookmarks.map((bookmark, index) => (*/}
+                    {/*    <div className={"flex items-center justify-start my-2"} key={`bookmark-${index}`}>*/}
+                    {/*        <div><FaStar className={"icon icon-accent"}/></div>*/}
+                    {/*        <div className={"ml-2 text-s"}>{bookmark.label}</div>*/}
+                    {/*    </div>*/}
+                    {/*))}*/}
+                    <BookMarks bookmarks={props.bookmarks}/>
                     <NotebookHeader text={"Notebooks"}/>
 
                     <List disablePadding dense key={props.depthStep}>

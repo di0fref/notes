@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {FaBars, FaTimes} from "react-icons/fa"
 import Sidebar from "../components/Sidebar"
 import Content from "../components/Content"
 import FolderService from "../service/FolderService";
 import NotesService from "../service/NotesService";
 import useUrl from "../components/hooks/useUrl";
 import {Router, useParams} from "react-router-dom";
+import {toast} from 'react-toastify';
 
 function Home() {
 
@@ -18,6 +18,8 @@ function Home() {
     const [bookMarks, setBookMarks] = useState([]);
     const [bookMarked, setBookMarked] = useState(false)
     const [noteCreated, setNoteCreated] = useState(false)
+    const [titleChanged, setTitleChanged] = useState(false)
+
     let params = useParams();
 
     /* Modal */
@@ -33,40 +35,23 @@ function Home() {
             setBookMarks(bookmarks.data)
             setTreeData(response.concat(notesWithoutFolder.data));
             setDropped(false);
-            setBookMarked(false);
-            setNoteCreated(false)
+            setNoteCreated(false);
+            setTitleChanged(false);
         })();
+        // console.log("Home::useEffect")
 
-        // window.addEventListener('resize', handleResize)
-        var toggle = document.getElementById("theme-toggle");
-
-        var storedTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-        if (storedTheme)
-            document.documentElement.setAttribute('data-theme', storedTheme)
-
-
-        toggle.onclick = function () {
-            var currentTheme = document.documentElement.getAttribute("data-theme");
-            var targetTheme = "light";
-
-            if (currentTheme === "light") {
-                targetTheme = "dark";
-            }
-
-            document.documentElement.setAttribute('data-theme', targetTheme)
-            localStorage.setItem('theme', targetTheme);
-        };
-
-    }, [dropped, bookMarked, noteCreated])
+    }, [dropped, noteCreated, titleChanged])
 
     const droppedHandler = () => {
         setDropped(true);
     }
     useUrl((type, id) => {
+        // console.log("useUrl")
         noteClicked(type, id)
     }, [params])
 
     const noteClicked = (type, id) => {
+        // console.log("noteClicked")
         setClickedId(id);
         if (type === "note") {
             NotesService.get(id)
@@ -80,8 +65,6 @@ function Home() {
         } else {
             setFolder(id);
         }
-
-
     }
 
     const createFolder = (parent_id) => {
@@ -107,12 +90,26 @@ function Home() {
             })
         })
     }
-    const setBookMark = (note) => {
+
+    const titleChange = () => {
+        console.log("titleChange")
+        setTitleChanged(true);
+    }
+
+    const setBookMark  = async (note) => {
+        console.log("setBookMark")
         note.bookmark = !note.bookmark
-        NotesService.update(note.id, note).then((result) => {
+        NotesService.setBookmark(note.id, {bookmark: note.bookmark}).then((result) => {
             NotesService.get(note.id).then((result) => {
                 setNote(result.data[0])
-                setBookMarked(true);
+                NotesService.getBookMarks().then((bookmarks)=>{
+                    setBookMarks(bookmarks.data)
+                })
+                note.bookmark
+                    ? toast.success("Note added to bookmarks")
+                    : toast.success("Note removed from bookmarks")
+            }).catch((err) => {
+                toast.error("Something went wrong")
             })
         })
     }
@@ -127,10 +124,12 @@ function Home() {
                 noteClicked={noteClicked}
                 clicked_id={clickedId}
                 droppedHandler={droppedHandler}
+                titleChanged={titleChanged}
                 bookmarks={bookMarks}/>
             <Content
                 noteClicked={noteClicked}
                 note={note}
+                titleChange={titleChange}
                 setBookMark={setBookMark}/>
         </div>
     );

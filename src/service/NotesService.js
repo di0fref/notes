@@ -37,8 +37,14 @@ class NotesService {
         return http.get(`/notes/bookmarks`);
 
     }
-    saveText(id, data){
-        return http.put(`/note/save/${id}`, data);
+
+    setTitle(id, data) {
+        return http.put(`/note/name/${id}`, data);
+    }
+
+    setBookmark(id, data) {
+        return http.put(`/note/bookmark/${id}`, data);
+
     }
 }
 

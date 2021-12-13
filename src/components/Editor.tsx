@@ -4,8 +4,6 @@ import {
     ThemeProvider,
     useRemirror,
     useRemirrorContext,
-    useHelpers,
-    useKeymap,
     ComponentItem,
     Toolbar
 } from '@remirror/react';
@@ -21,26 +19,25 @@ import NotesService from "../service/NotesService";
 import {prosemirrorNodeToHtml} from 'remirror';
 import {AllStyledComponent} from "@remirror/styles/emotion";
 import type {ToolbarItemUnion} from "@remirror/react";
-import {FaBars, FaMoon, FaSun} from "react-icons/all";
-import {Tooltip} from "@mui/material";
-import Moment from "react-moment";
+import {FaStar} from "react-icons/all";
+import {toast} from 'react-toastify';
+
 import moment from "moment";
 
 export interface EditorRef {
     setContent: (content: any) => void;
 }
 
-const saveToBackend = (id: string, state: any, title: string) => {
-    NotesService.update(id, {
-        text: prosemirrorNodeToHtml(state.state.doc),
-        name: title
-    }).then((result: any) => {
-
-    }).catch((err: any) => {
-        console.log(err);
-    });
-
-}
+// const saveToBackend = (id: string, state: any, title: string) => {
+//     NotesService.update(id, {
+//         text: prosemirrorNodeToHtml(state.state.doc),
+//         name: title
+//     }).then((result: any) => {
+//
+//     }).catch((err: any) => {
+//         console.log(err);
+//     });
+// }
 const toolbarItems: ToolbarItemUnion[] = [
     {
         type: ComponentItem.ToolbarGroup,
@@ -85,49 +82,7 @@ const toolbarItems: ToolbarItemUnion[] = [
             },
         ],
         separator: "none",
-    },
-    {
-        type: ComponentItem.ToolbarMenu,
-        label: "Headings",
-        items: [
-            {
-                type: ComponentItem.MenuGroup,
-                role: "radio",
-                items: [
-                    {
-                        type: ComponentItem.MenuCommandPane,
-                        commandName: "toggleHeading",
-                        attrs: {level: 1},
-                    },
-                    {
-                        type: ComponentItem.MenuCommandPane,
-                        commandName: "toggleHeading",
-                        attrs: {level: 2},
-                    },
-                    {
-                        type: ComponentItem.MenuCommandPane,
-                        commandName: "toggleHeading",
-                        attrs: {level: 3},
-                    },
-                    {
-                        type: ComponentItem.MenuCommandPane,
-                        commandName: "toggleHeading",
-                        attrs: {level: 4},
-                    },
-                    {
-                        type: ComponentItem.MenuCommandPane,
-                        commandName: "toggleHeading",
-                        attrs: {level: 5},
-                    },
-                    {
-                        type: ComponentItem.MenuCommandPane,
-                        commandName: "toggleHeading",
-                        attrs: {level: 6},
-                    },
-                ],
-            },
-        ],
-    },
+    }
 ];
 // const hooks = [
 //     () => {
@@ -158,7 +113,6 @@ const ImperativeHandle = forwardRef((_: unknown, ref: Ref<EditorRef>) => {
     return <></>;
 });
 const Editor = (props: any): JSX.Element => {
-
     const [dateModified, setDateModified] = useState("")
     const [title, setTitle] = useState("")
 
@@ -167,7 +121,6 @@ const Editor = (props: any): JSX.Element => {
             editorRef.current!.setContent(props.note.text)
             setTitle(props.note.name)
         }
-
     }, [props.note])
 
     const editorRef = useRef<EditorRef | null>(null);
@@ -183,6 +136,20 @@ const Editor = (props: any): JSX.Element => {
         content: '',
         stringHandler: 'html',
     });
+
+    const saveToBackend = (parameter:any) => {
+        NotesService.update(props.note.id, {
+            text: prosemirrorNodeToHtml(parameter.state.doc),
+            name: title
+        }).then((result: any) => {
+            props.titleChange();
+            toast.success("Note saved")
+        }).catch((err: any) => {
+            toast.error("Could not save note")
+            console.log(err);
+        });
+    }
+
     let timer = setTimeout(() => {
     }, 100);
 
@@ -192,85 +159,56 @@ const Editor = (props: any): JSX.Element => {
 
     return (
         <>
-
-
-            {/*<div className={"prose"}>*/}
-            {/*    <Remirror*/}
-            {/*        manager={manager}*/}
-            {/*        initialContent={state}*/}
-            {/*        autoRender='end'*/}
-            {/*        // hooks={hooks}*/}
-            {/*        onChange={*/}
-            {/*            (parameter) => {*/}
-            {/*                // if (props.note.id) {*/}
-            {/*                //     clearTimeout(timer);*/}
-            {/*                //     timer = setTimeout(() => {*/}
-            {/*                saveToBackend(props.note.id, parameter, title)*/}
-            {/*                setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))*/}
-            {/*                //     }, 2000);*/}
-            {/*                // }*/}
-            {/*            }}*/}
-            {/*    >*/}
-            {/*        /!*<AllStyledComponent>*!/*/}
-            {/*        /!*    <ThemeProvider>*!/*/}
-            {/*        /!*        <div className={"px-8 py-2 editor-toolbar shadow shadow-sm"}>*!/*/}
-            {/*        /!*            <Toolbar items={toolbarItems} refocusEditor label="Top Toolbar"/>*!/*/}
-            {/*        /!*        </div>*!/*/}
-            {/*        /!*    </ThemeProvider>*!/*/}
-            {/*        /!*</AllStyledComponent>*!/*/}
-            {/*        /!*<div className={"flex justify-center items-center"}>*!/*/}
-            {/*        /!*    <div className={"editor-date text-sm text-more-muted pt-2"}>*!/*/}
-            {/*        /!*        <Moment date={dateModified} format={"D MMMM YYYY [at] HH:mm"}/>*!/*/}
-            {/*        /!*    </div>*!/*/}
-            {/*        /!*</div>*!/*/}
-            {/*        /!*<div className={"flex justify-center items-center"}>*!/*/}
-            {/*        /!*    <div>*!/*/}
-            {/*        /!*        <input*!/*/}
-            {/*        /!*            type={"text"}*!/*/}
-            {/*        /!*            className={"text-center font-bold note-title pt-4"}*!/*/}
-            {/*        /!*            placeholder={"Give me a title"}*!/*/}
-            {/*        /!*            onChange={(e) => {*!/*/}
-            {/*        /!*                changeTitle(e);*!/*/}
-            {/*        /!*            }}*!/*/}
-            {/*        /!*            value={title}*!/*/}
-            {/*        /!*        />*!/*/}
-            {/*        /!*    </div>*!/*/}
-            {/*        /!*</div>*!/*/}
-            {/*        /!*<div className={"toolbar h-10"}>Toolbar</div>*!/*/}
-            {/*        /!*<div className={"datebar h-10"}>Date</div>*!/*/}
-            {/*        /!*<div className={"editor-part h-full"}>*!/*/}
-            {/*            <ImperativeHandle ref={editorRef}/>*/}
-            {/*        /!*</div>*!/*/}
-
-            {/*    </Remirror>*/}
-
-            {/*</div>*/}
-            <div className={"ed-wrapper w-full h-full bg-blue-800_ flex flex-col justify-start items-center"}>
-                <div className={"h-10"}>Toolbar</div>
-                <div className={"ed md:px-32_ px-14_ overflow-y-scroll w-full"}>
-                    <div className={"ed-inner mx-auto"}>
-                        <input placeholder={"Give your note a title"} className={"note-title w-full font-bold text-4xl my-4"}/>
+            <div className={"overflow-y-auto ed-wrapper w-full flex flex-col justify-start items-center"}>
+                <div className={"ed prose"}>
+                    <div className={"ed-inner mx-auto mt-16"}>
+                        <input value={title} onChange={changeTitle} placeholder={"Give your note a title"} className={"text-normal text-center w-full font-bold text-4xl mb-4 mt-12 md:my-4"}/>
                         <Remirror
+                            classNames={["overflow-y-auto", "p-1", "editor"]}
                             manager={manager}
                             initialContent={state}
+                            // state={state}
                             autoRender='end'
                             // hooks={hooks}
                             onChange={
                                 (parameter) => {
-                                    // if (props.note.id) {
-                                    //     clearTimeout(timer);
-                                    //     timer = setTimeout(() => {
-                                    saveToBackend(props.note.id, parameter, title)
-                                    setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
-                                    //     }, 2000);
-                                    // }
+                                    if (parameter.tr?.docChanged) {
+                                            clearTimeout(timer);
+                                            timer = setTimeout(() => {
+                                                saveToBackend(parameter)
+                                                setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
+                                            }, 2000);
+                                    }
                                 }}
                         >
+                            <div className={"fixed w-full h-14 top-0 tool left-72 flex items-center justify-start"}>
+                                <div className={"ml-3"}>
+                                    <button className={"flex items-center justify-between "}
+                                            onClick={() => props.setBookMark(props.note)}>
+                                        {props.note.bookmark
+                                            ? <FaStar className={"icon icon-accent"}/>
+                                            : <FaStar className={"icon text-normal"}/>
+                                        }
+                                        <span className={"ml-2 text-normal hover:text-hover"}>Bookmark</span>
+                                    </button>
+                                </div>
+                                <div>
+                                    <AllStyledComponent>
+                                        <ThemeProvider>
+                                            <div className={" tool-buttons flex-grow ml-12"}>
+                                                <Toolbar items={toolbarItems} refocusEditor label="Top Toolbar"/>
+                                            </div>
+                                        </ThemeProvider>
+                                    </AllStyledComponent>
+                                </div>
+                                <div></div>
+                            </div>
                             <ImperativeHandle ref={editorRef}/>
                         </Remirror>
                     </div>
                 </div>
             </div>
+
         </>
     );
 };

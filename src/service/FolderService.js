@@ -38,6 +38,22 @@ class FolderService {
 
     fetchJson = (url) => fetch(url).then((r) => r.json());
 
+    getBread = (id) => {
+        return this.fetchJson(`http://localhost:4000/folders/p/${id}`).then(
+            (items) => Promise.all(
+                items.map(this.getBreadAux)
+            )
+        );
+    }
+
+    getBreadAux = async (t = {}) => {
+        const items = await this.getBread(t.id)
+        return {
+            ...t,
+            items,
+        };
+    };
+
     getResult = (parent) => {
         return this.fetchJson(`http://localhost:4000/folders/parent/${parent}`).then(
             (items) => Promise.all(
@@ -83,7 +99,7 @@ class FolderService {
         const folders = await this.getResult(t.id)
         // const c = await this.getNotesCount(t.id)
         const notes = await this.getNoteResult(t.id)
-        var items = folders.concat(notes);
+        let items = folders.concat(notes);
         return {
             ...t,
             items,
