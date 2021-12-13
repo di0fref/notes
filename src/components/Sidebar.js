@@ -108,7 +108,6 @@ function SidebarItem(props, {isDragging, tool}) {
     }
 
     return (
-
         <>
             <MyLink type={props.items.type} id={props.items.id}>
                 <ArrowTooltips
@@ -118,7 +117,7 @@ function SidebarItem(props, {isDragging, tool}) {
                         (props.items.type === "note")
                             ? (
                                 <div className={"text-center"}>
-                                    <p>Last modified at: {formatDate(props.items.date)}</p>
+                                    <p>Modified at: {formatDate(props.items.date)}</p>
                                     <p>Created at: {formatDate(props.items.date)}</p>
                                 </div>
                             )
@@ -140,29 +139,29 @@ function SidebarItem(props, {isDragging, tool}) {
                               className={`${isActive ? "sidebar-active" : ""} pointer`}
                     >
 
-                        <ListItemText style={{paddingLeft: props.depth * props.depthStep * 2}} key={`cc-${props.items.id}`}>
+                        <ListItemText style={{paddingLeft: props.depth * props.depthStep * 1}} key={`cc-${props.items.id}`}>
                             <div className={'flex justify-start items-center'}>
 
                                 {(props.icon === true)
                                     ?
                                     (props.items.type == "folder")
-                                        ? <FaRegFolder className={`icon`}/>
+                                        ? <FaRegFolder className={`icon text-muted`}/>
                                         : <FaFileAlt className={`icon`}/>
-
                                     : null}
 
                                 <div className={`ml-2 text-s ${props.class}`}>
-
                                     {props.items.label}
-
-                                    {/*{isDragging?"Dragging": "not"}*/}
                                 </div>
+                                {/*<div className={"ml-auto"}>*/}
+                                {/*    {props.items.bookmark*/}
+                                {/*        ? <FaStar className={"icon-accent w-2 h-2"}/>*/}
+                                {/*        : null}*/}
+                                {/*</div>*/}
                             </div>
                         </ListItemText>
                         {(props.items.items && props.items.items.length > 0)
                             ? open ? <ExpandLess/> : <ExpandMore/>
                             : null}
-                        {/*<span className={`text-sm text-muted`}>{count}</span>*/}
                     </ListItem>
 
                 </ArrowTooltips>
@@ -210,7 +209,7 @@ function NotebookHeader({text}) {
 
     return (
         <div>
-            <h3 className={`py-2 text-xs pl-4 text-muted uppercase tracking-widest font-bold  mt-4 ${isActive ? "sidebar-active" : ""}`}
+            <h3 className={`py-2 text-xs pl-4 text-muted_ uppercase tracking-widest font-bold  mt-4 ${isActive ? "sidebar-active" : ""}`}
                 ref={drop}
                 id={"notebook-header"}
                 role="card"
@@ -230,7 +229,7 @@ function Sidebar(props) {
     return (
         <div className={`sidebar z-10 flex flex-col w-full md:w-72 flex-shrink-0 absolute md:static`}>
             <div className={`flex-shrink-0 h-14 mx-5 flex flex-row items-center justify-between `}>
-                Search
+                <input placeholder={"Search"} className={"search rounded rounded-lg bg-gray-300_ w-full mr-6 px-2 py-1"}/>
                 <button id="theme-toggle" className="" type="button">
                     <Tooltip title={"Dark theme"}>
                         <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
@@ -246,15 +245,30 @@ function Sidebar(props) {
                     }
                 </button>
             </div>
-            <nav className={`ease-in-out transition-all transform duration-500  flex-grow md:block md:pb-0 md:overflow-y-auto  ${openSm ? " h-360 overflow-y-auto" : "h-0 overflow-hidden "}`}>
+            <nav
+                className={`
+                ease-in-out 
+                transition-all 
+                transform 
+                duration-500 
+                flex-grow 
+                md:block 
+                md:pb-0 
+                md:overflow-y-auto  
+                ${openSm ? " sidebar-open overflow-y-auto_" : "h-0 overflow-hidden "}`
+                }
+                // style={{height: "calc(100vh - 4rem)"}}
+            >
                 <div className={"p-2"}>
-                    <h2 className={"py-2 text-xs pl-4 text-muted uppercase tracking-widest font-bold mt-4"}>Favourites</h2>
-                    {/*{props.bookmarks.map((bookmark, index) => (*/}
-                    {/*    <div className={"flex items-center justify-start my-2"} key={`bookmark-${index}`}>*/}
-                    {/*        <div><FaStar className={"icon icon-accent"}/></div>*/}
-                    {/*        <div className={"ml-2 text-s"}>{bookmark.label}</div>*/}
-                    {/*    </div>*/}
-                    {/*))}*/}
+                    {/*<h2 className={"py-2 text-xs pl-4 text-muted uppercase tracking-widest font-bold mt-4"}>Favourites</h2>*/}
+
+                    {/*<label htmlFor="toggle-example" className="flex items-center cursor-pointer relative mb-4">*/}
+                    {/*    <input type="checkbox" id="toggle-example" className="sr-only"/>*/}
+                    {/*        <div className="toggle-bg bg-gray-200 border-2 border-gray-200 h-5 w-10 rounded-full"></div>*/}
+                    {/*        <span className="ml-3 text-gray-900 text-sm font-medium">Toggle me</span>*/}
+                    {/*</label>*/}
+
+
                     <BookMarks bookmarks={props.bookmarks}/>
                     <NotebookHeader text={"Notebooks"}/>
 

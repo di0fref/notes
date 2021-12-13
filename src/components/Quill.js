@@ -3,16 +3,15 @@ import {useEffect, useRef, useState} from "react";
 import NotesService from "../service/NotesService";
 import t from "./CustomToast"
 import {Tooltip} from "@mui/material";
-import {FaRegStar, FaStar} from "react-icons/all";
+import {FaFileAlt, FaRegStar, FaStar} from "react-icons/all";
 import FolderService from "../service/FolderService";
-
+import Breadcrumbs from "./BreadCrumbs"
 const Quill = (props) => {
 
     const [value, setValue] = useState(null);
-    const [title, setTitle] = useState(props.note.name)
+    const [title, setTitle] = useState("")
     let timer = setTimeout(null)
     const el = useRef(null);
-    const [breadCrumb, setBreadCrumb] = useState([])
 
     const saveToBackend = (range, type, editor) => {
         const data = {
@@ -29,19 +28,6 @@ const Quill = (props) => {
         });
     }
 
-    const p = []
-
-    const getBreadCrumbs = (data) => {
-        data.forEach((el, index) => {
-            p.push(el.label)
-            if (el.parent) {
-                getBreadCrumbs(el.parent)
-            }
-        })
-
-        let s = p.reverse()
-        setBreadCrumb(s);
-    }
 
     const save = (content, delta, source, editor) => {
         clearTimeout(timer);
@@ -61,11 +47,6 @@ const Quill = (props) => {
 
     useEffect(() => {
         if (props.note.id) {
-            FolderService.getBread(props.note.folder_id).then((result) => {
-                getBreadCrumbs(result)
-                console.log(breadCrumb)
-
-            })
             setValue(JSON.parse(props.note.text))
             setTitle(props.note.name)
         }
@@ -73,7 +54,7 @@ const Quill = (props) => {
 
     return (
         <div className={"flex flex-col"}>
-            <div className={"flex items-center h-14"}>
+            <div className={"flex items-center h-14 md:mt-0 mt-12"}>
                 <div className={"bg-secondary_ flex-grow"}>
                     <div className={"flex justify-start items-center"}>
                         <Tooltip title={props.note.bookmark ? "Unfavorite this note" : "Favorite this note"}>
@@ -86,11 +67,7 @@ const Quill = (props) => {
                             </button>
                         </Tooltip>
                         <div className={"ml-4 text-muted bread-crumb_ text-s"}>
-                            My private docs
-                            /
-                            Untitled
-                            /
-                            jnllnl
+                            <Breadcrumbs note={props.note}/>
                         </div>
                     </div>
 

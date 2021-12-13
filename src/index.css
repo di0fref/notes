@@ -256,18 +256,14 @@ input {
 
 
 .MuiTooltip-tooltip {
-	font-size: 0.875rem !important;
+	font-size: 0.75rem !important;
 	line-height: 1.25rem !important;
-	background-color: var(--background-modifier-cover) !important;
+	background-color: black !important;
 	padding-left: 1em !important;
 	padding-right: 1em !important;
-
+	/*opacity: 1 !important;*/
+	/*transition: none!important;*/
 }
-
-.h-360{
-	height: 50em;
-}
-
 
 /*.remirror-theme * {*/
 /*	color: var(--text-normal) !important;*/
@@ -299,7 +295,7 @@ input::placeholder{
 }
 
 .editor{
-	height: calc(100vh - 3rem);
+	height: calc(100vh - 4rem);
 }
 .ql-editor h1,
 .ql-editor h2,
@@ -315,27 +311,52 @@ input::placeholder{
 	line-height: 1.6rem;
 	font-size: 1rem;
 	/*@apply mb-4;*/
+	/*color: #ecedef !important;*/
+
 }
-.ql-editor li{
+.ql-editor{
 	/*list-style: circle !;*/
+	/*color: #ecedef !important;*/
+
 }
 .quill{
 	width: 680px;
 }
+.sidebar-open{
+	height: calc(100vh - 4rem);
+}
 
 @media only screen and (max-width: 768px) {
-
 	.quill {
-		/*width: 100%;*/
+		width: 100%;
 		padding-left: 1em;
 		padding-right: 1em;
+	}
+	.editor{
+		height: calc(100vh - 7rem);
 	}
 }
 ._flex, ._quill{
 	/*outline: #2e3338;*/
 	outline: 1px dashed red;
 }
-
+.search:focus{
+	background-color: var(--interactive-hover);
+}
 .bread-crumb{
 	color: #acb1b9;
+}
+
+.toggle-bg:after {
+	content: '';
+	@apply absolute top-0.5 left-0.5 bg-white border border-gray-300 rounded-full h-4 w-4 transition shadow-sm;
+}
+
+input:checked + .toggle-bg:after {
+	transform: translateX(100%);
+	@apply border-white;
+}
+
+input:checked + .toggle-bg {
+	@apply bg-blue-600 border-blue-600;
 }

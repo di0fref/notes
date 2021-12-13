@@ -1,8 +1,5 @@
 import {toast} from "react-toastify";
 
-let options = {
-    theme: localStorage.getItem("theme")
-}
 const t = (type, msg) => {
     switch (type) {
         case "success":
@@ -17,6 +14,5 @@ const t = (type, msg) => {
             break;
     }
 }
-
 
 export default t

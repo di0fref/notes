@@ -5,8 +5,7 @@ import FolderService from "../service/FolderService";
 import NotesService from "../service/NotesService";
 import useUrl from "../components/hooks/useUrl";
 import {Router, useParams} from "react-router-dom";
-import {toast} from 'react-toastify';
-
+import t from "../components/CustomToast";
 function Home() {
 
     const [treeData, setTreeData] = useState([]);
@@ -97,7 +96,7 @@ function Home() {
     }
 
     const setBookMark  = async (note) => {
-        console.log("setBookMark")
+        // console.log("setBookMark")
         note.bookmark = !note.bookmark
         NotesService.setBookmark(note.id, {bookmark: note.bookmark}).then((result) => {
             NotesService.get(note.id).then((result) => {
@@ -106,10 +105,10 @@ function Home() {
                     setBookMarks(bookmarks.data)
                 })
                 note.bookmark
-                    ? toast.success("Note added to bookmarks")
-                    : toast.success("Note removed from bookmarks")
+                    ? t("success", "Note added to bookmarks")
+                    : t("success","Note removed from bookmarks")
             }).catch((err) => {
-                toast.error("Something went wrong")
+                t("error","Something went wrong")
             })
         })
     }

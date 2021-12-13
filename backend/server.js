@@ -28,12 +28,12 @@ const listener = app.listen(process.env.PORT || 4000, () => {
     console.log("App is listening on port " + listener.address().port);
 });
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = ["*"];
 const options = {
     origin: allowedOrigins
 };
 
-app.use(cors(options));
+app.use(cors());
 
 const getDateModified = () => {
 	return moment().format("YYYY-MM-DD HH:mm:ss");

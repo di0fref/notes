@@ -1,7 +1,6 @@
 import React from "react";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import { makeStyles } from "@mui/styles";
+import { makeStyles, withStyles } from "@mui/styles";
 
 const useStyles = makeStyles(theme => ({
     arrow: {
@@ -11,23 +10,39 @@ const useStyles = makeStyles(theme => ({
         color: "black"
     },
     tooltip: {
-        backgroundColor: "black",
-        border: "1px solid black",
-        color: "white",
+        // backgroundColor: "white",
+        // border: "1px solid black",
+        // color: "white",
     }
 }));
 
-export default function ArrowTooltips(props) {
-    let classes = useStyles();
+// export default function ArrowTooltips(props) {
+//     let classes = useStyles();
+//
+//     return (
+//         <Tooltip
+//             placement={"right"}
+//             title={props.title}
+//             arrow
+//             classes={{ arrow: classes.arrow, tooltip: classes.tooltip }}
+//         >
+//             <span className={"text-sm"}>{props.children}</span>
+//         </Tooltip>
+//     );
+// }
 
-    return (
-        <Tooltip
-            placement={"right"}
-            title={props.title}
-            arrow
-            classes={{ arrow: classes.arrow, tooltip: classes.tooltip }}
-        >
-            <span className={"text-sm"}>{props.children}</span>
-        </Tooltip>
-    );
-}
+const ArrowTooltips = withStyles({
+    arrow: {
+        "&:before": {
+            border: "1px solid black"
+        },
+        color: "black"
+    },
+    tooltip: {
+        backgroundColor: "black",
+        color: "white",
+        fontSize:"0.75rem"
+    }
+})(Tooltip);
+
+export default ArrowTooltips
