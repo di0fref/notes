@@ -24,6 +24,7 @@ import NotesService from "../service/NotesService";
 import ArrowTooltips from "./Tooltip";
 import MyLink from "./Link";
 import BookMarks from "./BookMarks";
+import Search from "./Search";
 
 let moment = require('moment');
 
@@ -225,12 +226,13 @@ function Sidebar(props) {
     const clickHandle = () => {
         setOpenSm(!openSm);
     }
+    const [searchOpen, setSearchOpen] = useState(false);
 
     return (
         <div className={`sidebar z-10 flex flex-col w-full md:w-72 flex-shrink-0 absolute md:static`}>
             <div className={`flex-shrink-0 h-14 mx-5 flex flex-row items-center justify-between `}>
-                <input placeholder={"Search"} className={"search rounded rounded-lg bg-gray-300_ w-full mr-6 px-2 py-1"}/>
-                <button id="theme-toggle" className="" type="button">
+                <Search/>
+                <button id="theme-toggle" className="mr-4 md:mr-0" type="button">
                     <Tooltip title={"Dark theme"}>
                         <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
                     </Tooltip>

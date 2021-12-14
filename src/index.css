@@ -5,7 +5,7 @@
 html[data-theme='dark'] {
 	--background-primary: #232529;
 	/*--background-secondary: #161616;*/
-	--background-secondary:rgba(29,31,35, 1);
+	--background-secondary: rgba(29, 31, 35, 1);
 	--text-accent: #7f6df2;
 	--background-primary-alt: #1a1a1a;
 	--background-secondary-alt: #282a2f;
@@ -39,7 +39,7 @@ html[data-theme='dark'] {
 	--scrollbar-bg: rgba(255, 255, 255, 0.05);
 	--scrollbar-thumb-bg: rgba(255, 255, 255, 0.1);
 	--highlight-mix-blend-mode: lighten;
-	--icon-accent:#f0c000;
+	--icon-accent: #f0c000;
 }
 
 :root,
@@ -80,13 +80,14 @@ html[data-theme='light'] {
 	--scrollbar-thumb-bg: rgba(0, 0, 0, 0.1);
 	--highlight-mix-blend-mode: darken;
 	--text-accent: #f0c000;
-	--icon-accent:#f0c000;
+	--icon-accent: #f0c000;
 }
 
-:root{
+:root {
 	--bg-accent: rgba(22, 104, 227, 1);
-	--font-family-system: "UniversalSans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+	--font-family-system: "UniversalSans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
+
 /*@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');*/
 .bg-primary {
 	background: var(--background-primary);
@@ -112,9 +113,11 @@ body {
 	/*font-family: 'Poppins', sans-serif;*/
 	line-height: 1.6em;
 }
+
 * {
 	font-family: var(--font-family-system) !important;
 }
+
 .text-muted {
 	color: var(--text-muted);
 }
@@ -148,9 +151,11 @@ html[data-theme='dark'] .d-block-dark {
 .icon {
 	/*color: var(--text-muted);*/
 }
-.icon-accent{
+
+.icon-accent {
 	color: var(--icon-accent);
 }
+
 .bg-accent {
 	background: var(--bg-accent);
 }
@@ -183,6 +188,7 @@ button:hover {
 	background: var(--background-secondary-alt) !important;
 	@apply rounded  !important
 }
+
 .prose :where(strong):not(:where([class~="not-prose"] *)) {
 	font-weight: 800;
 }
@@ -223,23 +229,23 @@ input {
 	color: var(--text-normal);
 }
 
-.modal {
-	position: absolute;
-	top: 20%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 50vw;
-	background-color: var(--background-primary-alt);
-	border: 1px solid var(--background-modifier-border);
-	box-shadow: var(--background-modifier-box-shadow);
-}
+/*.modal {*/
+/*	position: absolute;*/
+/*	top: 20%;*/
+/*	left: 50%;*/
+/*	transform: translate(-50%, -50%);*/
+/*	width: 50vw;*/
+/*	background-color: var(--background-primary-alt);*/
+/*	border: 1px solid var(--background-modifier-border);*/
+/*	box-shadow: var(--background-modifier-box-shadow);*/
+/*}*/
 
-@media screen and (max-width: 768px) {
-	.modal {
-		width: 100vw;
-		/*left: 0;*/
-	}
-}
+/*@media screen and (max-width: 768px) {*/
+/*	.modal {*/
+/*		width: 100vw;*/
+/*		!*left: 0;*!*/
+/*	}*/
+/*}*/
 
 .sidebar-active {
 	background-color: var(--text-accent-hover) !important;
@@ -279,71 +285,98 @@ input {
 /*	scrollbar-width: none;  !* Firefox *!*/
 /*}*/
 
-input::placeholder{
+input::placeholder {
 	opacity: 0.5;
 	color: var(--text-muted)
 }
 
 
 /* Placeholder */
-.quill > .ql-container > .ql-editor.ql-blank::before{
+.quill > .ql-container > .ql-editor.ql-blank::before {
 	opacity: 0.5;
 	color: var(--text-muted)
 }
-.tool{
+
+.tool {
 	background-color: var(--background-secondary-alt);
 }
 
-.editor{
+.editor {
 	height: calc(100vh - 4rem);
 }
+
 .ql-editor h1,
 .ql-editor h2,
 .ql-editor h3,
 .ql-editor h4,
 .ql-editor h5,
-.ql-editor h6
-{
-	@apply mb-2
+.ql-editor h6 {
+	@apply mb-2 font-bold;
 }
+
 .ql-editor p,
-.ql-editor ul, .ql-editor ol{
+.ql-editor ul, .ql-editor ol {
 	line-height: 1.6rem;
 	font-size: 1rem;
 	/*@apply mb-4;*/
 	/*color: #ecedef !important;*/
 
 }
-.ql-editor{
+
+.ql-editor {
 	/*list-style: circle !;*/
 	/*color: #ecedef !important;*/
 
 }
-.quill{
+
+.quill {
 	width: 680px;
 }
-.sidebar-open{
+
+.sidebar-open {
 	height: calc(100vh - 4rem);
 }
 
-@media only screen and (max-width: 768px) {
+.modal-box {
+	color: var(--text-normal) !important;
+	/*background-color: var(--background-primary);*/
+	width: 50vw !important;
+	background-color: var(--background-primary-alt) !important;
+	border: 1px solid var(--background-modifier-border) !important;
+	box-shadow: var(--background-modifier-box-shadow) !important;
+	position: absolute;
+		top: 20% !important;
+	left: 50% !important;
+}
+
+@media only screen and (max-width: 1024px) {
 	.quill {
 		width: 100%;
 		padding-left: 1em;
 		padding-right: 1em;
 	}
-	.editor{
+
+	.editor {
 		height: calc(100vh - 7rem);
 	}
+		.modal-box {
+		width: 90vw !important;
+	}
+
 }
-._flex, ._quill{
+@media only screen and (max-width: 768px) {
+
+}
+._flex, ._quill {
 	/*outline: #2e3338;*/
 	outline: 1px dashed red;
 }
-.search:focus{
+
+.search:focus {
 	background-color: var(--interactive-hover);
 }
-.bread-crumb{
+
+.bread-crumb {
 	color: #acb1b9;
 }
 
