@@ -35,7 +35,6 @@ class NotesService {
 
     getBookMarks(searchParams) {
         return http.get(`/notes/bookmarks`);
-
     }
 
     setTitle(id, data) {
@@ -44,7 +43,10 @@ class NotesService {
 
     setBookmark(id, data) {
         return http.put(`/note/bookmark/${id}`, data);
+    }
 
+    search(val, options){
+        return http.get(`/search/${val}`)
     }
 }
 

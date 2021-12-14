@@ -54,7 +54,7 @@ const Quill = (props) => {
 
     return (
         <div className={"flex flex-col"}>
-            <div className={"flex items-center h-14 md:mt-0 mt-12"}>
+            <div className={"flex items-center h-14 md:mt-0 mt-0"}>
                 <div className={"bg-secondary_ flex-grow"}>
                     <div className={"flex justify-start items-center"}>
                         <Tooltip title={props.note.bookmark ? "Unfavorite this note" : "Favorite this note"}>

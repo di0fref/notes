@@ -1,4 +1,3 @@
-import Editor from "./Editor.tsx"
 import React, {useEffect, useState} from "react";
 import Quill from "./Quill";
 
@@ -13,12 +12,6 @@ function Content(props) {
 
     return (
         <div className={"w-full bg-gray-_300"}>
-           {/*{props.note.id*/}
-           {/*     ? <Editor*/}
-           {/*        note={note}*/}
-           {/*        titleChange={props.titleChange}*/}
-           {/*        setBookMark={props.setBookMark}/>*/}
-           {/*     : null}*/}
             {props.note.id
             ? <Quill
                     note={note}

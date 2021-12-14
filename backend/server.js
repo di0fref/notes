@@ -38,6 +38,18 @@ app.use(cors());
 const getDateModified = () => {
 	return moment().format("YYYY-MM-DD HH:mm:ss");
 }
+app.get("/search/:term", (req, res) => {
+	db.query("SELECT f.name as folder, n.*, n.name as label, concat('note') as type from notes n left join folders f on n.folder_id = f.id where n.name like concat('%', ?, '%') or n.text like concat('%', ?, '%' )",
+		[req.params.term, req.params.term],
+		(err, result) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.send(result);
+			}
+		}
+	);
+});
 
 app.get("/folders/count", (req, res) => {
     db.query("SELECT count(*) as count from categories", (err, result) => {
@@ -134,7 +146,7 @@ app.get("/notes/count/:folder_id", (req, res) => {
 
 app.get("/notes", (req, res) => {
 	db.query(
-		"SELECT n.* , f.name as folde_name FROM notes n left join folders f on n.folder_id = f.id where deleted = 0 order by date_modified desc",
+		"SELECT n.* , f.name as folder_name FROM notes n left join folders f on n.folder_id = f.id where deleted = 0 order by date_modified desc",
 		(err, result) => {
 			if (err) {
 				console.log(err);
@@ -256,19 +268,7 @@ app.get("/notes/bookmarks", (req, res) => {
     );
 });
 
-app.get("/notes/search", (req, res) => {
-    db.query(
-        "SELECT *, name as label, concat('note') as type from notes where folder_id = ?",
-        req.params.id,
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.send(result);
-            }
-        }
-    );
-});
+
 
 
 app.put("/note/update/folder/:id", (req, res) => {

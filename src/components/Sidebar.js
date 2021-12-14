@@ -2,24 +2,18 @@ import React, {useEffect, useState} from 'react'
 import {List, ListItem, ListItemText, Collapse, ListItemIcon, Box, Typography, Modal, Tooltip} from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
 import {
     FaBars,
-    FaChevronLeft,
-    FaFile,
-    FaFileAlt, FaFolder,
+    FaFileAlt,
     FaRegFolder,
-    FaRegFolderOpen,
-    FaStar, FaTimes,
-    FaTrash,
-    FaTrashAlt,
-    FaMoon, FaSun
+    FaTimes,
+    FaMoon,
+    FaSun
 } from "react-icons/all";
 
 import FolderService from "../service/FolderService";
-import {useDrag} from "react-dnd";
 import {ItemTypes} from "./Constants";
-import {useDrop} from "react-dnd";
+import {useDrop, useDrag} from "react-dnd";
 import NotesService from "../service/NotesService";
 import ArrowTooltips from "./Tooltip";
 import MyLink from "./Link";
@@ -229,35 +223,47 @@ function Sidebar(props) {
     const [searchOpen, setSearchOpen] = useState(false);
 
     return (
-        <div className={`sidebar z-10 flex flex-col w-full md:w-72 flex-shrink-0 absolute md:static`}>
+        <div
+            className={`
+            sidebar 
+            z-10 flex 
+            flex-col 
+            h-screen 
+            w-72
+            md:ml-0 
+            flex-shrink-0 
+            absolute 
+            md:static
+            transition-all
+            ease-on-out
+            duration-300
+                ${openSm ? "ml-0" : "-ml-72"}`
+            }>
             <div className={`flex-shrink-0 h-14 mx-5 flex flex-row items-center justify-between `}>
                 <Search/>
-                <button id="theme-toggle" className="mr-4 md:mr-0" type="button">
-                    <Tooltip title={"Dark theme"}>
-                        <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
-                    </Tooltip>
-                    <Tooltip title={"Light theme"}>
-                        <span className="d-block-dark d-none hover:text-hover-accent"><FaSun/></span>
-                    </Tooltip>
-                </button>
-                <button className={`rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
+                    <button id="theme-toggle" className="mr-4 md:mr-0" type="button">
+                        <Tooltip title={"Dark theme"}>
+                            <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
+                        </Tooltip>
+                        <Tooltip title={"Light theme"}>
+                            <span className="d-block-dark d-none hover:text-hover-accent"><FaSun/></span>
+                        </Tooltip>
+                    </button>
+                <Tooltip title={"Toggle menu"}>
+                <button className={`fixed top-4 right-4 rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
                     {!openSm
-                        ? <FaBars className={""}/>
-                        : <FaTimes className={""}/>
+                        ? <FaBars className={"w-6 h-6"}/>
+                        : <FaTimes className={"w-6 h-6"}/>
                     }
                 </button>
+                </Tooltip>
             </div>
             <nav
                 className={`
-                ease-in-out 
-                transition-all 
-                transform 
-                duration-500 
                 flex-grow 
                 md:block 
                 md:pb-0 
-                md:overflow-y-auto  
-                ${openSm ? " sidebar-open overflow-y-auto_" : "h-0 overflow-hidden "}`
+                md:overflow-y-auto`
                 }
                 // style={{height: "calc(100vh - 4rem)"}}
             >
