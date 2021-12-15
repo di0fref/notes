@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {List, ListItem, ListItemText, Collapse, ListItemIcon, Box, Typography, Modal, Tooltip} from '@mui/material';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import {
     FaBars,
     FaFileAlt,
     FaRegFolder,
     FaTimes,
     FaMoon,
-    FaSun
+    FaSun, FaCaretDown, FaCaretUp, FaCaretLeft, FaCaretRight
 } from "react-icons/all";
 
 import FolderService from "../service/FolderService";
@@ -92,6 +90,9 @@ function SidebarItem(props, {isDragging, tool}) {
     const handleClick = (type, id) => {
         setOpen(!open);
         props.noteClicked(type, id)
+        if(type === "note"){
+            props.clickHandle()
+        }
     };
 
 
@@ -131,32 +132,42 @@ function SidebarItem(props, {isDragging, tool}) {
                                   (props.items.id === props.note_id) ? true : false
                               }
                               disableRipple disableTouchRipple
-                              className={`${isActive ? "sidebar-active" : ""} pointer`}
+                              className={`${isActive ? "sidebar-active _Mui-selected " : ""} pointer`}
+                              style={
+                                  {
+                                      marginLeft: props.depth * props.depthStep*1+"rem",
+                                      width:"inherit",
+                                      marginTop: "2px"
+                                  }
+                              }
                     >
 
-                        <ListItemText style={{paddingLeft: props.depth * props.depthStep * 1}} key={`cc-${props.items.id}`}>
+                        <ListItemText
+                            // style={{marginLeft: props.depth * props.depthStep*1.5+"rem"}}
+                            key={`cc-${props.items.id}`}>
                             <div className={'flex justify-start items-center'}>
-
+                                <div className={"mr-2"}>
+                                {(props.items.items && props.items.items.length > 0)
+                                    ? open
+                                        ? <FaCaretDown className={"icon-caret"}/>
+                                        : <FaCaretRight className={"icon-caret"}/>
+                                    : null}
+                                </div>
+                                <div>
                                 {(props.icon === true)
-                                    ?
-                                    (props.items.type === "folder")
+                                    ? (props.items.type === "folder")
                                         ? <FaRegFolder className={`icon text-muted`}/>
                                         : <FaFileAlt className={`icon`}/>
                                     : null}
-
-                                <div className={`ml-2 text-s ${props.class}`}>
+                                </div>
+                                <div className={`ml-2 text-s ${props.class} truncate`}>
                                     {props.items.label}
                                 </div>
-                                {/*<div className={"ml-auto"}>*/}
-                                {/*    {props.items.bookmark*/}
-                                {/*        ? <FaStar className={"icon-accent w-2 h-2"}/>*/}
-                                {/*        : null}*/}
-                                {/*</div>*/}
                             </div>
                         </ListItemText>
-                        {(props.items.items && props.items.items.length > 0)
-                            ? open ? <ExpandLess/> : <ExpandMore/>
-                            : null}
+                        {/*{(props.items.items && props.items.items.length > 0)*/}
+                        {/*    ? open ? <ExpandLess/> : <ExpandMore/>*/}
+                        {/*    : null}*/}
                     </ListItem>
 
                 </ArrowTooltips>
@@ -179,7 +190,7 @@ function SidebarItem(props, {isDragging, tool}) {
                                         class={""}
                                         icon={true}
                                         note_id={props.note_id}
-
+                                        clickHandle={props.clickHandle}
                                     />
                                 </div>
                             ))}
@@ -229,7 +240,8 @@ function Sidebar(props) {
             z-10 flex 
             flex-col 
             h-screen 
-            w-72
+            md:w-72
+            w-full
             md:ml-0 
             flex-shrink-0 
             absolute 
@@ -237,11 +249,12 @@ function Sidebar(props) {
             transition-all
             ease-on-out
             duration-300
-                ${openSm ? "ml-0" : "-ml-72"}`
+            noprint
+                ${openSm ? "ml-0" : "-ml-full"}`
             }>
             <div className={`flex-shrink-0 h-14 mx-5 flex flex-row items-center justify-between `}>
-                <Search/>
-                    <button id="theme-toggle" className="mr-4 md:mr-0" type="button">
+                <Search clickHandle={clickHandle}/>
+                    <button id="theme-toggle" className="mr-8 md:mr-0" type="button">
                         <Tooltip title={"Dark theme"}>
                             <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
                         </Tooltip>
@@ -250,7 +263,7 @@ function Sidebar(props) {
                         </Tooltip>
                     </button>
                 <Tooltip title={"Toggle menu"}>
-                <button className={`fixed top-4 right-4 rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
+                <button className={`p-2 bg-secondary fixed top-2 right-2 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
                     {!openSm
                         ? <FaBars className={"w-6 h-6"}/>
                         : <FaTimes className={"w-6 h-6"}/>
@@ -277,14 +290,14 @@ function Sidebar(props) {
                     {/*</label>*/}
 
 
-                    <BookMarks bookmarks={props.bookmarks}/>
+                    <BookMarks bookmarks={props.bookmarks} open={props.open}/>
                     <NotebookHeader text={"Notebooks"}/>
 
                     <List disablePadding dense key={props.depthStep}>
                         {props.items.map((sidebarItem, index) => (
                             <SidebarItem
                                 key={`${sidebarItem.name}${index}`}
-                                depthStep={10}
+                                depthStep={1}
                                 depth={0}
                                 noteClicked={props.noteClicked}
                                 items={sidebarItem}
@@ -293,6 +306,7 @@ function Sidebar(props) {
                                 class={""}
                                 icon={true}
                                 note_id={props.note_id}
+                                clickHandle={clickHandle}
                             />
                         ))}
                     </List>

@@ -3,8 +3,7 @@ import {useEffect, useRef, useState} from "react";
 import NotesService from "../service/NotesService";
 import t from "./CustomToast"
 import {Tooltip} from "@mui/material";
-import {FaFileAlt, FaRegStar, FaStar} from "react-icons/all";
-import FolderService from "../service/FolderService";
+import {FaRegStar, FaStar} from "react-icons/all";
 import Breadcrumbs from "./BreadCrumbs"
 const Quill = (props) => {
 
@@ -58,7 +57,7 @@ const Quill = (props) => {
                 <div className={"bg-secondary_ flex-grow"}>
                     <div className={"flex justify-start items-center"}>
                         <Tooltip title={props.note.bookmark ? "Unfavorite this note" : "Favorite this note"}>
-                            <button className={"flex items-center justify-between ml-4"}
+                            <button className={"flex items-center justify-between ml-4 noprint"}
                                     onClick={() => props.setBookMark(props.note)}>
                                 {props.note.bookmark
                                     ? <FaStar className={"icon icon-accent"}/>
@@ -76,7 +75,7 @@ const Quill = (props) => {
             <div className={"flex justify-between editor overflow-y-auto"}>
                 <div className={"mx-auto px-2"}>
                     <div className={"h-16 flex mt-6 mb-4 px-4 md:px-4"}>
-                        <input value={title} onBlur={titleChange} onChange={(e) => setTitle(e.target.value)} className={"w-full _bg-gray-900 text-4xl font-semibold"} placeholder={"Give your note a title"}/>
+                        <input value={title} onBlur={titleChange} onChange={(e) => setTitle(e.target.value)} className={"w-full _bg-gray-900 text-4xl font-bold"} placeholder={"Give your note a title"}/>
                     </div>
                     <ReactQuill onBlur={saveToBackend} placeholder="Click here to start writing" theme="bubble" value={value} onChange={setValue} ref={el}/>
                 </div>

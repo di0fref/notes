@@ -45,8 +45,13 @@ function SearchResults(props) {
 function Search(props) {
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpen = () => {
+        setOpen(true)
+    };
+    const handleClose = () => {
+        setOpen(false);
+        props.clickHandle()
+    }
     const [searchResults, setSearchResults] = useState([])
     const [term, setTerm] = useState('');
     const [debouncedTerm, setDebouncedTerm] = useState(term);
@@ -89,10 +94,12 @@ function Search(props) {
                                 className={"mr-6 px-2 py-1 w-full bg-secondary-alt_ font-medium ml-1 rounded rounded-lg"}
                                 placeholder={"Find anything"}
                                 onChange={e => setDebouncedTerm(e.target.value)}
-                                value={debouncedTerm}/>
+                                value={debouncedTerm}
+                                id={"search-input"}
+                                autoFocus/>
                         </div>
                     </Typography>
-                    <SearchResults data={searchResults} term={term} handleClose={handleClose}/>
+                    <SearchResults data={searchResults} term={term} handleClose={handleClose} clickHandle={props.clickHandle}/>
                     <IconButton sx={button} onClick={handleClose}>
                         <CloseIcon/>
                     </IconButton>

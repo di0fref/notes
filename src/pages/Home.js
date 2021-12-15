@@ -92,7 +92,6 @@ function Home() {
     }
 
     const titleChange = () => {
-        console.log("titleChange")
         setTitleChanged(true);
     }
 
@@ -100,10 +99,12 @@ function Home() {
         // console.log("setBookMark")
         note.bookmark = !note.bookmark
         NotesService.setBookmark(note.id, {bookmark: note.bookmark}).then((result) => {
+            setBookMarked(true)
             NotesService.get(note.id).then((result) => {
                 setNote(result.data[0])
                 NotesService.getBookMarks().then((bookmarks)=>{
                     setBookMarks(bookmarks.data)
+                    setBookMarked(false)
                 })
                 note.bookmark
                     ? t("success", "Note added to bookmarks")
@@ -125,7 +126,9 @@ function Home() {
                 clicked_id={clickedId}
                 droppedHandler={droppedHandler}
                 titleChanged={titleChanged}
-                bookmarks={bookMarks}/>
+                bookmarks={bookMarks}
+                open={bookMarked}
+            />
             <Content
                 noteClicked={noteClicked}
                 note={note}

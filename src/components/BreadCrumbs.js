@@ -24,12 +24,9 @@ function BreadCrumbs(props){
         })
     },[props.note.id])
     return(
-        // {breadCrumb.reverse().join(" / ")} <FaFileAlt/> / {props.note.label}
-        // <div className={"flex"}>
-        //     props.breadcrumbs.join(" / ")
-        <>
+        <div className={"truncate w-60 md:w-full"}>
             {breadCrumb.join(" / ")} / {props.note.label}
-        </>
+        </div>
 
     )
 }

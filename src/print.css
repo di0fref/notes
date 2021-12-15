@@ -1,0 +1,14 @@
+@media print {
+    * {
+        background: white !important;
+        color:#2e3338 !important;
+    }
+    .noprint{
+        display: none !important;
+        height: 0 !important;
+    }
+
+    /*.sidebar{*/
+    /*    margin-left: -20000px;*/
+    /*}*/
+}

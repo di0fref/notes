@@ -41,7 +41,17 @@ html[data-theme='dark'] {
 	--highlight-mix-blend-mode: lighten;
 	--icon-accent: #f0c000;
 
+	--shade-100: #232529;
+	--shade-60: #282a2f;
+	--shade-50: #2d2f34;
+	--shade-45: #2f3237;
+	--shade-40: #5e646e;
+	--shade-30: #6a707c;
 	--shade-20: #acb1b9;
+	--shade-10: #d8dadf;
+	--shade-05: #ecedef;
+	--shade-00: #f1f2f4;
+	--scrollbar-color: var(--shade-40);
 
 }
 
@@ -85,7 +95,17 @@ html[data-theme='light'] {
 	--text-accent: #f0c000;
 	--icon-accent: #f0c000;
 
+	--shade-00: #2d2f34;
+	--shade-05: #3f434a;
+	--shade-10: #5e646e;
 	--shade-20: #6a707c;
+	--shade-30: #acb1b9;
+	--shade-40: #d8dadf;
+	--shade-45: #ecedef;
+	--shade-50: #f1f2f4;
+	--shade-60: #f6f7f9;
+	--shade-100: #fcfcfd;
+	--scrollbar-color: var(--shade-05);
 
 }
 
@@ -123,7 +143,9 @@ body {
 * {
 	font-family: var(--font-family-system) !important;
 }
-
+.-ml-full{
+	margin-left: -50em;
+}
 .text-muted {
 	color: var(--text-muted);
 }
@@ -204,8 +226,8 @@ button:hover {
 }
 
 .css-tlelie-MuiListItemText-root {
-	margin-top: 6px !important;
-	margin-bottom: 6px !important;
+	margin-top: 2px !important;
+	margin-bottom: 2px !important;
 }
 
 /* Toggle B */
@@ -215,7 +237,7 @@ input:checked ~ .dot {
 
 .Mui-selected {
 	/*opacity: 0.5 !important;*/
-	background-color: var(--bg-accent) !important;
+	background-color: var(--shade-50) !important;
 	color: white !important;
 	@apply rounded  !important
 }
@@ -383,7 +405,7 @@ input::placeholder {
 	}
 }
 
-._flex, ._quill {
+._flex, ._quill, ._truncate {
 	/*outline: #2e3338;*/
 	outline: 1px dashed red;
 }
@@ -408,4 +430,36 @@ input:checked + .toggle-bg:after {
 
 input:checked + .toggle-bg {
 	@apply bg-blue-600 border-blue-600;
+}
+
+.icon-caret{
+	color: var(--shade-30);
+}
+
+*::-webkit-scrollbar {
+	background-color: transparent;
+	width: 12px
+}
+
+*::-webkit-scrollbar-thumb {
+	border: 2px solid transparent;
+	border-radius: 6px;
+	box-shadow: 0 0 0 8px var(--shade-40) inset;
+	box-shadow: 0 0 0 8px var(--scrollbar-color-light) inset;
+	width: 12px
+}
+
+body.slite-scrollbar.dark-mode ::-webkit-scrollbar-thumb {
+	box-shadow: 0 0 0 8px var(--shade-05) inset;
+	box-shadow: 0 0 0 8px var(--scrollbar-color-dark) inset
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	box-shadow: 0 0 0 8px var(--shade-20) inset;
+	box-shadow: 0 0 0 8px var(--scrollbar-color-hover) inset
+}
+
+body {
+	scrollbar-color: var(--shade-40) transparent;
+	scrollbar-color: var(--scrollbar-color-light) transparent
 }
