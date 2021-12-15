@@ -75,8 +75,8 @@ const Quill = (props) => {
             </div>
             <div className={"flex justify-between editor overflow-y-auto"}>
                 <div className={"mx-auto px-2"}>
-                    <div className={"h-16 flex mt-6 mb-4 px-6 md:px-2"}>
-                        <input value={title} onBlur={titleChange} onChange={(e) => setTitle(e.target.value)} className={"w-full _bg-gray-900 text-4xl font-bold"} placeholder={"Give your note a title"}/>
+                    <div className={"h-16 flex mt-6 mb-4 px-4 md:px-4"}>
+                        <input value={title} onBlur={titleChange} onChange={(e) => setTitle(e.target.value)} className={"w-full _bg-gray-900 text-4xl font-semibold"} placeholder={"Give your note a title"}/>
                     </div>
                     <ReactQuill onBlur={saveToBackend} placeholder="Click here to start writing" theme="bubble" value={value} onChange={setValue} ref={el}/>
                 </div>

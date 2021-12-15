@@ -139,7 +139,7 @@ function SidebarItem(props, {isDragging, tool}) {
 
                                 {(props.icon === true)
                                     ?
-                                    (props.items.type == "folder")
+                                    (props.items.type === "folder")
                                         ? <FaRegFolder className={`icon text-muted`}/>
                                         : <FaFileAlt className={`icon`}/>
                                     : null}

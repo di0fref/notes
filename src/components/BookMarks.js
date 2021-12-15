@@ -15,7 +15,7 @@ function BookMarks(props) {
     return (
         <>
             <List disablePadding dense>
-                <ListItem
+                <ListItem button dense
                     key={"head"}
                     onClick={() => setOpen(!open)}
                     className={"hover:cursor-pointer"}>
