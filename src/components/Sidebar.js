@@ -15,7 +15,7 @@ import {
     FaFolderOpen,
     AiOutlineFileText,
     CgFileDocument,
-    FaPlus, FaPlusSquare, BsPlusSquare, BsPlusSquareFill
+    FaPlus, FaPlusSquare, BsPlusSquare, BsPlusSquareFill, FaPlusCircle
 } from "react-icons/all";
 
 import FolderService from "../service/FolderService";
@@ -122,8 +122,8 @@ function SidebarItem(props, {isDragging, tool}) {
                         (props.items.type === "note")
                             ? (
                                 <div className={"text-center"}>
-                                    <p>Modified at: {formatDate(props.items.date)}</p>
-                                    <p>Created at: {formatDate(props.items.date)}</p>
+                                    <p>Modified at: {formatDate(props.items.date_modified)}</p>
+                                    <p>Created at: {formatDate(props.items.date_created)}</p>
                                 </div>
                             )
                             : ""
@@ -233,12 +233,19 @@ function NotebookHeader({text}) {
     const isActive = canDrop && isOver;
 
     return (
-        <div>
-            <h3 className={`py-2 text-xs pl-4 text-muted_ uppercase tracking-widest font-bold  mt-4 ${isActive ? "sidebar-active" : ""}`}
+        <div className={"flex items-center mt-4 mb-2"}>
+            <h3 className={`text-xs pl-4 uppercase tracking-widest font-bold  ${isActive ? "sidebar-active" : ""}`}
                 ref={drop}
                 id={"notebook-header"}
-                role="card"
-            >{text}</h3>
+                role="card">
+                {text}
+            </h3>
+            <Tooltip title={`New notebook`}>
+                <button className={"ml-auto mr-2 hover:text-hover-accent"}>
+                    <FaPlusCircle className={"h-4 w-4"}/>
+                </button>
+            </Tooltip>
+
         </div>
     )
 }
@@ -248,10 +255,9 @@ function Sidebar(props) {
     const [openSm, setOpenSm] = useState(false);
 
     const clickHandle = () => {
+        console.log(openSm)
         setOpenSm(!openSm);
     }
-    const [searchOpen, setSearchOpen] = useState(false);
-
     return (
         <div
             className={`
@@ -290,7 +296,7 @@ function Sidebar(props) {
                     </button>
                 </Tooltip>
             </div>
-            <nav
+            <div
                 className={`
                 flex-grow 
                 md:block 
@@ -310,6 +316,7 @@ function Sidebar(props) {
 
 
                     <BookMarks bookmarks={props.bookmarks} open={props.open}/>
+                    <button className={"h-8 text-sm  rounded bg-accent-blue w-full"}>New note +</button>
                     <NotebookHeader text={"Notebooks"}/>
 
                     <List disablePadding dense key={props.depthStep}>
@@ -330,7 +337,7 @@ function Sidebar(props) {
                         ))}
                     </List>
                 </div>
-            </nav>
+            </div>
         </div>
     );
 }

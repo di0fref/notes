@@ -73,14 +73,21 @@ function Search(props) {
         const res = await fetch(`http://localhost:4000/search/${term}`);
         const result = await res.json();
         setSearchResults(result);
-        console.log(result)
     };
 
     const clearResults = () => setSearchResults([]);
 
     return (
         <>
-            <input onClick={() => handleOpen(true)} placeholder={"Search"} className={"search rounded rounded-lg bg-gray-300_ w-full mr-6 px-2 py-1"}/>
+            <button onClick={() => handleOpen(true)} placeholder={"Search"} className={"search rounded rounded-lg w-full mr-6 px-2 py-1 text-muted bg-primary text-left"}>
+                <div className={"flex items-center"}>
+                    <div><BiSearch className={"mr-1"}/></div>
+                    <div className={"text-sm"}>Search</div>
+                </div>
+
+            </button>
+
+
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -91,7 +98,7 @@ function Search(props) {
                         <div className={"flex justify-start items-center overflow-y-auto"}>
                             <BiSearch className={"text-muted opacity-50 h-6 w-6"}/>
                             <input
-                                className={"mr-6 px-2 py-1 w-full bg-secondary-alt_ font-medium ml-1 rounded rounded-lg"}
+                                className={"mr-6 px-2 py-1 w-full font-medium ml-1 rounded rounded-lg"}
                                 placeholder={"Find anything"}
                                 onChange={e => setDebouncedTerm(e.target.value)}
                                 value={debouncedTerm}

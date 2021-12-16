@@ -15,39 +15,31 @@ const Quill = (props) => {
     let timer = setTimeout(null)
     const el = useRef(null);
     const [dateModified, setDateModified] = useState(props.note.date_modified)
-    const saveToBackend = (range, type, editor) => {
+
+    const saveToBackend = () => {
+        // console.log("saveToBackend")
         const data = {
-            text: JSON.stringify(editor.getContents()),
+            text: JSON.stringify(el.current.editor.getContents()),
             name: title
         }
         NotesService.update(props.note.id, data).then((result) => {
             // props.titleChange();
             setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
-            t("success", "Saved")
-            console.log(result)
+            // t("success", "Saved")
         }).catch((err) => {
             t("error", "Could not save note")
             console.log(err);
         });
     }
 
-
-    // const save = (content, delta, source, editor) => {
-    //     clearTimeout(timer);
-    //     timer = setTimeout(() => {
-    //         saveToBackend(JSON.stringify(editor.getContents()));
-    //     }, 2000);
-    // }
-
-    const titleChange = (e) => {
+    const saveTitle = () => {
+        // console.log("saveTitle")
         NotesService.setTitle(props.note.id, {name: title})
             .then((result) => {
                 setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
             })
-        // setTitle(e.target.value)
         props.titleChange();
     }
-
     useEffect(() => {
         if (props.note.id) {
             setValue(JSON.parse(props.note.text))
@@ -55,6 +47,30 @@ const Quill = (props) => {
             setDateModified(props.note.date_modified)
         }
     }, [props.note.id])
+
+
+    useEffect(() => {
+        // console.log("Debounced text")
+        const timer = setTimeout(() => saveToBackend(), 500);
+        return () => clearTimeout(timer);
+
+    }, [value])
+
+    useEffect(() => {
+        // console.log("Debounced title")
+        const timer = setTimeout(() => saveTitle(), 500);
+        return () => clearTimeout(timer);
+    }, [title])
+
+
+
+    const modules = {
+        toolbar: [
+            [{ 'header': 1 }, { 'header': 2 }, { 'header': 2 }],
+            ['bold', 'italic'],
+            [{'list': 'ordered'}, {'list': 'bullet'}],
+        ],
+    }
 
     return (
         <div className={"flex flex-col"}>
@@ -92,9 +108,17 @@ const Quill = (props) => {
                         </div>
                     </div>
                     <div className={"h-16 flex _mt-6 mb-4_ px-4 md:px-4 "}>
-                        <input value={title} onBlur={titleChange} onChange={(e) => setTitle(e.target.value)} className={"truncate w-full _bg-gray-900 text-4xl font-bold"} placeholder={"Give your note a title"}/>
+                        <input value={title} onChange={(e) => setTitle(e.target.value)} className={"truncate w-full title text-4xl font-bold"} placeholder={"Give your note a title"}/>
                     </div>
-                    <ReactQuill onBlur={saveToBackend} placeholder="Click here to start writing" theme="bubble" value={value} onChange={setValue} ref={el}/>
+                    <ReactQuill
+                        // onBlur={saveToBackend}
+                        placeholder="Click here to start writing"
+                        theme="bubble"
+                        value={value}
+                        onChange={setValue}
+                        ref={el}
+                        modules={modules}
+                        bounds={".quill"}/>
                 </div>
             </div>
         </div>

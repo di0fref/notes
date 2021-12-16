@@ -318,12 +318,13 @@ app.put("/folder/update/folder/:id", (req, res) => {
 
 app.post("/note/create", (req, res) => {
 	db.query(
-		"INSERT into notes (id, name, text, date_modified, folder_id) values (?,?,?,?,?)",
+		"INSERT into notes (id, name, text, date_modified, date_created, folder_id) values (?,?,?,?,?,?)",
 		[
 			req.body.id,
 			req.body.name,
 			req.body.text,
             getDateModified(),
+			getDateModified(),
 			req.body.folder_id,
 		],
 		(err, result) => {

@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import {CgFileDocument, FaCaretDown, FaCaretRight, FaFileAlt, FaStar} from "react-icons/all";
 import {Collapse, List, ListItem, ListItemText} from "@mui/material";
 import {Link} from "react-router-dom";
+import ArrowTooltips from "./Tooltip";
+import moment from "moment";
 
 function BookMarks(props) {
 
@@ -12,7 +14,9 @@ function BookMarks(props) {
         // if (props.open)
         //     setOpen(true)
     }, [props.bookmarks, props.open])
-
+    const formatDate = (date) => {
+        return moment(date).format("YYYY-M-d H:m")
+    }
     return (
         <>
             <List dense disablePadding>
@@ -51,16 +55,26 @@ function BookMarks(props) {
                     ? <Collapse in={open} timeout="auto" unmountOnExit key={`collapse-bookmark`}>
                         {bookMarks.map((bookmark, index) => (
                             <Link to={`/note/${bookmark.id}`} key={`link-${bookmark.id}`}>
-                                <ListItem disableRipple disableTouchRipple button dense key={`bookmark-${bookmark.id}`} className={"hover:cursor-pointer pl-3"}>
-                                    <ListItemText style={{paddingLeft: "10px"}}>
-                                        <div className={'flex justify-start items-center'}>
-                                            <CgFileDocument className={`icon icon-muted`}/>
-                                            <div className={`ml-2 text-sm truncate text-sm`}>
-                                                {bookmark.label}
-                                            </div>
+                                <ArrowTooltips
+                                    placement={"right"}
+                                    arrow
+                                    title={
+                                        <div className={"text-center"}>
+                                            <p>Modified at: {formatDate(bookmark.date_modified)}</p>
+                                            <p>Created at: {formatDate(bookmark.date_created)}</p>
                                         </div>
-                                    </ListItemText>
-                                </ListItem>
+                                    }>
+                                    <ListItem disableRipple disableTouchRipple button dense key={`bookmark-${bookmark.id}`} className={"hover:cursor-pointer pl-3"}>
+                                        <ListItemText style={{paddingLeft: "10px"}}>
+                                            <div className={'flex justify-start items-center'}>
+                                                <CgFileDocument className={`icon icon-muted`}/>
+                                                <div className={`ml-2 text-sm truncate text-sm`}>
+                                                    {bookmark.label}
+                                                </div>
+                                            </div>
+                                        </ListItemText>
+                                    </ListItem>
+                                </ArrowTooltips>
                             </Link>
                         ))}
                     </Collapse>
