@@ -143,19 +143,28 @@ body {
 * {
 	font-family: var(--font-family-system) !important;
 }
-.-ml-full{
+
+.-ml-full {
 	margin-left: -50em;
 }
+
 .text-muted {
 	color: var(--text-muted);
 }
 
 .hover\:text-hover:hover {
 	color: var(--text-accent-hover);
+
 }
 
 .hover\:bg-hover:hover {
 	background: var(--text-accent-hover);
+}
+
+.hover\:blue-hover:hover {
+	color: var(--bg-accent);
+	background-color: white;
+	border-radius: 4px;
 }
 
 html[data-theme='light'] .d-block-light,
@@ -186,6 +195,10 @@ html[data-theme='dark'] .d-block-dark {
 
 .bg-accent {
 	background: var(--bg-accent);
+}
+
+.text-accent-blue {
+	color: var(--bg-accent);
 }
 
 .text-accent {
@@ -237,8 +250,8 @@ input:checked ~ .dot {
 
 .Mui-selected {
 	/*opacity: 0.5 !important;*/
-	background-color: var(--shade-50) !important;
-	color: white !important;
+	background-color: var(--background-secondary-alt) !important;
+	color: var(--text-normal) !important;
 	@apply rounded  !important
 }
 
@@ -359,7 +372,8 @@ input::placeholder {
 	@apply my-4
 }
 
-.quill {
+
+.content {
 	width: 680px;
 }
 
@@ -379,25 +393,23 @@ input::placeholder {
 	left: 50% !important;
 }
 
-@media only screen and (max-width: 1024px) {
+.quill {
+	width: 680px;
+}
+
+@media only screen and (max-width: 1023.94px) {
 	.quill {
 		width: 100%;
-		/*padding-left: 1em;*/
-		/*padding-right: 1em;*/
-		/*width: 400px;*/
 	}
+}
 
-	.editor {
-		height: calc(100vh - 4rem);
-	}
-
+@media only screen and (max-width: 767.94px) {
 	.modal-box {
 		width: 90vw !important;
 	}
-
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767.94px) {
 	.quill {
 		/*width: 100%;*/
 		/*padding-left: 1em;*/
@@ -405,7 +417,7 @@ input::placeholder {
 	}
 }
 
-._flex, ._quill, ._truncate {
+.flex, .quill, ._truncate {
 	/*outline: #2e3338;*/
 	outline: 1px dashed red;
 }
@@ -432,7 +444,7 @@ input:checked + .toggle-bg {
 	@apply bg-blue-600 border-blue-600;
 }
 
-.icon-caret{
+.icon-caret {
 	color: var(--shade-30);
 }
 
@@ -462,4 +474,8 @@ body.slite-scrollbar.dark-mode ::-webkit-scrollbar-thumb {
 body {
 	scrollbar-color: var(--shade-40) transparent;
 	scrollbar-color: var(--scrollbar-color-light) transparent
+}
+
+.icon-folder {
+	color: var(--text-accent-hover)
 }

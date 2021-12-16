@@ -6,7 +6,16 @@ import {
     FaRegFolder,
     FaTimes,
     FaMoon,
-    FaSun, FaCaretDown, FaCaretUp, FaCaretLeft, FaCaretRight
+    FaSun,
+    FaCaretDown,
+    FaCaretUp,
+    FaCaretLeft,
+    FaCaretRight,
+    FaFolder,
+    FaFolderOpen,
+    AiOutlineFileText,
+    CgFileDocument,
+    FaPlus, FaPlusSquare, BsPlusSquare, BsPlusSquareFill
 } from "react-icons/all";
 
 import FolderService from "../service/FolderService";
@@ -90,7 +99,7 @@ function SidebarItem(props, {isDragging, tool}) {
     const handleClick = (type, id) => {
         setOpen(!open);
         props.noteClicked(type, id)
-        if(type === "note"){
+        if (type === "note") {
             props.clickHandle()
         }
     };
@@ -135,8 +144,8 @@ function SidebarItem(props, {isDragging, tool}) {
                               className={`${isActive ? "sidebar-active _Mui-selected " : ""} pointer`}
                               style={
                                   {
-                                      marginLeft: props.depth * props.depthStep*1+"rem",
-                                      width:"inherit",
+                                      marginLeft: props.depth * props.depthStep * 1 + "rem",
+                                      width: "inherit",
                                       marginTop: "2px"
                                   }
                               }
@@ -147,29 +156,39 @@ function SidebarItem(props, {isDragging, tool}) {
                             key={`cc-${props.items.id}`}>
                             <div className={'flex justify-start items-center'}>
                                 <div className={"mr-2"}>
-                                {(props.items.items && props.items.items.length > 0)
-                                    ? open
-                                        ? <FaCaretDown className={"icon-caret"}/>
-                                        : <FaCaretRight className={"icon-caret"}/>
-                                    : null}
+                                    {(props.items.items && props.items.items.length > 0)
+                                        ? open
+                                            ? <FaCaretDown className={"icon-caret"}/>
+                                            : <FaCaretRight className={"icon-caret"}/>
+                                        : null}
                                 </div>
                                 <div>
-                                {(props.icon === true)
-                                    ? (props.items.type === "folder")
-                                        ? <FaRegFolder className={`icon text-muted`}/>
-                                        : <FaFileAlt className={`icon`}/>
-                                    : null}
+                                    {(props.icon === true)
+                                        ? (props.items.type === "folder")
+                                            ? (
+                                                open
+                                                    ? <FaFolderOpen className={`icon text-muted icon-folder`}/>
+                                                    : <FaFolder className={`icon text-muted icon-folder`}/>
+
+                                            )
+                                            : <CgFileDocument className={`icon`}/>
+                                        : null}
                                 </div>
                                 <div className={`ml-2 text-s ${props.class} truncate`}>
                                     {props.items.label}
                                 </div>
+                                {/*{props.items.type === "folder"*/}
+                                {/*    ? (*/}
+                                {/*        <Tooltip title={`Create new note in ${props.items.label}`}>*/}
+                                {/*            <div className={"ml-auto mr-1"}>*/}
+                                {/*                <BsPlusSquareFill className={"w-5 h-5 hover:blue-hover"}/>*/}
+                                {/*            </div>*/}
+                                {/*        </Tooltip>*/}
+                                {/*    )*/}
+                                {/*    : ""}*/}
                             </div>
                         </ListItemText>
-                        {/*{(props.items.items && props.items.items.length > 0)*/}
-                        {/*    ? open ? <ExpandLess/> : <ExpandMore/>*/}
-                        {/*    : null}*/}
                     </ListItem>
-
                 </ArrowTooltips>
             </MyLink>
             {(props.items.items && props.items.items.length > 0) ? (
@@ -254,21 +273,21 @@ function Sidebar(props) {
             }>
             <div className={`flex-shrink-0 h-14 mx-5 flex flex-row items-center justify-between `}>
                 <Search clickHandle={clickHandle}/>
-                    <button id="theme-toggle" className="mr-8 md:mr-0" type="button">
-                        <Tooltip title={"Dark theme"}>
-                            <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
-                        </Tooltip>
-                        <Tooltip title={"Light theme"}>
-                            <span className="d-block-dark d-none hover:text-hover-accent"><FaSun/></span>
-                        </Tooltip>
-                    </button>
-                <Tooltip title={"Toggle menu"}>
-                <button className={`p-2 bg-secondary fixed top-2 right-2 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
-                    {!openSm
-                        ? <FaBars className={"w-6 h-6"}/>
-                        : <FaTimes className={"w-6 h-6"}/>
-                    }
+                <button id="theme-toggle" className="mr-8 md:mr-0" type="button">
+                    <Tooltip title={"Dark theme"}>
+                        <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
+                    </Tooltip>
+                    <Tooltip title={"Light theme"}>
+                        <span className="d-block-dark d-none hover:text-hover-accent"><FaSun/></span>
+                    </Tooltip>
                 </button>
+                <Tooltip title={"Toggle menu"}>
+                    <button className={`p-2 bg-secondary fixed top-2 right-2 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
+                        {!openSm
+                            ? <FaBars className={"w-6 h-6"}/>
+                            : <FaTimes className={"w-6 h-6"}/>
+                        }
+                    </button>
                 </Tooltip>
             </div>
             <nav

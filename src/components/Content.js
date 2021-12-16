@@ -11,7 +11,7 @@ function Content(props) {
 
 
     return (
-        <div className={"w-full bg-gray-_300"}>
+        <div className={"w-full"}>
             {props.note.id
             ? <Quill
                     note={note}

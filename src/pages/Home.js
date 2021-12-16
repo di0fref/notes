@@ -46,12 +46,11 @@ function Home() {
         setDropped(true);
     }
     useUrl((type, id) => {
-        // console.log("useUrl")
+        console.log("useUrl")
         noteClicked(type, id)
     }, [params])
 
     const noteClicked = (type, id) => {
-        // console.log("noteClicked")
         setClickedId(id);
         if (type === "note") {
             NotesService.get(id)

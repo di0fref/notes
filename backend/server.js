@@ -173,7 +173,7 @@ app.get("/notes/folder/:id", (req, res) => {
 
 app.get("/note/:id", (req, res) => {
 	db.query(
-		"SELECT *, name as label, concat('note')  FROM notes where id = ? and deleted = 0",
+		"SELECT *, name as label, concat('note') as type FROM notes where id = ?",
 		req.params.id,
 		(err, result) => {
 			if (err) {

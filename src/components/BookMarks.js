@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {FaCaretDown, FaCaretRight, FaFileAlt, FaStar} from "react-icons/all";
+import {CgFileDocument, FaCaretDown, FaCaretRight, FaFileAlt, FaStar} from "react-icons/all";
 import {Collapse, List, ListItem, ListItemText} from "@mui/material";
 import {Link} from "react-router-dom";
 
@@ -50,12 +50,12 @@ function BookMarks(props) {
                 {bookMarks.length
                     ? <Collapse in={open} timeout="auto" unmountOnExit key={`collapse-bookmark`}>
                         {bookMarks.map((bookmark, index) => (
-                            <Link to={`/note/${bookmark.id}`}>
+                            <Link to={`/note/${bookmark.id}`} key={`link-${bookmark.id}`}>
                                 <ListItem disableRipple disableTouchRipple button dense key={`bookmark-${bookmark.id}`} className={"hover:cursor-pointer pl-3"}>
                                     <ListItemText style={{paddingLeft: "10px"}}>
                                         <div className={'flex justify-start items-center'}>
-                                            <FaFileAlt className={`icon icon-muted`}/>
-                                            <div className={`ml-2 text-s truncate`}>
+                                            <CgFileDocument className={`icon icon-muted`}/>
+                                            <div className={`ml-2 text-sm truncate text-sm`}>
                                                 {bookmark.label}
                                             </div>
                                         </div>
