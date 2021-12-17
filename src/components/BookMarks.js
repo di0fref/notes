@@ -69,7 +69,10 @@ function BookMarks(props) {
                                             <div className={'flex justify-start items-center'}>
                                                 <CgFileDocument className={`icon icon-muted`}/>
                                                 <div className={`ml-2 text-sm truncate text-sm`}>
-                                                    {bookmark.label}
+                                                    {bookmark.label
+                                                        ? bookmark.label
+                                                        : "Untitled"
+                                                    }
                                                 </div>
                                             </div>
                                         </ListItemText>

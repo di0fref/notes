@@ -75,12 +75,13 @@ function Home() {
     }
 
     const createNote = (e) => {
+        console.log("createNote");
         let id = uuidv4()
         NotesService.create({
             id: id,
-            name: "Untitled",
+            name: "",
             folder_id: folder || 0,
-            text: ""
+            text: null
         }).then((result) => {
             NotesService.get(id).then((result) => {
                 setNote(result.data[0])

@@ -1,5 +1,18 @@
 import React, {useEffect, useState} from 'react'
-import {List, ListItem, ListItemText, Collapse, ListItemIcon, Box, Typography, Modal, Tooltip} from '@mui/material';
+import {
+    List,
+    ListItem,
+    ListItemText,
+    Collapse,
+    ListItemIcon,
+    Box,
+    Typography,
+    Modal,
+    Tooltip,
+    IconButton
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+
 import {
     FaBars,
     FaFileAlt,
@@ -26,6 +39,7 @@ import ArrowTooltips from "./Tooltip";
 import MyLink from "./Link";
 import BookMarks from "./BookMarks";
 import Search from "./Search";
+import {button, style} from "./styles";
 
 let moment = require('moment');
 
@@ -175,7 +189,10 @@ function SidebarItem(props, {isDragging, tool}) {
                                         : null}
                                 </div>
                                 <div className={`ml-2 text-s ${props.class} truncate`}>
-                                    {props.items.label}
+                                    {props.items.label.length
+                                        ? props.items.label
+                                        : "Untitled"
+                                    }
                                 </div>
                                 {/*{props.items.type === "folder"*/}
                                 {/*    ? (*/}
@@ -222,6 +239,14 @@ function SidebarItem(props, {isDragging, tool}) {
 
 function NotebookHeader({text}) {
 
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(true)
+    };
+    const handleClose = () => {
+        setOpen(false);
+        // props.clickHandle()
+    }
     const [{canDrop, isOver}, drop] = useDrop(() => ({
         accept: ItemTypes.CARD,
         drop: () => ({name: "NotebookHeader", id: 0}),
@@ -241,11 +266,32 @@ function NotebookHeader({text}) {
                 {text}
             </h3>
             <Tooltip title={`New notebook`}>
-                <button className={"ml-auto mr-2 hover:text-hover-accent"}>
+                <button onClick={() => handleOpen(true)} className={"ml-auto mr-4 hover:text-hover-accent"}>
                     <FaPlusCircle className={"h-4 w-4"}/>
                 </button>
             </Tooltip>
-
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description">
+                <Box sx={style} className={"modal-box rounded rounded-lg"}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        <div className={"flex justify-start items-center overflow-y-auto"}>
+                            <input
+                                className={"mr-6 px-2 py-1 w-full font-medium ml-1 rounded rounded-lg"}
+                                placeholder={"New folder name"}
+                                id={"new-folder"}
+                                autoFocus/>
+                        </div>
+                        <button>Create</button>
+                        <button>Cancel</button>
+                    </Typography>
+                    <IconButton sx={button} onClick={handleClose}>
+                        <CloseIcon/>
+                    </IconButton>
+                </Box>
+            </Modal>
         </div>
     )
 }
@@ -314,9 +360,18 @@ function Sidebar(props) {
                     {/*        <span className="ml-3 text-gray-900 text-sm font-medium">Toggle me</span>*/}
                     {/*</label>*/}
 
+                    <div className={"flex items-center justify-around w-full my-3"}>
+                        <Tooltip title={"New note"}>
+                            <button onClick={props.createNote} className={"h-8 text-sm rounded bg-accent-blue flex-grow  mx-4 hover:bg-hover"}>
+                                <div className={"flex items-center justify-center"}>
+                                    <span>New note</span>
+                                    <span className={"ml-2"}><FaPlus/></span>
+                                </div>
 
+                            </button>
+                        </Tooltip>
+                    </div>
                     <BookMarks bookmarks={props.bookmarks} open={props.open}/>
-                    <button className={"h-8 text-sm  rounded bg-accent-blue w-full"}>New note +</button>
                     <NotebookHeader text={"Notebooks"}/>
 
                     <List disablePadding dense key={props.depthStep}>
