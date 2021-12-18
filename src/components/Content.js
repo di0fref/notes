@@ -20,7 +20,7 @@ function Content(props) {
                     titleChange={props.titleChange}/>
                 : (
                     <div className={"flex flex-col justify-center items-center h-96"}>
-                        <div className={"font-bold text-shade-20 text-3xl"}>No note in open</div>
+                        <div className={"font-bold text-shade-20 text-3xl"}>No note is open</div>
 
                         <div className={"text-shade-20 mt-2 hover:text-hover-accent"}>
                             <Link to={"#"}>Create new note</Link>

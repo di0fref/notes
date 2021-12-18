@@ -6,7 +6,7 @@ class FolderService {
     }
 
     get(id) {
-        return http.get(`/folders/${id}`);
+        return http.get(`/folder/${id}`);
     }
 
     count() {

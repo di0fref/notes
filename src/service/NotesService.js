@@ -48,6 +48,18 @@ class NotesService {
     search(val, options){
         return http.get(`/search/${val}`)
     }
+
+    addRecent(id){
+        return http.post(`/note/addrecent/${id}`);
+    }
+
+    recent(id){
+        return http.post(`/notes/recent`);
+    }
+
+    setLocked(id, data){
+        return http.put(`/note/lock/${id}`, data);
+    }
 }
 
 export default new NotesService();

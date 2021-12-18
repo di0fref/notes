@@ -5,6 +5,7 @@ import FolderService from "../service/FolderService";
 function BreadCrumbs(props){
 
     const [breadCrumb, setBreadCrumb] = useState([])
+    const [title, setTitle] = useState(props.title)
 
     let p = []
 
@@ -17,15 +18,15 @@ function BreadCrumbs(props){
         })
     }
     useEffect(() => {
-        console.log(breadCrumb)
         FolderService.getBread(props.note.folder_id).then((result) => {
             getBreadCrumbs(result)
             setBreadCrumb(p.reverse())
         })
-    },[props.note.id])
+    },[props.title])
+
     return(
         <div className={"truncate w-60 md:w-full"}>
-            {breadCrumb.join(" / ")} / {props.note.label}
+            {breadCrumb.join(" / ")} / {props.title? props.title:"Untitled"}
         </div>
 
     )
