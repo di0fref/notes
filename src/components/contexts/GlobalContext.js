@@ -2,7 +2,14 @@ import React, { createContext, useReducer } from 'react';
 import AppReducer from './AppReducer';
 
 const initialState = {
-    folder: []
+    folder: [
+        {
+            id: 0,
+            name: "Root",
+            parent_id: 0,
+        }
+    ],
+    recent: []
 }
 
 export const GlobalContext = createContext(initialState);
@@ -10,21 +17,27 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
-    function addItemToList(item) {
+    function setFolderContext(item) {
         dispatch({
-            type: 'ADD_ITEM',
-            payload: item
-        });
-    }
-    function removeItemFromList(item) {
-        dispatch({
-            type: 'REMOVE_ITEM',
-            payload: item
+            type: 'SET_FOLDER',
+            payload: item,
         });
     }
 
+    function addRecentContext(item) {
+        dispatch({
+            type: 'ADD_RECENT',
+            payload: item,
+        });
+    }
     return(
-        <GlobalContext.Provider value = {{folder : state.folder, addItemToList, removeItemFromList}}>
+        <GlobalContext.Provider value = {
+            {
+                folder : state.folder,
+                recent: state.recent,
+                setFolderContext,
+                addRecentContext
+            }}>
             {children}
         </GlobalContext.Provider>
     )

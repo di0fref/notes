@@ -26,6 +26,7 @@ const Quill = (props) => {
     const [dateModified, setDateModified] = useState(props.note.date_modified)
     const [locked, setLocked] = useState(props.note.locked);
     const [theme, setTheme] = useState()
+
     useEffect(() => {
         let toggle = document.getElementById("theme-toggle");
         let storedTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
@@ -99,23 +100,37 @@ const Quill = (props) => {
             [{'list': 'ordered'}, {'list': 'bullet'}],
         ],
     }
+    const formats = [
+        'header',
+        'bold', 'italic',
+        'blockquote', 'code-block',
+        'list', 'bullet',
+        'link', 'image'
+    ];
+
     const lockForEditing = () => {
         NotesService.setLocked(props.note.id, {
             locked: !locked
         })
             .then((result) => {
                 setLocked(!locked);
+                (locked
+                        ? t("success", "Unlocked editing")
+                        : t("success", "Locked for editing")
+                )
+                props.lockChanged();
             }).catch((err) => {
-
             console.log(err)
         });
-        // (locked
-        //         ? t("success", "Unlocked editing")
-        //         : t("success", "Locked for editing")
-        // )
+
     }
     const moveToTrash = () => {
         console.log("moveToTrash")
+        NotesService.trash(props.note.id).then((result) => {
+            console.log("Moved to trash")
+        }).catch((err) => {
+            console.log(err)
+        })
     }
     const downloadPDF = () => {
         console.log("downloadPDF")
@@ -203,6 +218,7 @@ const Quill = (props) => {
                         onChange={setValue}
                         ref={el}
                         modules={modules}
+                        formats={formats}
                         bounds={".quill"}/>
                 </div>
             </div>

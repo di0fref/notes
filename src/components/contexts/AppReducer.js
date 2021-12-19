@@ -1,14 +1,17 @@
 import React from 'react';
 
-export default (state, action) => {
+export default (state, action, variant) => {
     switch(action.type) {
-        case 'ADD_ITEM':
+        case 'SET_FOLDER':
             return {
-                folder: state.folder = action.payload
+                ...state,
+                folder: state.folder = action.payload,
             }
-        case 'REMOVE_ITEM':
+        case 'ADD_RECENT':
             return {
-                folder: state.folder = []
+                // recent: state.folder = []
+                ...state,
+                recent: state.recent.concat(action.payload),
             }
         default:
             return state;

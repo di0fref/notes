@@ -60,6 +60,13 @@ class NotesService {
     setLocked(id, data){
         return http.put(`/note/lock/${id}`, data);
     }
+    trash(id){
+        return http.put(`/note/trash/${id}`);
+    }
+
+    getTrash(){
+        return http.get(`/notes/trashdata`);
+    }
 }
 
 export default new NotesService();

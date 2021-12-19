@@ -20,7 +20,7 @@ import {
     FaFolder,
     FaFolderOpen,
     CgFileDocument,
-    FaPlus, FaPlusCircle, FaMoon, FaSun
+    FaPlus, FaPlusCircle, FaMoon, FaSun, BiLock
 } from "react-icons/all";
 
 import FolderService from "../service/FolderService";
@@ -33,6 +33,7 @@ import BookMarks from "./BookMarks";
 import Search from "./Search";
 import {button, style_folder} from "./styles";
 import {GlobalContext} from "./contexts/GlobalContext";
+import Trash from "./Trash";
 
 let moment = require('moment');
 
@@ -103,13 +104,13 @@ function SidebarItem(props, {isDragging, tool}) {
 
     const isActive = canDrop && isOver;
     const [open, setOpen] = useState(false); // Open or closed sidebar menu
+    const context = useContext(GlobalContext);
 
     const handleClick = (type, id) => {
         setOpen(!open);
-        // props.noteClicked(type, id)
-        // if (type === "note") {
-        //     props.clickHandle()
-        // }
+        if (type === "folder") {
+            props.folderClicked(id)
+        }
     };
 
 
@@ -132,6 +133,9 @@ function SidebarItem(props, {isDragging, tool}) {
                                 <div className={"text-center"}>
                                     <p>Modified at: {formatDate(props.items.date_modified)}</p>
                                     <p>Created at: {formatDate(props.items.date_created)}</p>
+                                    {props.items.locked
+                                        ? <p>Locked for editing</p>: null
+                                    }
                                 </div>
                             )
                             : ""
@@ -177,9 +181,10 @@ function SidebarItem(props, {isDragging, tool}) {
                                                 open
                                                     ? <FaFolderOpen className={`icon text-muted icon-folder`}/>
                                                     : <FaFolder className={`icon text-muted icon-folder`}/>
-
                                             )
-                                            : <CgFileDocument className={`icon`}/>
+                                            : (
+                                                <CgFileDocument className={`icon`}/>
+                                            )
                                         : null}
                                 </div>
                                 <div className={`ml-2 text-s ${props.class} truncate`}>
@@ -188,6 +193,12 @@ function SidebarItem(props, {isDragging, tool}) {
                                         : "Untitled"
                                     }
                                 </div>
+                                {props.items.locked
+                                ? (<span className={"ml-auto"}>
+                                    <BiLock/>
+                                    </span>)
+                                    : null
+                                }
                             </div>
                         </ListItemText>
                     </ListItem>
@@ -212,6 +223,7 @@ function SidebarItem(props, {isDragging, tool}) {
                                         icon={true}
                                         note_id={props.note_id}
                                         clickHandle={props.clickHandle}
+                                        folderClicked={props.folderClicked}
                                     />
                                 </div>
                             ))}
@@ -312,7 +324,9 @@ function NotebookHeader(props) {
                         </div>
                         <div className={"text-s h-4 error ml-2"}><FormError error={formError}/></div>
                         <div className={"flex items-center justify-end mt-6 mr-6"}>
-                            {/*<div className={"ml-2 mr-auto text-s"}>In {context.folder.name}</div>*/}
+                            {/*{context.folder.name*/}
+                            {/*? <div className={"ml-2 mr-auto text-s"}>In {context.folder.name}</div>*/}
+                            {/*    : ""}*/}
                             <button onClick={handleClose} className={"mr-4 shadow bg-gray-700 hover:bg-gray-800 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>Cancel</button>
                             <button
                                 onClick={userInputNewFolder}
@@ -357,14 +371,6 @@ function Sidebar(props) {
             }>
             <div className={`flex-shrink-0 h-14 mx-5 flex flex-row items-center justify-between `}>
                 <Search clickHandle={clickHandle}/>
-                {/*<button id="theme-toggle" className="mr-8 md:mr-0" type="button">*/}
-                {/*    <Tooltip title={"Dark theme"}>*/}
-                {/*        <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>*/}
-                {/*    </Tooltip>*/}
-                {/*    <Tooltip title={"Light theme"}>*/}
-                {/*        <span className="d-block-dark d-none hover:text-hover-accent"><FaSun/></span>*/}
-                {/*    </Tooltip>*/}
-                {/*</button>*/}
                 <Tooltip title={"Toggle menu"}>
                     <button className={`p-2 bg-secondary fixed top-2 right-12 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
                         {!openSm
@@ -403,14 +409,6 @@ function Sidebar(props) {
                     </div>
                     <BookMarks bookmarks={props.bookmarks} open={props.open}/>
                     <NotebookHeader text={"Notebooks"} createFolder={props.createFolder} folder={props.clicked_id}/>
-                    {/*<button id="theme-toggle" className="mr-8 md:mr-0" type="button">*/}
-                    {/*    <Tooltip title={"Dark theme"}>*/}
-                    {/*        <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>*/}
-                    {/*    </Tooltip>*/}
-                    {/*    <Tooltip title={"Light theme"}>*/}
-                    {/*        <span className="d-block-dark d-none hover:text-hover-accent"><FaSun/></span>*/}
-                    {/*    </Tooltip>*/}
-                    {/*</button>*/}
                     <List disablePadding dense key={props.depthStep}>
                         {props.items.map((sidebarItem, index) => (
                             <SidebarItem
@@ -425,9 +423,13 @@ function Sidebar(props) {
                                 icon={true}
                                 note_id={props.note_id}
                                 clickHandle={clickHandle}
+                                folderClicked={props.folderClicked}
                             />
                         ))}
                     </List>
+                    <div className={"mt-4"}>
+                        <Trash trash={props.trash}/>
+                    </div>
                 </div>
             </div>
         </div>

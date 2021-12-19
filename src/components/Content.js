@@ -17,7 +17,9 @@ function Content(props) {
             ? <Quill
                     note={note}
                     setBookMark={props.setBookMark}
-                    titleChange={props.titleChange}/>
+                    titleChange={props.titleChange}
+                    lockChanged={props.lockChanged}
+                    moveTrash={props.moveTrash}/>
                 : (
                     <div className={"flex flex-col justify-center items-center h-96"}>
                         <div className={"font-bold text-shade-20 text-3xl"}>No note is open</div>
