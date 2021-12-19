@@ -60,35 +60,28 @@ function Home() {
 
     const noteClicked = (type, id) => {
         setClickedId(id);
-        // console.log(context)
-        // console.log("noteClicked");
         if (type === "note") {
-
-        NotesService.get(id)
-            .then((result) => {
-                setNote(result.data[0]);
-                setFolder(result.data[0].folder_id);
-                // addRecentContext(result.data[0].id)
-                // console.log(context.recent)
-                /* Insert into recent */
-                NotesService.addRecent(id)
-                    .then((result) => {})
-                    .catch((err) => {
-                        console.log(err);
-                    });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        // } else {
-        //     setFolder(id);
-        //     FolderService.get(id).then((result) => {
-        //         addItemToList(result.data[0]);
-        //     });
+            NotesService.get(id)
+                .then((result) => {
+                    setNote(result.data[0]);
+                    setFolder(result.data[0].folder_id);
+                    // addRecentContext(result.data[0].id)
+                    /* Insert into recent */
+                    NotesService.addRecent(id)
+                        .then((result) => {
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         }
     };
     const moveTrash = (id) => {
         setTrashed(true)
+        setNote([])
     }
     const folderClicked = (id) => {
         // console.log("folderClicked::" +id)

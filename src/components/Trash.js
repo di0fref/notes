@@ -6,6 +6,7 @@ import {
     FaCaretRight,
     HiOutlineTrash
 } from "react-icons/all";
+import MyLink from "./Link";
 
 function Trash(props) {
     const [open, setOpen] = useState(false)
@@ -44,11 +45,20 @@ function Trash(props) {
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit key={`collapse-trash`}>
                 {trash.map((t, index) => (
+                    <MyLink type={"note"} id={t.id} key={`tlink-${index}`}>
+
                     <ListItem key={`trash-${index}`}
                               button dense
                               disableRipple disableTouchRipple
-                              className={"hover:cursor-pointer"}>
-                        <ListItemText className={"pl-6"}>
+                              className={"hover:cursor-pointer"}
+                              style={
+                                  {
+                                      marginLeft: "1.5rem",
+                                      width: "inherit",
+                                      marginTop: "2px"
+                                  }
+                              }>
+                        <ListItemText className={"pl-6_"}>
                             <div className={'flex justify-start items-center'}>
                                 <CgFileDocument className={`icon icon-muted`}/>
                                 <div className={`ml-2 text-sm truncate text-sm`}>
@@ -57,6 +67,7 @@ function Trash(props) {
                             </div>
                         </ListItemText>
                     </ListItem>
+                    </MyLink>
                 ))}
             </Collapse>
         </List>

@@ -25,6 +25,8 @@ const Quill = (props) => {
     const el = useRef(null);
     const [dateModified, setDateModified] = useState(props.note.date_modified)
     const [locked, setLocked] = useState(props.note.locked);
+    const [deleted, setDeleted] = useState(props.note.deleted);
+
     const [theme, setTheme] = useState()
 
     useEffect(() => {
@@ -75,8 +77,9 @@ const Quill = (props) => {
             setTitle(props.note.name)
             setDateModified(props.note.date_modified)
             setLocked(props.note.locked)
+            setDeleted(props.note.deleted)
         }
-    }, [props.note.id, props.note.locked])
+    }, [props.note.id, props.note.locked, props.note.deleted])
 
     useEffect(() => {
         // console.log("Debounced text")
@@ -127,7 +130,9 @@ const Quill = (props) => {
     const moveToTrash = () => {
         console.log("moveToTrash")
         NotesService.trash(props.note.id).then((result) => {
-            console.log("Moved to trash")
+            props.moveTrash()
+            setDeleted(1)
+            t("success", "Moved to trash")
         }).catch((err) => {
             console.log(err)
         })
@@ -192,7 +197,12 @@ const Quill = (props) => {
                         <div className={"flex items-center"}>
                             <Tooltip title={"Locked for editing"}>
                                 <span>
-                                    {locked ? <BiLockAlt className={"mr-2 h-4 w-4"}/> : ""}
+                                    {locked ? <BiLockAlt className={"mr-2 h-4 w-4 text-red-500"}/> : ""}
+                                </span>
+                            </Tooltip>
+                            <Tooltip title={"This note is in trash"}>
+                                   <span>
+                                    {deleted ? <HiOutlineTrash className={"mr-2 h-4 w-4 text-red-500"}/> : ""}
                                 </span>
                             </Tooltip>
                             <span>
@@ -207,12 +217,12 @@ const Quill = (props) => {
                     </div>
                     <div className={"h-16 flex _mt-6 mb-4_ px-4 md:px-4 "}>
                         <input
-                            readOnly={locked ? 1 : 0}
+                            readOnly={locked||deleted ? 1 : 0}
                             value={title} onChange={(e) => setTitle(e.target.value)} className={"truncate w-full title text-4xl font-bold"} placeholder={"Give your note a title"}/>
                     </div>
                     <ReactQuill
                         placeholder="Click here to start writing"
-                        readOnly={locked ? true : false}
+                        readOnly={locked||deleted ? true : false }
                         theme="bubble"
                         value={value}
                         onChange={setValue}
