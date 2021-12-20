@@ -25,24 +25,12 @@ class NotesService {
         return http.put(`/notes/update/${id}`, data);
     }
 
-    updateFolder(id, data) {
-        return http.put(`/notes/update/folder/${id}`, data);
-    }
-
     delete(id) {
         return http.delete(`/notes/delete/${id}`);
     }
 
     getBookMarks() {
         return http.get(`/notes/bookmarks`);
-    }
-
-    setTitle(id, data) {
-        return http.put(`/notes/name/${id}`, data);
-    }
-
-    setBookmark(id, data) {
-        return http.put(`/notes/bookmark/${id}`, data);
     }
 
     search(val, options){
