@@ -65,7 +65,7 @@ const Quill = (props) => {
 
     const saveTitle = () => {
         // console.log("saveTitle")
-        NotesService.setTitle(props.note.id, {name: title})
+        NotesService.update(props.note.id, {name: title})
             .then((result) => {
                 setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
             })
@@ -112,7 +112,7 @@ const Quill = (props) => {
     ];
 
     const lockForEditing = () => {
-        NotesService.setLocked(props.note.id, {
+        NotesService.update(props.note.id, {
             locked: !locked
         })
             .then((result) => {
@@ -129,7 +129,7 @@ const Quill = (props) => {
     }
     const moveToTrash = () => {
         console.log("moveToTrash")
-        NotesService.trash(props.note.id).then((result) => {
+        NotesService.update(props.note.id, {deleted: 1}).then((result) => {
             props.moveTrash()
             setDeleted(1)
             t("success", "Moved to trash")

@@ -56,7 +56,7 @@ function SidebarItem(props, {isDragging, tool}) {
                             console.log(`Moving note ${item.id} into folder ${dropResult.id}`);
 
                             if (item.id !== dropResult.id) {
-                                NotesService.updateFolder(item.id, {folder_id: dropResult.id}).then((result) => {
+                                NotesService.update(item.id, {folder_id: dropResult.id}).then((result) => {
                                     /* Send signal to update sidebar */
                                     props.droppedHandler();
                                 });
@@ -67,7 +67,7 @@ function SidebarItem(props, {isDragging, tool}) {
                         case "folder":
                             console.log(`Moving folder ${item.id} into folder ${dropResult.id}`);
                             if (item.id !== dropResult.id) {
-                                FolderService.updateFolder(item.id, {folder_id: dropResult.id}).then((result) => {
+                                FolderService.update(item.id, {folder_id: dropResult.id}).then((result) => {
                                     /* Send signal to update sidebar */
                                     props.droppedHandler();
                                 });
@@ -188,8 +188,8 @@ function SidebarItem(props, {isDragging, tool}) {
                                         : null}
                                 </div>
                                 <div className={`ml-2 text-s ${props.class} truncate`}>
-                                    {props.items.label.length
-                                        ? props.items.label
+                                    {props.items.name.length
+                                        ? props.items.name
                                         : "Untitled"
                                     }
                                 </div>

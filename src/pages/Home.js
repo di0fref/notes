@@ -31,20 +31,26 @@ function Home() {
     useEffect(() => {
         (async () => {
             let response = await FolderService.getResult(0);
+            setTreeData(response);
+
             let notesWithoutFolder = await FolderService.notesByFolderId(0);
+            setTreeData(response.concat(notesWithoutFolder.data));
+
             let bookmarks = await NotesService.getBookMarks();
+            setBookMarks(bookmarks.data);
+
             let trashData = await NotesService.getTrash();
             setTrash(trashData.data);
-            setBookMarks(bookmarks.data);
-            setTreeData(response.concat(notesWithoutFolder.data));
+
+            console.log(trashData)
+
+
             setDropped(false);
             setNoteCreated(false);
             setTitleChanged(false);
             setFolderCreated(false);
             setLocked(false);
             setTrashed(false)
-
-            // console.log(trashData)
         })();
     }, [dropped, noteCreated, titleChanged, folderCreated, locked, trashed]);
 
@@ -63,16 +69,16 @@ function Home() {
         if (type === "note") {
             NotesService.get(id)
                 .then((result) => {
-                    setNote(result.data[0]);
-                    setFolder(result.data[0].folder_id);
-                    // addRecentContext(result.data[0].id)
+                    setNote(result.data);
+                    setFolder(result.data.folder_id);
+                    // addRecentContext(result.data.id)
                     /* Insert into recent */
-                    NotesService.addRecent(id)
-                        .then((result) => {
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                        });
+                    // NotesService.addRecent(id)
+                    //     .then((result) => {
+                    //     })
+                    //     .catch((err) => {
+                    //         console.log(err);
+                    //     });
                 })
                 .catch((err) => {
                     console.log(err);
@@ -87,9 +93,9 @@ function Home() {
         // console.log("folderClicked::" +id)
         setClickedId(id);
         setFolder(id);
-        FolderService.get(id).then((result) => {
-            setFolderContext(result.data[0]);
-        });
+        // FolderService.get(id).then((result) => {
+        //     setFolderContext(result.data[0]);
+        // });
     }
 
     const createFolder = (name) => {
@@ -137,12 +143,13 @@ function Home() {
     const setBookMark = async (note) => {
         // console.log("setBookMark")
         note.bookmark = !note.bookmark;
-        NotesService.setBookmark(note.id, {bookmark: note.bookmark}).then(
+        NotesService.update(note.id, {bookmark: note.bookmark}).then(
             (result) => {
+                // console.log(result.data)
                 setBookMarked(true);
                 NotesService.get(note.id)
                     .then((result) => {
-                        setNote(result.data[0]);
+                        setNote(result.data);
                         NotesService.getBookMarks().then((bookmarks) => {
                             setBookMarks(bookmarks.data);
                             setBookMarked(false);

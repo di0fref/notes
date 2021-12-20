@@ -1,12 +1,15 @@
 import http from "./http-common";
 
 class FolderService {
+
+    url = "http://localhost:8000/api";
+
     getAll() {
         return http.get("/folders");
     }
 
     get(id) {
-        return http.get(`/folder/${id}`);
+        return http.get(`/folders/${id}`);
     }
 
     count() {
@@ -39,7 +42,7 @@ class FolderService {
     fetchJson = (url) => fetch(url).then((r) => r.json());
 
     getBread = (folder_id) => {
-        return this.fetchJson(`http://localhost:4000/folders/p/${folder_id}`).then(
+        return this.fetchJson(`${this.url}/folders/p/${folder_id}`).then(
             (parent) => Promise.all(
                 parent.map(this.getBreadAux)
             )
@@ -55,7 +58,7 @@ class FolderService {
     };
 
     getResult = (parent) => {
-        return this.fetchJson(`http://localhost:4000/folders/parent/${parent}`).then(
+        return this.fetchJson(`${this.url}/folders/parent/${parent}`).then(
             (items) => Promise.all(
                 items.map(this.getResultAux)
             )
@@ -63,7 +66,7 @@ class FolderService {
     }
 
     getNotesCount = (folder) => {
-        return this.fetchJson(`http://localhost:4000/notes/count/${folder}`).then(
+        return this.fetchJson(`${this.url}/notes/count/${folder}`).then(
             (c) => Promise.all(
                 c.map(this.getNoteCountAux)
             )
@@ -86,7 +89,7 @@ class FolderService {
 
 
     getNoteResult = (folder) => {
-        return this.fetchJson(`http://localhost:4000/notes/folder/${folder}`).then();
+        return this.fetchJson(`${this.url}/notes/folder/${folder}`).then();
     }
 
     getNoteAux = async (t = {}) => ({
