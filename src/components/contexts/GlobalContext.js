@@ -24,9 +24,9 @@ export const GlobalProvider = ({ children }) => {
         });
     }
 
-    function addRecentContext(item) {
+    function setRecentContext(item) {
         dispatch({
-            type: 'ADD_RECENT',
+            type: 'SET_RECENT',
             payload: item,
         });
     }
@@ -36,7 +36,7 @@ export const GlobalProvider = ({ children }) => {
                 folder : state.folder,
                 recent: state.recent,
                 setFolderContext,
-                addRecentContext
+                setRecentContext
             }}>
             {children}
         </GlobalContext.Provider>

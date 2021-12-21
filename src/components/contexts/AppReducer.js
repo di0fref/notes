@@ -7,11 +7,10 @@ export default (state, action, variant) => {
                 ...state,
                 folder: state.folder = action.payload,
             }
-        case 'ADD_RECENT':
+        case 'SET_RECENT':
             return {
-                // recent: state.folder = []
                 ...state,
-                recent: state.recent.concat(action.payload),
+                recent: state.recent = action.payload,
             }
         default:
             return state;

@@ -20,7 +20,9 @@ import {
     FaFolder,
     FaFolderOpen,
     CgFileDocument,
-    FaPlus, FaPlusCircle, FaMoon, FaSun, BiLock
+    FaPlus,
+    FaPlusCircle,
+    BiLock
 } from "react-icons/all";
 
 import FolderService from "../service/FolderService";
@@ -370,7 +372,7 @@ function Sidebar(props) {
                 ${openSm ? "ml-0" : "-ml-full"}`
             }>
             <div className={`flex-shrink-0 h-14 mx-5 flex flex-row items-center justify-between `}>
-                <Search clickHandle={clickHandle}/>
+                <Search clickHandle={clickHandle} text={"Search"}/>
                 <Tooltip title={"Toggle menu"}>
                     <button className={`p-2 bg-secondary fixed top-2 right-12 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
                         {!openSm

@@ -27,26 +27,6 @@ const Quill = (props) => {
     const [locked, setLocked] = useState(props.note.locked);
     const [deleted, setDeleted] = useState(props.note.deleted);
 
-    const [theme, setTheme] = useState()
-
-    useEffect(() => {
-        let toggle = document.getElementById("theme-toggle");
-        let storedTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-        if (storedTheme) {
-            document.documentElement.setAttribute('data-theme', storedTheme)
-        }
-        setTheme(storedTheme)
-        toggle.onclick = function () {
-            let currentTheme = document.documentElement.getAttribute("data-theme");
-            let targetTheme = "light";
-
-            if (currentTheme === "light") {
-                targetTheme = "dark";
-            }
-            document.documentElement.setAttribute('data-theme', targetTheme)
-            localStorage.setItem('theme', targetTheme);
-        };
-    }, [theme])
     const saveToBackend = () => {
         // console.log("saveToBackend")
         const data = {
@@ -142,7 +122,7 @@ const Quill = (props) => {
     }
     return (
         <div className={"flex flex-col"}>
-            <div className={"flex items-center h-14 md:mt-0 mt-0"}>
+            <div className={"flex items-center h-14 md:mt-0 mt-0 noprint"}>
                 <div className={"bg-secondary_ flex-grow"}>
                     <div className={"flex justify-start items-center"}>
                         <Tooltip title={props.note.bookmark ? "Unfavorite this note" : "Favorite this note"}>
@@ -157,14 +137,6 @@ const Quill = (props) => {
                         <div className={"ml-4 text-muted bread-crumb_ text-s"}>
                             <Breadcrumbs note={props.note} title={title}/>
                         </div>
-                        <button id="theme-toggle" className="mr-8_ md:mr-0_ absolute bottom-6 right-6" type="button">
-                            <Tooltip title={"Dark theme"}>
-                                <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
-                            </Tooltip>
-                            <Tooltip title={"Light theme"}>
-                                <span className="d-block-dark d-none hover:text-hover-accent"><FaSun/></span>
-                            </Tooltip>
-                        </button>
                         <div className={"ml-auto mr-4 text-s"}>
 
                             <DropdownMenu options={
@@ -193,7 +165,7 @@ const Quill = (props) => {
             </div>
             <div className={"flex justify-between editor overflow-y-auto"}>
                 <div className={"mx-auto px-2"}>
-                    <div className={"text-sm pl-4 text-muted mt-4 italic"}>
+                    <div className={"text-sm pl-4 text-muted mt-4 italic noprint"}>
                         <div className={"flex items-center"}>
                             <Tooltip title={"Locked for editing"}>
                                 <span>

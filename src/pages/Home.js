@@ -19,21 +19,23 @@ function Home() {
     const [noteCreated, setNoteCreated] = useState(false);
     const [titleChanged, setTitleChanged] = useState(false);
     const [folderCreated, setFolderCreated] = useState(false);
-    const {setFolderContext, addRecentContext} = useContext(GlobalContext);
+    const {setFolderContext, setRecentContext} = useContext(GlobalContext);
     const [locked, setLocked] = useState(false)
     const [trashed, setTrashed] = useState(false)
     const [trash, setTrash] = useState([])
 
     let params = useParams();
 
-    const context = useContext(GlobalContext)
 
+    const context = useContext(GlobalContext)
     useEffect(() => {
         (async () => {
             let response = await FolderService.getResult(0);
             let notesWithoutFolder = await FolderService.notesByFolderId(0);
             let bookmarks = await NotesService.getBookMarks();
             let trashData = await NotesService.getTrash();
+            // let recent = await NotesService.getRecent();
+            // setRecentContext(recent.data)
             setTrash(trashData.data);
             setBookMarks(bookmarks.data);
             setTreeData(response.concat(notesWithoutFolder.data));
@@ -43,8 +45,6 @@ function Home() {
             setFolderCreated(false);
             setLocked(false);
             setTrashed(false)
-
-            // console.log(trashData)
         })();
     }, [dropped, noteCreated, titleChanged, folderCreated, locked, trashed]);
 
@@ -58,6 +58,18 @@ function Home() {
         [params]
     );
 
+    useEffect(() => {
+        /* Set title */
+        if (note.id) {
+            note.name
+                ? document.title = "Noteer - " + note.name
+                : document.title = "Noteer - Untitled"
+        } else {
+            document.title = "Noteer"
+        }
+
+    }, [note.name])
+
     const noteClicked = (type, id) => {
         setClickedId(id);
         if (type === "note") {
@@ -65,10 +77,13 @@ function Home() {
                 .then((result) => {
                     setNote(result.data[0]);
                     setFolder(result.data[0].folder_id);
-                    // addRecentContext(result.data[0].id)
                     /* Insert into recent */
-                    NotesService.addRecent(id)
+                    NotesService.addRecent(id,{name: note.name||"Untitled"})
                         .then((result) => {
+                            /* Populate recent context */
+                            // NotesService.getRecent().then((result) => {
+                            //     setRecentContext(result.data)
+                            // })
                         })
                         .catch((err) => {
                             console.log(err);
@@ -77,6 +92,7 @@ function Home() {
                 .catch((err) => {
                     console.log(err);
                 });
+
         }
     };
     const moveTrash = (id) => {
@@ -159,7 +175,7 @@ function Home() {
     };
 
     return (
-        <div className="md:flex flex-col md:flex-row md:min-h-screen w-full overflow-hidden">
+        <div className="main md:flex flex-col md:flex-row md:min-h-screen w-full overflow-hidden">
             <Sidebar
                 createNote={createNote}
                 note_id={note.id}
@@ -181,6 +197,7 @@ function Home() {
                 setBookMark={setBookMark}
                 lockChanged={lockChanged}
                 moveTrash={moveTrash}
+                createNote={createNote}
             />
         </div>
     );
