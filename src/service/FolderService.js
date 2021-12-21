@@ -2,8 +2,6 @@ import http from "./http-common";
 import api_config from "./config";
 class FolderService {
 
-    url = "http://backend.loc/api";
-
     getAll() {
         return http.get("/folders");
     }
