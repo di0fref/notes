@@ -41,15 +41,15 @@ const getDateModified = () => {
 
 app.post("/note/addrecent/:id", (req, res) => {
     db.query(
-    	"insert into recent (id, date) values(?,?) ON DUPLICATE KEY UPDATE date= ?",
-    	[req.params.id, getDateModified(), getDateModified()],
-    	(err, result) => {
-    		if (err) {
-    			console.log(err);
-    		} else {
-    			res.send(result);
-    		}
-    	}
+        "insert into recent (id, date, name) values(?,?,?) ON DUPLICATE KEY UPDATE date= ?",
+        [req.params.id, getDateModified(), req.body.name, getDateModified()],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
     );
 });
 
@@ -187,7 +187,7 @@ app.get("/notes", (req, res) => {
 
 app.get("/notes/trashdata", (req, res) => {
     db.query(
-        "SELECT n.id, n.name , f.name as folder_name FROM notes n left join folders f on n.folder_id = f.id where deleted = 1 order by date_modified desc",
+        "SELECT n.id, if(n.name is null or n.name = '', 'Untitled', n.name) as name , f.name as folder_name FROM notes n left join folders f on n.folder_id = f.id where deleted = 1 order by date_modified desc",
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -197,6 +197,29 @@ app.get("/notes/trashdata", (req, res) => {
         }
     );
 });
+app.get("/notes/getrecent", (req, res) => {
+    db.query("SELECT " +
+	"n.id,"+
+	"IF(n.name is null or n.name = '', 'Untitled', n.name) as name,"+
+	"n.bookmark,"+
+	"n.locked, "+
+        "n.folder_id, "+
+	"f.name as folder_name,"+
+	"date "+
+	"from recent r "+
+	"left join notes n on n.id = r.id "+
+	"left join folders f on n.folder_id = f.id " +
+	"order by date desc",
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
 
 app.get("/notes/deleted", (req, res) => {
     db.query(
@@ -379,22 +402,6 @@ app.put("/folder/update/folder/:id", (req, res) => {
         }
     );
 });
-
-//
-// app.delete("/notes/delete/:id", (req, res) => {
-// 	db.query(
-// 		"UPDATE notes set deleted = 1 where id = ?",
-// 		[req.params.id],
-// 		(err, result) => {
-// 			if (err) {
-// 				console.log(err);
-// 			} else {
-// 				res.send(result);
-// 			}
-// 		}
-// 	);
-// });
-//
 
 app.post("/note/create", (req, res) => {
     db.query(

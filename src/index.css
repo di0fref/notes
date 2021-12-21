@@ -128,7 +128,9 @@ html[data-theme='light'] {
 .bg-primary {
     background: var(--background-primary);
 }
-
+.shade-50{
+    background-color: var(--shade-50);
+}
 .bg-secondary {
     background: var(--background-secondary);
 }
@@ -430,6 +432,7 @@ input::placeholder {
     position: absolute;
     top: 50% !important;
     left: 50% !important;
+    padding: 0!important;
 }
 
 .modal-box-folder {
