@@ -6,7 +6,7 @@ class NotesService {
     }
 
     get(id) {
-        return http.get(`/note/${id}`);
+        return http.get(`/notes/${id}`);
     }
 
     getNotesByCategory(id) {
@@ -18,31 +18,19 @@ class NotesService {
     }
 
     create(data) {
-        return http.post("/note/create", data);
+        return http.post("/notes/create", data);
     }
 
     update(id, data) {
-        return http.put(`/note/update/${id}`, data);
-    }
-
-    updateFolder(id, data) {
-        return http.put(`/note/update/folder/${id}`, data);
+        return http.put(`/notes/update/${id}`, data);
     }
 
     delete(id) {
-        return http.delete(`/note/delete/${id}`);
+        return http.delete(`/notes/delete/${id}`);
     }
 
-    getBookMarks(searchParams) {
+    getBookMarks() {
         return http.get(`/notes/bookmarks`);
-    }
-
-    setTitle(id, data) {
-        return http.put(`/note/name/${id}`, data);
-    }
-
-    setBookmark(id, data) {
-        return http.put(`/note/bookmark/${id}`, data);
     }
 
     search(val, options){
@@ -50,7 +38,7 @@ class NotesService {
     }
 
     addRecent(id){
-        return http.post(`/note/addrecent/${id}`);
+        return http.post(`/notes/addrecent/${id}`);
     }
 
     recent(id){
@@ -58,14 +46,14 @@ class NotesService {
     }
 
     setLocked(id, data){
-        return http.put(`/note/lock/${id}`, data);
+        return http.put(`/notes/lock/${id}`, data);
     }
     trash(id){
-        return http.put(`/note/trash/${id}`);
+        return http.put(`/notes/trash/${id}`);
     }
 
     getTrash(){
-        return http.get(`/notes/trashdata`);
+        return http.get(`/notes/trash`);
     }
 }
 

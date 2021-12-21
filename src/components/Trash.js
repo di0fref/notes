@@ -43,7 +43,8 @@ function Trash(props) {
                     </div>
                 </ListItemText>
             </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit key={`collapse-trash`}>
+            {trash.length
+            ?(<Collapse in={open} timeout="auto" unmountOnExit key={`collapse-trash`}>
                 {trash.map((t, index) => (
                     <MyLink type={"note"} id={t.id} key={`tlink-${index}`}>
 
@@ -69,7 +70,8 @@ function Trash(props) {
                     </ListItem>
                     </MyLink>
                 ))}
-            </Collapse>
+            </Collapse>)
+                :null}
         </List>
     )
 }
