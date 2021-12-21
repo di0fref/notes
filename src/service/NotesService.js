@@ -33,23 +33,23 @@ class NotesService {
         return http.get(`/notes/bookmarks`);
     }
 
-    search(val, options){
+    search(val, options) {
         return http.get(`/search/${val}`)
     }
 
-    addRecent(id){
-        return http.post(`/notes/addrecent/${id}`);
+    addRecent(data) {
+        return http.post(`/recents`, data);
     }
 
-    recent(id){
-        return http.post(`/notes/recent`);
+    getRecent() {
+        return http.get(`/recents`);
     }
 
-    trash(id){
+    trash(id) {
         return http.put(`/notes/trash/${id}`);
     }
 
-    getTrash(){
+    getTrash() {
         return http.get(`/notes/trash`);
     }
 }

@@ -7,6 +7,7 @@ import useUrl from "../components/hooks/useUrl";
 import {Router, useParams} from "react-router-dom";
 import t from "../components/CustomToast";
 import {GlobalContext} from "../components/contexts/GlobalContext";
+import {useWhatChanged} from "@simbathesailor/use-what-changed";
 
 function Home() {
     const [treeData, setTreeData] = useState([]);
@@ -26,12 +27,16 @@ function Home() {
 
     let params = useParams();
 
+    // useWhatChanged([dropped, noteCreated, titleChanged, folderCreated, locked, trashed]);
 
     const context = useContext(GlobalContext)
     useEffect(() => {
+
+        console.log("useEffect");
+
         (async () => {
             let response = await FolderService.getResult(0);
-            setTreeData(response);
+            // setTreeData(response);
 
             let notesWithoutFolder = await FolderService.notesByFolderId(0);
             setTreeData(response.concat(notesWithoutFolder.data));
@@ -43,18 +48,11 @@ function Home() {
             // let recent = await NotesService.getRecent();
             // setRecentContext(recent.data)
             setTrash(trashData.data);
-
-            setDropped(false);
-            setNoteCreated(false);
-            setTitleChanged(false);
-            setFolderCreated(false);
-            setLocked(false);
-            setTrashed(false)
         })();
     }, [dropped, noteCreated, titleChanged, folderCreated, locked, trashed]);
 
     const droppedHandler = () => {
-        setDropped(true);
+        setDropped(!dropped);
     };
     useUrl(
         (type, id) => {
@@ -76,20 +74,24 @@ function Home() {
     }, [note.name])
 
     const noteClicked = (type, id) => {
+        // console.log("noteClicked")
         setClickedId(id);
-        if (type === "note") {
+        if (type === "note" && id) {
             NotesService.get(id)
                 .then((result) => {
                     setNote(result.data);
                     setFolder(result.data.folder_id);
                     // addRecentContext(result.data.id)
+
                     /* Insert into recent */
-                    // NotesService.addRecent(id)
-                    //     .then((result) => {
-                    //     })
-                    //     .catch((err) => {
-                    //         console.log(err);
-                    //     });
+                    NotesService.addRecent({
+                        id: id,
+                        name: result.data.name
+                    }).then((result) => {
+
+                    }).catch((err) => {
+                            console.log(err);
+                    });
                 })
                 .catch((err) => {
                     console.log(err);
@@ -98,11 +100,10 @@ function Home() {
         }
     };
     const moveTrash = (id) => {
-        setTrashed(true)
+        setTrashed(!trashed)
         setNote([])
     }
     const folderClicked = (id) => {
-        // console.log("folderClicked::" +id)
         setClickedId(id);
         setFolder(id);
         // FolderService.get(id).then((result) => {
@@ -116,37 +117,30 @@ function Home() {
             parent_id: folder || 0,
         })
             .then((result) => {
-                setFolderCreated(true);
+                setFolderCreated(!folderCreated);
             })
             .catch((err) => {
                 console.log(err);
             });
     };
 
-    function uuidv4() {
-        return (
-            Date.now().toString(36) + Math.random().toString(36).substring(2)
-        );
-    }
-
     const createNote = (e) => {
-        let id = uuidv4();
-         NotesService.create({
+        NotesService.create({
             name: "",
             folder_id: folder || 0,
             text: null,
         }).then((result) => {
-             setNote(result.data);
-             setNoteCreated(true);
-             setClickedId(id);
+            setNote(result.data);
+            setNoteCreated(!noteCreated);
+            setClickedId(result.id);
         });
     };
 
     const lockChanged = () => {
-        setLocked(true)
+        setLocked(!locked)
     }
     const titleChange = () => {
-        setTitleChanged(true);
+        setTitleChanged(!titleChanged);
     };
 
     const setBookMark = async (note) => {
@@ -154,22 +148,15 @@ function Home() {
         note.bookmark = !note.bookmark;
         NotesService.update(note.id, {bookmark: note.bookmark}).then(
             (result) => {
-                // console.log(result.data)
                 setBookMarked(true);
-                NotesService.get(note.id)
-                    .then((result) => {
-                        setNote(result.data);
-                        NotesService.getBookMarks().then((bookmarks) => {
-                            setBookMarks(bookmarks.data);
-                            setBookMarked(false);
-                        });
-                        note.bookmark
-                            ? t("success", "Note added to bookmarks")
-                            : t("success", "Note removed from bookmarks");
-                    })
-                    .catch((err) => {
-                        t("error", "Something went wrong");
-                    });
+                setNote(result.data)
+                NotesService.getBookMarks().then((bookmarks) => {
+                    setBookMarks(bookmarks.data);
+                    setBookMarked(!bookMarked);
+                    note.bookmark
+                        ? t("success", "Note added to bookmarks")
+                        : t("success", "Note removed from bookmarks");
+                });
             }
         );
     };

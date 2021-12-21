@@ -24,18 +24,18 @@ const Quill = (props) => {
     const [title, setTitle] = useState("")
     let timer = setTimeout(null)
     const el = useRef(null);
-    const [dateModified, setDateModified] = useState(props.note.date_modified)
+    const [dateModified, setDateModified] = useState(props.note.updated_At)
     const [locked, setLocked] = useState(props.note.locked);
     const [deleted, setDeleted] = useState(props.note.deleted);
+    const [titleSaved, setTitleSaved] = useState(false);
 
     const saveToBackend = () => {
-        // console.log("saveToBackend")
+        console.log("saveToBackend")
         const data = {
             text: JSON.stringify(el.current.editor.getContents()),
             name: title
         }
         NotesService.update(props.note.id, data).then((result) => {
-            // props.titleChange();
             setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
             // t("success", "Saved")
         }).catch((err) => {
@@ -45,38 +45,38 @@ const Quill = (props) => {
     }
 
     const saveTitle = () => {
-        // console.log("saveTitle")
-        NotesService.update(props.note.id, {name: title})
-            .then((result) => {
-                setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
-            })
-        props.titleChange();
+        console.log("saveTitle")
+        if(props.note.id) {
+            NotesService.update(props.note.id, {name: title})
+                .then((result) => {
+                    setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
+                    props.titleChange();
+                    setTitleSaved(!titleSaved)
+                })
+        }
     }
 
-    const prevValue = usePrevious(value)
+    const updateTitle = (e) => {
+        setTitle(e.target.value)
+    }
 
     useEffect(() => {
         if (props.note.id) {
             setValue(JSON.parse(props.note.text))
             setTitle(props.note.name)
-            setDateModified(props.note.date_modified)
+            setDateModified(props.note.updated_at)
             setLocked(props.note.locked)
             setDeleted(props.note.deleted)
-            //
-            // console.log("Value: " + value);
-            // console.log("Prev: " + prevValue);
         }
     }, [props.note.id, props.note.locked, props.note.deleted])
 
     useEffect(() => {
-        // console.log("Saving text")
-        const timer = setTimeout(() => saveToBackend(), 500);
+        const timer = setTimeout(() => saveToBackend(), 2000);
         return () => clearTimeout(timer);
     }, [value])
 
     useEffect(() => {
-        console.log("Saving title")
-        const timer = setTimeout(() => saveTitle(), 500);
+        const timer = setTimeout(() => saveTitle(), 2000);
         return () => clearTimeout(timer);
 
     }, [title])
@@ -105,10 +105,10 @@ const Quill = (props) => {
         })
             .then((result) => {
                 setLocked(!locked);
-                // (locked
-                //         ? t("success", "Unlocked editing")
-                //         : t("success", "Locked for editing")
-                // )
+                (locked
+                        ? t("success", "Unlocked editing")
+                        : t("success", "Locked for editing")
+                )
                 props.lockChanged();
             }).catch((err) => {
             console.log(err)
@@ -143,7 +143,7 @@ const Quill = (props) => {
                             </button>
                         </Tooltip>
                         <div className={"ml-4 text-muted bread-crumb_ text-s"}>
-                            <Breadcrumbs note={props.note} title={title}/>
+                            <Breadcrumbs note={props.note} title={title} titleSaved={titleSaved}/>
                         </div>
                         <div className={"ml-auto mr-4 text-s"}>
 
@@ -186,11 +186,12 @@ const Quill = (props) => {
                                 </span>
                             </Tooltip>
                             <span>
-                                    <FaRegClock className={"mr-1"}/>
+                                    <FaRegClock className={"mr-2"}/>
                                 </span>
                             <Tooltip title={"Date modified"}>
                                 <span>
                                     <Moment date={dateModified} format={"D MMMM YYYY [at] HH:mm"}/>
+                                    {/*<Moment date={props.note.created_at} format={"D MMMM YYYY [at] HH:mm"}/>*/}
                                 </span>
                             </Tooltip>
                         </div>
@@ -198,7 +199,7 @@ const Quill = (props) => {
                     <div className={"h-16 flex _mt-6 mb-4_ px-4 md:px-4 "}>
                         <input
                             readOnly={locked || deleted ? 1 : 0}
-                            value={title} onChange={(e) => setTitle(e.target.value)} className={"truncate w-full title text-4xl font-bold"} placeholder={"Give your note a title"}/>
+                            value={title} onChange={updateTitle} className={"truncate w-full title text-4xl font-bold"} placeholder={"Give your note a title"}/>
                     </div>
                     <ReactQuill
                         placeholder="Click here to start writing"

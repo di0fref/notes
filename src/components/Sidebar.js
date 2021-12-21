@@ -107,6 +107,7 @@ function SidebarItem(props, {isDragging, tool}) {
     const isActive = canDrop && isOver;
     const [open, setOpen] = useState(false); // Open or closed sidebar menu
     const context = useContext(GlobalContext);
+    const[windowSize, setWindowSize] = useState(window.innerWidth);
 
     const handleClick = (type, id) => {
         setOpen(!open);
@@ -116,25 +117,30 @@ function SidebarItem(props, {isDragging, tool}) {
     };
 
 
-    // useEffect(() => {
-    // }, [props.clicked_id])
+    useEffect(() => {
+        function handleResize() {
+            setWindowSize(window.innerWidth)
+            console.log(windowSize)
+        }
+        window.addEventListener('resize', handleResize)
+    })
 
     const formatDate = (date) => {
-        return moment(date).format("YYYY-M-d H:m")
+        return moment(date).format("YYYY-M-D H:m")
     }
 
     return (
         <>
             <MyLink type={props.items.type} id={props.items.id}>
                 <ArrowTooltips
-                    placement={"right"}
+                    placement={windowSize<768?"top":"right"}
                     arrow
                     title={
                         (props.items.type === "note")
                             ? (
                                 <div className={"text-center"}>
-                                    <p>Modified at: {formatDate(props.items.date_modified)}</p>
-                                    <p>Created at: {formatDate(props.items.date_created)}</p>
+                                    <p>Modified at: {formatDate(props.items.updated_at)}</p>
+                                    <p>Created at: {formatDate(props.items.created_at)}</p>
                                     {props.items.locked
                                         ? <p>Locked for editing</p>: null
                                     }
@@ -152,7 +158,7 @@ function SidebarItem(props, {isDragging, tool}) {
                               }}
                               key={`bb-${props.items.id}`}
                               selected={
-                                  (props.items.id === props.note_id) ? true : false
+                                  (props.items.id === props.note_id && props.items.type === "note") ? true : false
                               }
                               disableRipple disableTouchRipple
                               className={`${isActive ? "sidebar-active _Mui-selected " : ""} pointer`}
@@ -197,7 +203,7 @@ function SidebarItem(props, {isDragging, tool}) {
                                 </div>
                                 {props.items.locked
                                 ? (<span className={"ml-auto"}>
-                                    <BiLock/>
+                                    <BiLock className={"text-red-500 opacity-50"}/>
                                     </span>)
                                     : null
                                 }
@@ -429,9 +435,9 @@ function Sidebar(props) {
                             />
                         ))}
                     </List>
-                    {/*<div className={"mt-4"}>*/}
-                    {/*    <Trash trash={props.trash}/>*/}
-                    {/*</div>*/}
+                    <div className={"mt-4"}>
+                        <Trash trash={props.trash}/>
+                    </div>
                 </div>
             </div>
         </div>

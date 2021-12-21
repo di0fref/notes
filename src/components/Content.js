@@ -38,7 +38,7 @@ function Content(props) {
         setOpenSm(!openSm);
     }
     return (
-        <div className={"w-full z-10 main"}>
+        <div className={"w-full z-10"}>
             <button id="theme-toggle" className="noprint mr-8_ md:mr-0_ absolute bottom-6 right-6" type="button">
                 <Tooltip title={"Dark theme"}>
                     <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
@@ -62,7 +62,7 @@ function Content(props) {
                             <div className={"flex items-center justify-start"}>
                                 <span><CgFileDocument/></span>
                                 <span className={"ml-2"}>
-                                    <Link to={"#"} className={"hover:text-hover-accent"} onClick={props.createNote}>Create new note</Link>
+                                    <Link to={"#"} className={"mr-20 md:mr-0  hover:text-hover-accent"} onClick={props.createNote}>Create new note</Link>
                                 </span>
                             </div>
                         </div>
