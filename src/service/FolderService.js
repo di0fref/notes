@@ -1,8 +1,8 @@
 import http from "./http-common";
-
+import api_config from "./config";
 class FolderService {
 
-    url = "http://localhost:8000/api";
+    url = "http://backend.loc/api";
 
     getAll() {
         return http.get("/folders");
@@ -17,7 +17,7 @@ class FolderService {
     }
 
     create(data) {
-        return http.post("/folder/create", data);
+        return http.post("/folders", data);
     }
 
     update(id, data) {
@@ -40,14 +40,14 @@ class FolderService {
 
         headers: {
             "Content-type": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjRUaE1WaUdxOU9XTkRjNTI2eldFTiJ9.eyJpc3MiOiJodHRwczovL2Rldi1sMnZ0LTc5MS5ldS5hdXRoMC5jb20vIiwic3ViIjoiaE1ZZFFsb3JZS2hHbWxwNWZSSE5DcE9SZjBVR3M3V2hAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vYXBpLmZhaGxzdGFkLnNlIiwiaWF0IjoxNjQwMDQwMjg2LCJleHAiOjE2NDAxMjY2ODYsImF6cCI6ImhNWWRRbG9yWUtoR21scDVmUkhOQ3BPUmYwVUdzN1doIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.ilEf0d5rvpLt_GoCy-wHYGhpyeEB7S0qzTFAwxW2Bb7wzFjQ68wBi3BTTkog6JCf6KeoisKPwlV_0J2duqz29uqEU0C8RNGHtf6sQ4L_YcgtBNC-6lQJrl3qwzXXD8RDA5NSXnXuije12XT9H3oHOiFlbYxQpRsbOJT9JwRNGB4JUCPxLkFIFaskw7UMEgyvJVdgGRNlGTAvd44ebYEXx2twALqkN4RL0ksrRWrlc26WBXryKNhzvyj7ktQnUjQbCMjyKKXdTXGOmlE_6d6ajgaECV0eptYe3V3eUyQVvpTvucep_As4YmnN5c4NUY4u433CQ9P0la24q1h-R3wT8w"
+            "Authorization": `Bearer ${api_config.token}`
         }
 
 
     }).then((r) => r.json());
 
     getBread = (folder_id) => {
-        return this.fetchJson(`${this.url}/folders/p/${folder_id}`).then(
+        return this.fetchJson(`${api_config.url}/folders/p/${folder_id}`).then(
             (parent) => Promise.all(
                 parent.map(this.getBreadAux)
             )
@@ -63,7 +63,7 @@ class FolderService {
     };
 
     getResult = (parent) => {
-        return this.fetchJson(`${this.url}/folders/parent/${parent}`).then(
+        return this.fetchJson(`${api_config.url}/folders/parent/${parent}`).then(
             (items) => Promise.all(
                 items.map(this.getResultAux)
             )
@@ -71,7 +71,7 @@ class FolderService {
     }
 
     getNotesCount = (folder) => {
-        return this.fetchJson(`${this.url}/notes/count/${folder}`).then(
+        return this.fetchJson(`${api_config.url}/notes/count/${folder}`).then(
             (c) => Promise.all(
                 c.map(this.getNoteCountAux)
             )
@@ -94,7 +94,7 @@ class FolderService {
 
 
     getNoteResult = (folder) => {
-        return this.fetchJson(`${this.url}/notes/folder/${folder}`,{}).then();
+        return this.fetchJson(`${api_config.url}/notes/folder/${folder}`,{}).then();
     }
 
     getNoteAux = async (t = {}) => ({

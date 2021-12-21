@@ -16,6 +16,7 @@ import Moment from "react-moment";
 import moment from "moment";
 import DropdownMenu from "./DropdownMenu";
 import * as React from "react";
+import {usePrevious} from "./hooks/usePrevious";
 
 const Quill = (props) => {
 
@@ -51,6 +52,9 @@ const Quill = (props) => {
             })
         props.titleChange();
     }
+
+    const prevValue = usePrevious(value)
+
     useEffect(() => {
         if (props.note.id) {
             setValue(JSON.parse(props.note.text))
@@ -58,19 +62,23 @@ const Quill = (props) => {
             setDateModified(props.note.date_modified)
             setLocked(props.note.locked)
             setDeleted(props.note.deleted)
+            //
+            // console.log("Value: " + value);
+            // console.log("Prev: " + prevValue);
         }
     }, [props.note.id, props.note.locked, props.note.deleted])
 
     useEffect(() => {
-        // console.log("Debounced text")
+        // console.log("Saving text")
         const timer = setTimeout(() => saveToBackend(), 500);
         return () => clearTimeout(timer);
     }, [value])
 
     useEffect(() => {
-        // console.log("Debounced title")
+        console.log("Saving title")
         const timer = setTimeout(() => saveTitle(), 500);
         return () => clearTimeout(timer);
+
     }, [title])
 
 
@@ -97,10 +105,10 @@ const Quill = (props) => {
         })
             .then((result) => {
                 setLocked(!locked);
-                (locked
-                        ? t("success", "Unlocked editing")
-                        : t("success", "Locked for editing")
-                )
+                // (locked
+                //         ? t("success", "Unlocked editing")
+                //         : t("success", "Locked for editing")
+                // )
                 props.lockChanged();
             }).catch((err) => {
             console.log(err)
@@ -189,12 +197,12 @@ const Quill = (props) => {
                     </div>
                     <div className={"h-16 flex _mt-6 mb-4_ px-4 md:px-4 "}>
                         <input
-                            readOnly={locked||deleted ? 1 : 0}
+                            readOnly={locked || deleted ? 1 : 0}
                             value={title} onChange={(e) => setTitle(e.target.value)} className={"truncate w-full title text-4xl font-bold"} placeholder={"Give your note a title"}/>
                     </div>
                     <ReactQuill
                         placeholder="Click here to start writing"
-                        readOnly={locked||deleted ? true : false }
+                        readOnly={locked || deleted ? true : false}
                         theme="bubble"
                         value={value}
                         onChange={setValue}

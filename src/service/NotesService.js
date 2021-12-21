@@ -18,15 +18,15 @@ class NotesService {
     }
 
     create(data) {
-        return http.post("/notes/create", data);
+        return http.post("/notes", data);
     }
 
     update(id, data) {
-        return http.put(`/notes/update/${id}`, data);
+        return http.put(`/notes/${id}`, data);
     }
 
     delete(id) {
-        return http.delete(`/notes/delete/${id}`);
+        return http.delete(`/notes/${id}`);
     }
 
     getBookMarks() {
@@ -45,9 +45,6 @@ class NotesService {
         return http.post(`/notes/recent`);
     }
 
-    setLocked(id, data){
-        return http.put(`/notes/lock/${id}`, data);
-    }
     trash(id){
         return http.put(`/notes/trash/${id}`);
     }

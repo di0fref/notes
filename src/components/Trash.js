@@ -63,7 +63,7 @@ function Trash(props) {
                             <div className={'flex justify-start items-center'}>
                                 <CgFileDocument className={`icon icon-muted`}/>
                                 <div className={`ml-2 text-sm truncate text-sm`}>
-                                    {t.name}
+                                    {t.name?t.name:"Untitled"}
                                 </div>
                             </div>
                         </ListItemText>

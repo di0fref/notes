@@ -475,7 +475,7 @@ input::placeholder {
     }
 }
 
-._flex, ._quill, ._truncate {
+.flex, ._quill, ._truncate {
     /*outline: #2e3338;*/
     outline: 1px dashed red;
 }

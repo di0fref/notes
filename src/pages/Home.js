@@ -44,9 +44,6 @@ function Home() {
             // setRecentContext(recent.data)
             setTrash(trashData.data);
 
-            console.log(trashData)
-
-
             setDropped(false);
             setNoteCreated(false);
             setTitleChanged(false);
@@ -134,17 +131,14 @@ function Home() {
 
     const createNote = (e) => {
         let id = uuidv4();
-        NotesService.create({
-            id: id,
+         NotesService.create({
             name: "",
             folder_id: folder || 0,
             text: null,
         }).then((result) => {
-            NotesService.get(id).then((result) => {
-                setNote(result.data[0]);
-                setNoteCreated(true);
-                setClickedId(id);
-            });
+             setNote(result.data);
+             setNoteCreated(true);
+             setClickedId(id);
         });
     };
 

@@ -429,9 +429,9 @@ function Sidebar(props) {
                             />
                         ))}
                     </List>
-                    <div className={"mt-4"}>
-                        <Trash trash={props.trash}/>
-                    </div>
+                    {/*<div className={"mt-4"}>*/}
+                    {/*    <Trash trash={props.trash}/>*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </div>
