@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/fahlstad.se/static/css/main.5babdcfc.css",
-    "main.js": "/fahlstad.se/static/js/main.d209d0dc.js",
-    "index.html": "/fahlstad.se/index.html",
-    "main.5babdcfc.css.map": "/fahlstad.se/static/css/main.5babdcfc.css.map",
-    "main.d209d0dc.js.map": "/fahlstad.se/static/js/main.d209d0dc.js.map"
+    "main.css": "/static/css/main.5babdcfc.css",
+    "main.js": "/static/js/main.d209d0dc.js",
+    "index.html": "/index.html",
+    "main.5babdcfc.css.map": "/static/css/main.5babdcfc.css.map",
+    "main.d209d0dc.js.map": "/static/js/main.d209d0dc.js.map"
   },
   "entrypoints": [
     "static/css/main.5babdcfc.css",
