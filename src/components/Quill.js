@@ -30,22 +30,24 @@ const Quill = (props) => {
     const [titleSaved, setTitleSaved] = useState(false);
 
     const saveToBackend = () => {
-        console.log("saveToBackend")
-        const data = {
-            text: JSON.stringify(el.current.editor.getContents()),
-            name: title
+        if(props.note.id) {
+            // console.log("saveToBackend")
+            const data = {
+                text: JSON.stringify(el.current.editor.getContents()),
+                name: title
+            }
+            NotesService.update(props.note.id, data).then((result) => {
+                setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
+                // t("success", "Saved")
+            }).catch((err) => {
+                t("error", "Could not save note")
+                console.log(err);
+            });
         }
-        NotesService.update(props.note.id, data).then((result) => {
-            setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
-            // t("success", "Saved")
-        }).catch((err) => {
-            t("error", "Could not save note")
-            console.log(err);
-        });
     }
 
     const saveTitle = () => {
-        console.log("saveTitle")
+        // console.log("saveTitle")
         if(props.note.id) {
             NotesService.update(props.note.id, {name: title})
                 .then((result) => {

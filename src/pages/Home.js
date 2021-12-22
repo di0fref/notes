@@ -7,7 +7,10 @@ import useUrl from "../components/hooks/useUrl";
 import {Router, useParams} from "react-router-dom";
 import t from "../components/CustomToast";
 import {GlobalContext} from "../components/contexts/GlobalContext";
-import {useWhatChanged} from "@simbathesailor/use-what-changed";
+import {useAuth0} from "@auth0/auth0-react";
+import LoginButton from "../components/login-button";
+
+// import {useWhatChanged} from "@simbathesailor/use-what-changed";
 
 function Home() {
     const [treeData, setTreeData] = useState([]);
@@ -30,11 +33,17 @@ function Home() {
     // useWhatChanged([dropped, noteCreated, titleChanged, folderCreated, locked, trashed]);
 
     const context = useContext(GlobalContext)
+
+
     useEffect(() => {
 
         console.log("useEffect");
+        // console.log(user);
+        // console.log(JSON.stringify(user, null, 2));
+
 
         (async () => {
+
             let response = await FolderService.getResult(0);
             // setTreeData(response);
 
@@ -90,7 +99,7 @@ function Home() {
                     }).then((result) => {
 
                     }).catch((err) => {
-                            console.log(err);
+                        console.log(err);
                     });
                 })
                 .catch((err) => {

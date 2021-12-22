@@ -36,6 +36,7 @@ import Search from "./Search";
 import {button, style_folder} from "./styles";
 import {GlobalContext} from "./contexts/GlobalContext";
 import Trash from "./Trash";
+import AuthNav from "./auth-nav";
 
 let moment = require('moment');
 
@@ -120,7 +121,6 @@ function SidebarItem(props, {isDragging, tool}) {
     useEffect(() => {
         function handleResize() {
             setWindowSize(window.innerWidth)
-            console.log(windowSize)
         }
         window.addEventListener('resize', handleResize)
     })
@@ -438,6 +438,7 @@ function Sidebar(props) {
                     <div className={"mt-4"}>
                         <Trash trash={props.trash}/>
                     </div>
+                    <AuthNav />
                 </div>
             </div>
         </div>
