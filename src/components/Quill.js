@@ -200,6 +200,7 @@ const Quill = (props) => {
                     </div>
                     <div className={"h-16 flex _mt-6 mb-4_ px-4 md:px-4 "}>
                         <input
+                            id={"title-input"}
                             readOnly={locked || deleted ? 1 : 0}
                             value={title} onChange={updateTitle} className={"truncate w-full title text-4xl font-bold"} placeholder={"Give your note a title"}/>
                     </div>

@@ -36,7 +36,7 @@ import Search from "./Search";
 import {button, style_folder} from "./styles";
 import {GlobalContext} from "./contexts/GlobalContext";
 import Trash from "./Trash";
-import AuthNav from "./auth-nav";
+import AuthNav from "../auth/auth-nav";
 
 let moment = require('moment');
 
@@ -438,7 +438,7 @@ function Sidebar(props) {
                     <div className={"mt-4"}>
                         <Trash trash={props.trash}/>
                     </div>
-                    <AuthNav />
+                    {/*<AuthNav />*/}
                 </div>
             </div>
         </div>

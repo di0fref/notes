@@ -52,6 +52,14 @@ class NotesService {
     getTrash() {
         return http.get(`/notes/trash`);
     }
+
+    login(data) {
+        return http.post(`/users/login`, data);
+    }
+
+    validateUser(data){
+        return http.post(`/users/validate`, data);
+    }
 }
 
 export default new NotesService();

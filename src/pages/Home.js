@@ -8,7 +8,7 @@ import {Router, useParams} from "react-router-dom";
 import t from "../components/CustomToast";
 import {GlobalContext} from "../components/contexts/GlobalContext";
 import {useAuth0} from "@auth0/auth0-react";
-import LoginButton from "../components/login-button";
+import LoginButton from "../auth/login-button";
 
 // import {useWhatChanged} from "@simbathesailor/use-what-changed";
 

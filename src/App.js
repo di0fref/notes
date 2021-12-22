@@ -5,23 +5,36 @@ import {Route, Routes} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
 import {createContext, useEffect, useState} from "react";
 import {GlobalProvider} from "./components/contexts/GlobalContext";
-import {useAuth0} from "@auth0/auth0-react";
-import LoginButton from "./components/login-button";
+
+import Login from "./components/Login";
+import NotesService from "./service/NotesService";
 
 export const Context = createContext(null)
 
 function App() {
-    const {user, isAuthenticated} = useAuth0()
+    const [userLoggedIn, setUserLoggedIn] = useState(false)
 
-    const [local, setLocal] = useState(false);
     useEffect(() => {
-        if(user) {
-            localStorage.setItem("user", JSON.stringify(user, null, 2))
-            setLocal(true);
+        if(localStorage.getItem("u")){
+            NotesService.validateUser({
+                id: 1,
+                token: "og9riuJyslzHrTqN0py7AMcMBKe5yx1UD0Y7u96P"
+            })
+                .then((result) => {
+                    console.log(result)
+            }).catch((err) => {
+                console.log(err)
+            })
         }
-    }, [isAuthenticated])
+    },[])
 
-    if (isAuthenticated && local) {
+    const loginHandle = () =>{
+        setUserLoggedIn(true)
+    }
+    const logOutHandle = () =>{
+        // setUserLoggedIn(false)
+    }
+    if (userLoggedIn) {
         return (
             <div className={"antialiased"}>
                 <GlobalProvider>
@@ -39,7 +52,7 @@ function App() {
             </div>
         )
     } else {
-        return <LoginButton/>
+        return <Login loginHandle={loginHandle}/>
     }
 }
 

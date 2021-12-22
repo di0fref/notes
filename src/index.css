@@ -280,7 +280,7 @@ input:checked ~ .dot {
     border-top: 1px solid var(--background-modifier-border);
 }
 
-input {
+input#title-input {
     background: var(--background-primary);
     outline: none;
     border: none;
@@ -475,7 +475,7 @@ input::placeholder {
     }
 }
 
-._flex, ._quill, ._truncate {
+._flex, ._quill, ._truncate, _div {
     /*outline: #2e3338;*/
     outline: 1px dashed red;
 }
