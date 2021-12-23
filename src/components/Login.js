@@ -1,25 +1,25 @@
 import {HiLockClosed} from "react-icons/all";
 import {useState} from "react";
 import NotesService from "../service/NotesService";
+import { useNavigate } from "react-router-dom";
 
 function Login(props) {
 
-    const [user, setUser] = useState([])
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [username, setUsername] = useState("fredrik@fahlstad.se")
+    const [password, setPassword] = useState("test")
 
+    const navigate = useNavigate();
     const submitHandler = (e) => {
-        console.log("submitHandler")
         e.preventDefault()
         /* Call backend to validate user */
         NotesService.login({
                 username: username,
                 password: password
             }
-        ).then((user) => {
-            console.log(user.data)
-            localStorage.setItem("u", JSON.stringify(user.data))
-            props.loginHandle();
+        ).then((result) => {
+            localStorage.setItem("api_token", result.data.api_token)
+            console.log("localStorage")
+            navigate('/')
         }).catch((err) => {
 
         })
@@ -40,11 +40,11 @@ function Login(props) {
                         <div className="">
                             <div className={"mt-2"}>
                                 <label htmlFor="email-address" className="sr-only">Email address</label>
-                                <input onChange={(e) => setUsername(e.target.value)} id="email-address" name="email" type="email" autoComplete="email" required className="rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address"/>
+                                <input value={username} onChange={(e) => setUsername(e.target.value)} id="email-address" name="email" type="email" autoComplete="email" required className="rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address"/>
                             </div>
                             <div className={"mt-2"}>
                                 <label htmlFor="password" className="sr-only">Password</label>
-                                <input onChange={(e) => setPassword(e.target.value)} id="password" name="password" type="password" autoComplete="current-password" required className="rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password"/>
+                                <input value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" type="password" autoComplete="current-password" required className="rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password"/>
                             </div>
                         </div>
                         <div>
@@ -58,7 +58,6 @@ function Login(props) {
                     </form>
                 </div>
             </div>
-
         </>
     )
 }

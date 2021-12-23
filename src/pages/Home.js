@@ -38,15 +38,9 @@ function Home() {
     useEffect(() => {
 
         console.log("useEffect");
-        // console.log(user);
-        // console.log(JSON.stringify(user, null, 2));
-
-
         (async () => {
 
             let response = await FolderService.getResult(0);
-            // setTreeData(response);
-
             let notesWithoutFolder = await FolderService.notesByFolderId(0);
             setTreeData(response.concat(notesWithoutFolder.data));
 
@@ -54,9 +48,8 @@ function Home() {
             setBookMarks(bookmarks.data);
 
             let trashData = await NotesService.getTrash();
-            // let recent = await NotesService.getRecent();
-            // setRecentContext(recent.data)
             setTrash(trashData.data);
+
         })();
     }, [dropped, noteCreated, titleChanged, folderCreated, locked, trashed]);
 
@@ -93,14 +86,14 @@ function Home() {
                     // addRecentContext(result.data.id)
 
                     /* Insert into recent */
-                    NotesService.addRecent({
-                        id: id,
-                        name: result.data.name
-                    }).then((result) => {
-
-                    }).catch((err) => {
-                        console.log(err);
-                    });
+                    // NotesService.addRecent({
+                    //     id: id,
+                    //     name: result.data.name
+                    // }).then((result) => {
+                    //
+                    // }).catch((err) => {
+                    //     console.log(err);
+                    // });
                 })
                 .catch((err) => {
                     console.log(err);
@@ -135,13 +128,14 @@ function Home() {
 
     const createNote = (e) => {
         NotesService.create({
-            name: "",
+            name: "Untitled",
             folder_id: folder || 0,
             text: null,
         }).then((result) => {
+            console.log(result.data)
             setNote(result.data);
             setNoteCreated(!noteCreated);
-            setClickedId(result.id);
+            setClickedId(result.data.id);
         });
     };
 

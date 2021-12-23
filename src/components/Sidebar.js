@@ -22,7 +22,7 @@ import {
     CgFileDocument,
     FaPlus,
     FaPlusCircle,
-    BiLock
+    BiLock, HiLogout, HiCog,FaUserCircle
 } from "react-icons/all";
 
 import FolderService from "../service/FolderService";
@@ -37,6 +37,8 @@ import {button, style_folder} from "./styles";
 import {GlobalContext} from "./contexts/GlobalContext";
 import Trash from "./Trash";
 import AuthNav from "../auth/auth-nav";
+import Avatar from "./Avatar";
+import DropdownMenu from "./DropdownMenu";
 
 let moment = require('moment');
 
@@ -353,6 +355,12 @@ function NotebookHeader(props) {
 
 function Sidebar(props) {
 
+    const logout = () => {
+        console.log("logout")
+    }
+    const settings = () => {
+      
+    }
     const [openSm, setOpenSm] = useState(false);
 
     const clickHandle = () => {
@@ -377,6 +385,29 @@ function Sidebar(props) {
             noprint
                 ${openSm ? "ml-0" : "-ml-full"}`
             }>
+            <div className={"flex items-center justify-start py-2"}>
+                <div className={"ml-6 text-xl"}><FaUserCircle/></div>
+                <div className={"ml-2"}>
+                    <DropdownMenu
+                        icon={"Fredrik"}
+                        text={"Fredrik Fahlstad"}
+                    options={
+                        [
+                            {
+                                label: "Settings",
+                                icon: <HiCog className={"text-normal"}/>,
+                                onClick:{settings}
+                            },
+                            {
+                                divider: true,
+                                label: "Sign out",
+                                icon: <HiLogout className={"text-normal"}/>,
+                                onClick:{logout}
+                            }
+                        ]
+                    }/>
+                </div>
+            </div>
             <div className={`flex-shrink-0 h-14 mx-5 flex flex-row items-center justify-between `}>
                 <Search clickHandle={clickHandle} text={"Search"}/>
                 <Tooltip title={"Toggle menu"}>
@@ -405,7 +436,7 @@ function Sidebar(props) {
                     {/*        <span className="ml-3 text-gray-900 text-sm font-medium">Toggle me</span>*/}
                     {/*</label>*/}
 
-                    <div className={"flex items-center justify-around w-full my-3"}>
+                    <div className={"flex items-center justify-around w-full mb-3"}>
                         <Tooltip title={"New note"}>
                             <button onClick={props.createNote} className={"h-8 text-sm rounded bg-accent-blue flex-grow  mx-4 hover:bg-hover"}>
                                 <div className={"flex items-center justify-center"}>
@@ -438,7 +469,7 @@ function Sidebar(props) {
                     <div className={"mt-4"}>
                         <Trash trash={props.trash}/>
                     </div>
-                    {/*<AuthNav />*/}
+                    <Avatar/>
                 </div>
             </div>
         </div>

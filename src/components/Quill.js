@@ -17,6 +17,8 @@ import moment from "moment";
 import DropdownMenu from "./DropdownMenu";
 import * as React from "react";
 import {usePrevious} from "./hooks/usePrevious";
+import { useNavigate } from "react-router-dom";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const Quill = (props) => {
 
@@ -118,7 +120,7 @@ const Quill = (props) => {
 
     }
     const moveToTrash = () => {
-        console.log("moveToTrash")
+        // console.log("moveToTrash")
         NotesService.update(props.note.id, {deleted: 1}).then((result) => {
             props.moveTrash()
             setDeleted(1)
@@ -127,6 +129,13 @@ const Quill = (props) => {
             console.log(err)
         })
     }
+    const navigate = useNavigate();
+
+    const logOut = () => {
+        localStorage.clear();
+        navigate('/login')
+    }
+
     const downloadPDF = () => {
         console.log("downloadPDF")
     }
@@ -149,7 +158,7 @@ const Quill = (props) => {
                         </div>
                         <div className={"ml-auto mr-4 text-s"}>
 
-                            <DropdownMenu options={
+                            <DropdownMenu text={<MoreVertIcon/>} options={
                                 [
                                     {
                                         label: "Download PDF",
@@ -163,10 +172,16 @@ const Quill = (props) => {
                                     },
                                     {
                                         // divider: true,
-                                        label: "Move to trash",
+                                        label: "Send to trash",
                                         icon: <HiOutlineTrash className={"text-normal"}/>,
                                         onClick: () => moveToTrash()
                                     },
+                                    // {
+                                    //     // divider: true,
+                                    //     label: "Log out",
+                                    //     icon: <HiOutlineTrash className={"text-normal"}/>,
+                                    //     onClick: () => logOut()
+                                    // },
                                 ]
                             }/>
                         </div>

@@ -6,10 +6,11 @@ import 'react-quill/dist/quill.bubble.css';
 import './index.css';
 import "./print.css"
 import App from './App';
-import {Auth0Provider} from '@auth0/auth0-react'
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
     <BrowserRouter>
+
         {/*<Auth0Provider*/}
         {/*    domain={process.env.REACT_APP_AUTH0_DOMAIN}*/}
         {/*    clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}*/}

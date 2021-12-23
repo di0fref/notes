@@ -6,6 +6,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {useEffect, useState} from "react";
 import { Divider, ListItemIcon, ListItemText } from "@mui/material";
 import { Lock } from "@mui/icons-material";
+import {Link} from "react-router-dom";
 
 const ITEM_HEIGHT = 48;
 
@@ -31,41 +32,41 @@ export default function DropdownMenu(props) {
 
 	return (
 		<div>
-			<IconButton
-				aria-label="more"
-				id="long-button"
-				aria-controls="long-menu"
-				aria-expanded={open ? "true" : undefined}
-				aria-haspopup="true"
-				onClick={handleClick}
-			>
-				<MoreVertIcon className={"text-normal"} />
-			</IconButton>
+			{/*{1 || props.icon?*/}
+			{/*	(<IconButton*/}
+			{/*	aria-label="more"*/}
+			{/*	id="long-button"*/}
+			{/*	aria-controls="long-menu"*/}
+			{/*	aria-expanded={open ? "true" : undefined}*/}
+			{/*	aria-haspopup="true"*/}
+			{/*	onClick={handleClick}*/}
+			{/*>*/}
+			{/*	/!*<MoreVertIcon className={"text-normal"} />*!/*/}
+			{/*	<span className={"text-normal"}>{props.icon}</span>*/}
+			{/*</IconButton>)*/}
+			{/*:null}*/}
+
+				<Link to={"#"} className={"hover:text-accent"} onClick={handleClick}>{props.text}</Link>
+
 			<Menu
 				id="long-menu"
 				MenuListProps={{
-					"aria-labelledby": "Note menu",
+					"aria-labelledby": "Menu",
 				}}
 				anchorEl={anchorEl}
 				open={open}
 				onClose={handleClose}
 				PaperProps={{
 					style: {
-						backgroundColor: "var(--background-secondary)",
+						backgroundColor: "var(--shade-100)",
 						color: "var(--text-normal)",
+						marginBottom: 0,
+						marginTop:0,
 					},
 				}}
 			>
 				{options.map((option) => (
 					<span key={option.label}>
-						{/*{option.divider ? (*/}
-						{/*	<Divider*/}
-						{/*		sx={{*/}
-						{/*			backgroundColor: "var(--text-faint)",*/}
-						{/*		}}*/}
-						{/*	/>*/}
-						{/*) : null}*/}
-
 						<MenuItem
 							onClick={option.onClick}
 							sx={[
@@ -79,7 +80,7 @@ export default function DropdownMenu(props) {
 						>
 							<ListItemIcon>{option.icon}</ListItemIcon>
 							<ListItemText>
-								<span className={"text-s"}>{option.label}</span>
+								<span className={"text-sm"}>{option.label}</span>
 							</ListItemText>
 						</MenuItem>
 					</span>

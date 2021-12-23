@@ -38,8 +38,7 @@ class FolderService {
 
         headers: {
             "Content-type": "application/json",
-            "Authorization": `Bearer ${api_config.token}`,
-            "Credentials": JSON.parse(localStorage.getItem("user")).sub
+            "token": localStorage.getItem("api_token"),
         }
 
 

@@ -5,55 +5,39 @@ import {Route, Routes} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
 import {createContext, useEffect, useState} from "react";
 import {GlobalProvider} from "./components/contexts/GlobalContext";
-
 import Login from "./components/Login";
-import NotesService from "./service/NotesService";
+
+import {PrivateRoute} from "./helpers/PrivateRoute";
 
 export const Context = createContext(null)
 
 function App() {
-    const [userLoggedIn, setUserLoggedIn] = useState(false)
+    return (
+        <div className={"antialiased"}>
+            <GlobalProvider>
+                <DndProvider backend={HTML5Backend} debugMode={true}>
+                    <ToastContainer
+                        hideProgressBar={true}
+                        className={"text-s"}
+                        position="bottom-right"/>
+                    <Routes>
+                        {/*<Route path={"/:type/:id"} element={<Home/>}/>*/}
+                        {/*<Route exact path={"/"} element={<Home/>}/>*/}
 
-    useEffect(() => {
-        if(localStorage.getItem("u")){
-            NotesService.validateUser({
-                id: 1,
-                token: "og9riuJyslzHrTqN0py7AMcMBKe5yx1UD0Y7u96P"
-            })
-                .then((result) => {
-                    console.log(result)
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
-    },[])
+                        {/*<PrivateRoute exact component={<Home/>} path={"/:type/:id"} />*/}
 
-    const loginHandle = () =>{
-        setUserLoggedIn(true)
-    }
-    const logOutHandle = () =>{
-        // setUserLoggedIn(false)
-    }
-    if (userLoggedIn) {
-        return (
-            <div className={"antialiased"}>
-                <GlobalProvider>
-                    <DndProvider backend={HTML5Backend} debugMode={true}>
-                        <ToastContainer
-                            hideProgressBar={true}
-                            className={"text-s"}
-                            position="bottom-right"/>
-                        <Routes>
+                        <Route exact path={'/'} element={<PrivateRoute/>}>
                             <Route path={"/:type/:id"} element={<Home/>}/>
                             <Route exact path={"/"} element={<Home/>}/>
-                        </Routes>
-                    </DndProvider>
-                </GlobalProvider>
-            </div>
-        )
-    } else {
-        return <Login loginHandle={loginHandle}/>
-    }
+                        </Route>
+                        <Route exact path={"/login"} element={<Login/>}/>
+                        {/*<Route exact path="/signup" element={<Signup/>}  />*/}
+                    </Routes>
+                </DndProvider>
+            </GlobalProvider>
+        </div>
+    )
+
 }
 
 export default App;
