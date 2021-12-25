@@ -5,7 +5,6 @@ import t from "./CustomToast"
 import {Button, Tooltip} from "@mui/material";
 import {
     BiLockAlt,
-    FaLock, FaMoon,
     FaRegClock, FaRegFilePdf,
     FaRegStar,
     FaStar, FaSun,
@@ -16,8 +15,6 @@ import Moment from "react-moment";
 import moment from "moment";
 import DropdownMenu from "./DropdownMenu";
 import * as React from "react";
-import {usePrevious} from "./hooks/usePrevious";
-import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const Quill = (props) => {
@@ -129,12 +126,12 @@ const Quill = (props) => {
             console.log(err)
         })
     }
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    const logOut = () => {
-        localStorage.clear();
-        navigate('/login')
-    }
+    // const logOut = () => {
+    //     localStorage.clear();
+    //     navigate('/login')
+    // }
 
     const downloadPDF = () => {
         console.log("downloadPDF")
@@ -179,7 +176,10 @@ const Quill = (props) => {
                                     // {
                                     //     // divider: true,
                                     //     label: "Log out",
-                                    //     icon: <HiOutlineTrash className={"text-normal"}/>,
+                                    //     icon: <HiO    const logOut = () => {
+                                    //         localStorage.clear();
+                                    //         navigate('/login')
+                                    //     }utlineTrash className={"text-normal"}/>,
                                     //     onClick: () => logOut()
                                     // },
                                 ]
@@ -215,9 +215,10 @@ const Quill = (props) => {
                     </div>
                     <div className={"h-16 flex _mt-6 mb-4_ px-4 md:px-4 "}>
                         <input
+                            type={"text"}
                             id={"title-input"}
                             readOnly={locked || deleted ? 1 : 0}
-                            value={title} onChange={updateTitle} className={"truncate w-full title text-4xl font-bold"} placeholder={"Give your note a title"}/>
+                            value={title} onChange={updateTitle} className={"p-0 truncate w-full title text-4xl font-bold bg-primary border-0 focus:outline-none focus:ring-0"} placeholder={"Give your note a title"}/>
                     </div>
                     <ReactQuill
                         placeholder="Click here to start writing"

@@ -217,8 +217,10 @@ function Search(props) {
                                 className={"text-muted opacity-50 h-6 w-6"}
                             />
                             <input
+                                autoComplete="off"
+                                type={"search"}
                                 className={
-                                    "mr-6 px-2 py-1 w-full font-medium ml-1 rounded rounded-lg"
+                                    "mr-6 px-2 py-1 w-full font-medium ml-1 rounded"
                                 }
                                 placeholder={"Find anything"}
                                 onChange={(e) =>

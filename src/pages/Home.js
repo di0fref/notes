@@ -76,7 +76,8 @@ function Home() {
     }, [note.name])
 
     const noteClicked = (type, id) => {
-        // console.log("noteClicked")
+        console.log("noteClicked::"+id)
+        console.log(type)
         setClickedId(id);
         if (type === "note" && id) {
             NotesService.get(id)
@@ -106,6 +107,7 @@ function Home() {
         setNote([])
     }
     const folderClicked = (id) => {
+        console.log(id)
         setClickedId(id);
         setFolder(id);
         // FolderService.get(id).then((result) => {
@@ -114,6 +116,7 @@ function Home() {
     }
 
     const createFolder = (name) => {
+        console.log("createFolder::"+folder)
         FolderService.create({
             name: name,
             parent_id: folder || 0,

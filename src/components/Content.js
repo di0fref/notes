@@ -4,49 +4,22 @@ import {Link} from "react-router-dom";
 import Tooltip from "./Tooltip";
 import {BiSearch, CgFileDocument, FaMoon, FaSun} from "react-icons/all";
 import Search from "./Search";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 function Content(props) {
-
 
     const [note, setNote] = useState(props.note)
     useEffect(() => {
         setNote(props.note)
     }, [props.note])
-    const [theme, setTheme] = useState()
-
-    useEffect(() => {
-        let toggle = document.getElementById("theme-toggle");
-        let storedTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-        if (storedTheme) {
-            document.documentElement.setAttribute('data-theme', storedTheme)
-        }
-        setTheme(storedTheme)
-        toggle.onclick = function () {
-            let currentTheme = document.documentElement.getAttribute("data-theme");
-            let targetTheme = "light";
-
-            if (currentTheme === "light") {
-                targetTheme = "dark";
-            }
-            document.documentElement.setAttribute('data-theme', targetTheme)
-            localStorage.setItem('theme', targetTheme);
-        };
-    }, [theme])
     const [openSm, setOpenSm] = useState(false);
 
     const clickHandle = () => {
         setOpenSm(!openSm);
     }
     return (
-        <div className={"w-full z-10"}>
-            <button id="theme-toggle" className="noprint mr-8_ md:mr-0_ absolute bottom-6 right-6" type="button">
-                <Tooltip title={"Dark theme"}>
-                    <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
-                </Tooltip>
-                <Tooltip title={"Light theme"}>
-                    <span className="d-block-dark d-none hover:text-hover-accent"><FaSun/></span>
-                </Tooltip>
-            </button>
+        <div className={"w-full z-10_"}>
+            {/*<ThemeSwitcher/>*/}
             {props.note.id
                 ? <Quill
                     note={note}

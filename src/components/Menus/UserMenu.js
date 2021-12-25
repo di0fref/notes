@@ -12,8 +12,10 @@ import {
 } from "@mui/material";
 import {HiChevronDown, HiCog, HiLogout, HiQuestionMarkCircle, HiUser, HiUserCircle} from "react-icons/all";
 import {menuItemStyle} from "./style";
+import { useNavigate } from "react-router-dom";
 
 function UserMenu() {
+    const navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -23,7 +25,10 @@ function UserMenu() {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
+    const logOut = () => {
+        localStorage.clear();
+        navigate('/login')
+    }
     const menuItems = [
         {
             name: "My settings",
@@ -36,12 +41,13 @@ function UserMenu() {
         {
             divider: true,
             name: "Sign out ",
-            icon: <HiLogout className={"text-normal"}/>
+            icon: <HiLogout className={"text-normal"}/>,
+            onClick: () => logOut()
         }
     ]
 
     return (
-        <div className={"ml-4 rounded"}>
+        <div className={"ml-4_ rounded"}>
             <IconButton
                 id="user-button"
                 aria-controls="user-button"
@@ -49,7 +55,8 @@ function UserMenu() {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
                 sx={{
-                    borderRadius:"3px"
+                    borderRadius:"3px",
+                    padding:0
                 }}>
 
                 <div className={"text-normal flex items-center"}>
@@ -75,9 +82,10 @@ function UserMenu() {
             >
                 {menuItems.map((item, index) => {
                     return (
-                        <div>
+                        <div key={`usermenu-${index}`}>
                             {item.divider?<Divider sx={{ my: 0.5 }}/>:null}
                         <MenuItem
+                            onClick={item.onClick}
                             sx={menuItemStyle}>
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText onClick={handleClose}>

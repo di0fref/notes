@@ -6,6 +6,9 @@ module.exports = {
         extend: {
             transitionProperty: {
                 'height': 'height',
+            },
+            width: {
+                "76": "18.75rem"
             }
         },
     },

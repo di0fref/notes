@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {CgFileDocument, FaCaretDown, FaCaretRight, FaFileAlt, FaRegStar, FaStar} from "react-icons/all";
+import {CgFileDocument, FaCaretDown, FaCaretRight, FaFileAlt, FaRegStar, FaStar, HiStar} from "react-icons/all";
 import {Collapse, List, ListItem, ListItemText} from "@mui/material";
 import {Link} from "react-router-dom";
 import ArrowTooltips from "./Tooltip";
@@ -31,16 +31,18 @@ function BookMarks(props) {
                 }}>
                     <ListItemText>
                         <div className={'flex justify-start items-center'}>
-                            <div className={""}>
-                                {bookMarks.length
-                                    ? open
-                                        ? <FaCaretDown className={"icon-caret"}/>
-                                        : <FaCaretRight className={"icon-caret"}/>
-                                    : ""}
-                            </div>
-                            <div><FaRegStar className={"icon icon-accent ml-2"}/></div>
-                            <div>
-                                <span className={"mt-4 ml-2"}>Favourite notes</span>
+                            {/*<div className={""}>*/}
+                            {/*    {bookMarks.length*/}
+                            {/*        ? open*/}
+                            {/*            ? <FaCaretDown className={"icon-caret"}/>*/}
+                            {/*            : <FaCaretRight className={"icon-caret"}/>*/}
+                            {/*        : ""}*/}
+                            {/*</div>*/}
+                            {/*<div><FaRegStar className={"icon icon-accent ml-2"}/></div>*/}
+                            <div><span className={"mt-4 ml-2"}>Favourites</span></div>
+                            <div><HiStar className={"icon-accent ml-1"}/></div>
+                            <div className={"text-muted text-xs ml-2"}>
+                                {!open?(`(${bookMarks.length} hidden)`):""}
                             </div>
                         </div>
                     </ListItemText>
@@ -63,8 +65,8 @@ function BookMarks(props) {
                                             <div className={'flex justify-start items-center'}>
                                                 <CgFileDocument className={`icon icon-muted`}/>
                                                 <div className={`ml-2 text-sm truncate text-sm`}>
-                                                    {bookmark.label
-                                                        ? bookmark.label
+                                                    {bookmark.name
+                                                        ? bookmark.name
                                                         : "Untitled"
                                                     }
                                                 </div>

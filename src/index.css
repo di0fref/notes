@@ -128,12 +128,15 @@ html[data-theme='light'] {
 .bg-primary {
     background: var(--background-primary);
 }
-.shade-50{
+
+.shade-50 {
     background-color: var(--shade-50);
 }
-.shade-100{
+
+.shade-100 {
     background-color: var(--shade-100);
 }
+
 .bg-secondary {
     background: var(--background-secondary);
 }
@@ -279,22 +282,38 @@ input:checked ~ .dot {
     @apply rounded  !important
 }
 
+
+[type='text'],
+[type='email'],
+[type='url'],
+[type='password'],
+[type='number'],
+[type='date'],
+[type='datetime-local'],
+[type='month'],
+[type='search'],
+[type='tel'],
+[type='time'],
+[type='week'],
+[multiple],
+textarea,
+select{
+    background-color: var(--shade-100);
+    border-color:var(--shade-50)
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus{
+    @apply focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
+}
+
+#new-folder, #search-input{
+    background-color: var(--shade-50);
+}
 .sidebar-avatar {
     border-top: 1px solid var(--background-modifier-border);
-}
-
-input#title-input, input#search-input {
-    background: var(--background-primary);
-    outline: none;
-    border: none;
-}
-
-#search-input, #new-folder {
-    /*background: var(--background-secondary);*/
-}
-
-#search-input:focus, #new-folder:focus {
-    /*border: 1px solid var(--interactive-accent);*/
 }
 
 .text-s {
@@ -305,25 +324,6 @@ input#title-input, input#search-input {
 .text-normal {
     color: var(--text-normal);
 }
-
-/*.modal {*/
-/*	position: absolute;*/
-/*	top: 20%;*/
-/*	left: 50%;*/
-/*	transform: translate(-50%, -50%);*/
-/*	width: 50vw;*/
-/*	background-color: var(--background-primary-alt);*/
-/*	border: 1px solid var(--background-modifier-border);*/
-/*	box-shadow: var(--background-modifier-box-shadow);*/
-/*}*/
-
-/*@media screen and (max-width: 768px) {*/
-/*	.modal {*/
-/*		width: 100vw;*/
-/*		!*left: 0;*!*/
-/*	}*/
-/*}*/
-
 .sidebar-active {
     background-color: var(--text-accent-hover) !important;
     @apply rounded
@@ -401,7 +401,7 @@ input::placeholder {
 .ql-bubble .ql-editor code, .ql-bubble .ql-editor pre {
     background-color: var(--code-background) !important;
     border: 1px solid var(--code-border-color) !important;
-    border-radius: 3px!important;
+    border-radius: 3px !important;
     color: var(--text-normal) !important;
     @apply text-base;
 }
@@ -412,9 +412,11 @@ input::placeholder {
     line-height: 1.6em;
     font-size: 1rem;
 }
-.ql-editor a{
+
+.ql-editor a {
     color: var(--editor-url-color) !important;
 }
+
 .ql-editor ul, .ql-editor ol {
     @apply my-4
 }
@@ -435,7 +437,7 @@ input::placeholder {
     position: absolute;
     top: 50% !important;
     left: 50% !important;
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 .modal-box-folder {
@@ -486,7 +488,6 @@ input::placeholder {
 /*.search:focus {*/
 /*	background-color: var(--interactive-hover);*/
 /*}*/
-
 .bread-crumb {
     color: #acb1b9;
 }
@@ -540,4 +541,24 @@ input:checked + .toggle-bg {
 
 .error {
     color: var(--text-error);
+}
+
+.overlay {
+    position: absolute;
+    /*display: none;*/
+    top: 0;
+    left: 0;
+    /*height: 100%;*/
+    /*width: 100%;*/
+    background-color: black;
+    opacity: 0.7;
+    z-index: 2;
+    transition : opacity 500ms ease-out;
+    -webkit-transition : opacity 500ms ease-out;
+    -moz-transition : opacity 500ms ease-out;
+    -o-transition : opacity 500ms ease-out;
+}
+
+.trash{
+    width: 275px;
 }

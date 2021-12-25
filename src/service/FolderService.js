@@ -19,7 +19,7 @@ class FolderService {
     }
 
     update(id, data) {
-        return http.put(`/folder/${id}`, data);
+        return http.put(`/folders/${id}`, data);
     }
 
     delete(id) {

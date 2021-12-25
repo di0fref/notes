@@ -2,6 +2,7 @@ import {HiLockClosed} from "react-icons/all";
 import {useState} from "react";
 import NotesService from "../service/NotesService";
 import { useNavigate } from "react-router-dom";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 function Login(props) {
 
@@ -28,10 +29,10 @@ function Login(props) {
     return (
         <>
             <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8 bg-gray-200 p-4 shadow_">
+                <div className="max-w-md w-full space-y-8 bg-secondary p-4 shadow_">
                     <div>
                         <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow"/>
-                        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                        <h2 className="mt-6 text-center text-3xl font-extrabold text-normal">
                             Sign in to your account
                         </h2>
 
@@ -40,11 +41,11 @@ function Login(props) {
                         <div className="">
                             <div className={"mt-2"}>
                                 <label htmlFor="email-address" className="sr-only">Email address</label>
-                                <input value={username} onChange={(e) => setUsername(e.target.value)} id="email-address" name="email" type="email" autoComplete="email" required className="rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address"/>
+                                <input value={username} onChange={(e) => setUsername(e.target.value)} id="email-address" name="email" type="email" autoComplete="email" required className="rounded relative block w-full px-3 py-2   focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address"/>
                             </div>
                             <div className={"mt-2"}>
                                 <label htmlFor="password" className="sr-only">Password</label>
-                                <input value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" type="password" autoComplete="current-password" required className="rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password"/>
+                                <input value={password} onChange={(e) => setPassword(e.target.value)} id="password" name="password" type="password" autoComplete="current-password" required className="rounded relative block w-full px-3 py-2   focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password"/>
                             </div>
                         </div>
                         <div>
@@ -58,6 +59,7 @@ function Login(props) {
                     </form>
                 </div>
             </div>
+            <ThemeSwitcher/>
         </>
     )
 }
