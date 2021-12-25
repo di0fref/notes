@@ -40,7 +40,7 @@ const Quill = (props) => {
             }
             NotesService.update(props.note.id, data).then((result) => {
                 setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
-                // t("success", "Saved")
+                t("success", "Saved")
             }).catch((err) => {
                 t("error", "Could not save note")
                 console.log(err);

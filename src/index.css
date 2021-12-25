@@ -131,6 +131,9 @@ html[data-theme='light'] {
 .shade-50{
     background-color: var(--shade-50);
 }
+.shade-100{
+    background-color: var(--shade-100);
+}
 .bg-secondary {
     background: var(--background-secondary);
 }
@@ -280,18 +283,18 @@ input:checked ~ .dot {
     border-top: 1px solid var(--background-modifier-border);
 }
 
-input#title-input {
+input#title-input, input#search-input {
     background: var(--background-primary);
     outline: none;
     border: none;
 }
 
 #search-input, #new-folder {
-    background: var(--background-secondary);
+    /*background: var(--background-secondary);*/
 }
 
 #search-input:focus, #new-folder:focus {
-    border: 1px solid var(--interactive-accent);
+    /*border: 1px solid var(--interactive-accent);*/
 }
 
 .text-s {

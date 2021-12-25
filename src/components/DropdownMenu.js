@@ -32,23 +32,24 @@ export default function DropdownMenu(props) {
 
 	return (
 		<div>
-			{/*{1 || props.icon?*/}
-			{/*	(<IconButton*/}
-			{/*	aria-label="more"*/}
-			{/*	id="long-button"*/}
-			{/*	aria-controls="long-menu"*/}
-			{/*	aria-expanded={open ? "true" : undefined}*/}
-			{/*	aria-haspopup="true"*/}
-			{/*	onClick={handleClick}*/}
-			{/*>*/}
-			{/*	/!*<MoreVertIcon className={"text-normal"} />*!/*/}
-			{/*	<span className={"text-normal"}>{props.icon}</span>*/}
-			{/*</IconButton>)*/}
-			{/*:null}*/}
+			{1 || props.icon?
+				(<IconButton
+				aria-label="more"
+				id="long-button"
+				aria-controls="long-menu"
+				aria-expanded={open ? "true" : undefined}
+				aria-haspopup="true"
+				onClick={handleClick}
+			>
+				{/*<MoreVertIcon className={"text-normal"} />*/}
+				<span className={"text-normal"}>{props.icon}</span>
+			</IconButton>)
+			:null}
 
-				<Link to={"#"} className={"hover:text-accent"} onClick={handleClick}>{props.text}</Link>
+				<Link to={"#"} className={"hover:text-accent text-sm"} onClick={handleClick}>{props.text}</Link>
 
 			<Menu
+				dense
 				id="long-menu"
 				MenuListProps={{
 					"aria-labelledby": "Menu",
@@ -58,10 +59,9 @@ export default function DropdownMenu(props) {
 				onClose={handleClose}
 				PaperProps={{
 					style: {
-						backgroundColor: "var(--shade-100)",
+						backgroundColor: "var(--shade-50)",
 						color: "var(--text-normal)",
-						marginBottom: 0,
-						marginTop:0,
+						minWidth:"200px",
 					},
 				}}
 			>

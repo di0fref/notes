@@ -17,13 +17,16 @@ function Trash(props) {
     }, [props.trash])
 
     return (
-        <List key={"thead"}
-              className={"hover:cursor-pointer"}>
+        <List key={"thead"} className={"hover:cursor-pointer"}>
             <ListItem
+                // selected={true}
                 button dense
                 disableRipple disableTouchRipple
                 key={"thead"}
                 onClick={() => setOpen(!open)}
+                style={{
+                    paddingLeft:"4px"
+                }}
             >
                 <ListItemText>
                     <div className={'flex justify-start items-center'}>
@@ -54,7 +57,7 @@ function Trash(props) {
                               className={"hover:cursor-pointer"}
                               style={
                                   {
-                                      marginLeft: "1.5rem",
+                                      marginLeft: "0.7rem",
                                       width: "inherit",
                                       marginTop: "2px"
                                   }

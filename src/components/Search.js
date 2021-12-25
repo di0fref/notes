@@ -178,12 +178,12 @@ function Search(props) {
     const clearResults = () => setSearchResults([]);
 
     return (
-        <>
+        <div className={" w-full"}>
             <button
                 onClick={() => handleOpen(true)}
                 placeholder={"Search"}
                 className={
-                    "search rounded rounded-lg w-full mr-20 md:mr-0 px-2 py-1 text-muted_ bg-primary text-left"
+                    "search rounded rounded-lg w-full mr-20 md:mr-0 _md:ml-1 px-2 py-1 text-muted_ bg-primary text-left"
                 }
             >
                 <div className={"flex items-center"}>
@@ -242,7 +242,7 @@ function Search(props) {
                     </IconButton>
                 </Box>
             </Modal>
-        </>
+        </div>
     );
 }
 

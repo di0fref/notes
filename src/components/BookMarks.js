@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {CgFileDocument, FaCaretDown, FaCaretRight, FaFileAlt, FaStar} from "react-icons/all";
+import {CgFileDocument, FaCaretDown, FaCaretRight, FaFileAlt, FaRegStar, FaStar} from "react-icons/all";
 import {Collapse, List, ListItem, ListItemText} from "@mui/material";
 import {Link} from "react-router-dom";
 import ArrowTooltips from "./Tooltip";
@@ -18,23 +18,17 @@ function BookMarks(props) {
         return moment(date).format("YYYY-M-d H:m")
     }
     return (
-        <>
-            <List dense disablePadding>
-                <ListItem>
-                    <ListItemText className={"font-medium"}>
-                        <div className={"flex items-center justify-start"}>
-                            <div className={"text-xs text-muted_ uppercase tracking-widest font-bold mr-2"}>Favorites</div>
-                            <div><FaStar className={"icon-accent"}/></div>
-                        </div>
-                    </ListItemText>
-                </ListItem>
-            </List>
+        <div className={"my-1"}>
             <List disablePadding dense>
                 <ListItem button dense
-                          disableRipple disableTouchRipple
-                          key={"head"}
-                          onClick={() => setOpen(!open)}
-                          className={"hover:cursor-pointer"}>
+                          selected={!open}
+                        disableRipple disableTouchRipple
+                        key={"head"}
+                        onClick={() => setOpen(!open)}
+                        className={"hover:cursor-pointer"}
+                        sx={{
+                        paddingLeft: "4px"
+                }}>
                     <ListItemText>
                         <div className={'flex justify-start items-center'}>
                             <div className={""}>
@@ -44,10 +38,10 @@ function BookMarks(props) {
                                         : <FaCaretRight className={"icon-caret"}/>
                                     : ""}
                             </div>
+                            <div><FaRegStar className={"icon icon-accent ml-2"}/></div>
                             <div>
-                                <span className={"ml-1 mt-4"}>Favourite notes</span>
+                                <span className={"mt-4 ml-2"}>Favourite notes</span>
                             </div>
-                            {/*<div><FaStar className={"icon icon-accent ml-2"}/></div>*/}
                         </div>
                     </ListItemText>
                 </ListItem>
@@ -83,7 +77,7 @@ function BookMarks(props) {
                     </Collapse>
                     : ""}
             </List>
-        </>
+        </div>
     )
 }
 
