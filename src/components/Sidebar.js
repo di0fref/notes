@@ -32,7 +32,7 @@ import {ItemTypes} from "./Constants";
 import {useDrop, useDrag} from "react-dnd";
 import NotesService from "../service/NotesService";
 import ArrowTooltips from "./Tooltip";
-import MyLink from "./Link";
+import MyLink from "./MyLink";
 import BookMarks from "./BookMarks";
 import Search from "./Search";
 import {button, style_folder} from "./styles";
@@ -44,6 +44,7 @@ import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import NewFolderButton from "./NewFolderButton";
 import ThemeSwitcher from "./ThemeSwitcher";
 import Avatar from "./Avatar";
+import Shared from "./Shared";
 
 
 let moment = require('moment');
@@ -308,7 +309,7 @@ function Sidebar(props) {
                 }>
                 <div className={"p-3 z-10"}>
 
-                    <Avatar/>
+                    <UserMenu/>
 
                     <div className={`flex-shrink-0 h-12 mb-2 flex flex-row items-center justify-between `}>
                         <Search clickHandle={clickHandle} text={"Search"}/>
@@ -396,6 +397,7 @@ function Sidebar(props) {
                                     ))}</Collapse>
                             </List>
                             <div className={"absolute w-70 bottom-10 trash"}>
+                                <Shared/>
                                 <Trash trash={props.trash}/>
                             </div>
                         </div>

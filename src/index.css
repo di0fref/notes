@@ -443,7 +443,9 @@ input::placeholder {
     line-height: 1.6em;
     font-size: 1rem;
 }
-.ql-editor p{
+.ql-bubble .ql-editor p,
+.ql-bubble .ql-editor pre,
+.ql-bubble .ql-editor code{
     @apply mb-4
 }
 .ql-editor a {

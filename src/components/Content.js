@@ -19,7 +19,6 @@ function Content(props) {
     }
     return (
         <div className={"w-full z-10_"}>
-            {/*<ThemeSwitcher/>*/}
             {props.note.id
                 ? <Quill
                     note={note}
@@ -35,7 +34,7 @@ function Content(props) {
                             <div className={"flex items-center justify-start"}>
                                 <span><CgFileDocument/></span>
                                 <span className={"ml-2"}>
-                                    <Link to={"#"} className={"mr-20 md:mr-0  hover:text-hover-accent"} onClick={props.createNote}>Create new note</Link>
+                                    <Link to={"#"} className={"md:mr-0 hover:text-hover-accent"} onClick={props.createNote}>Create new note</Link>
                                 </span>
                             </div>
                         </div>
@@ -47,6 +46,7 @@ function Content(props) {
                     </div>
                 )
             }
+            <ThemeSwitcher/>
         </div>
 
     )

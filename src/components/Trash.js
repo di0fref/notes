@@ -6,7 +6,7 @@ import {
     FaCaretRight,
     HiOutlineTrash
 } from "react-icons/all";
-import MyLink from "./Link";
+import MyLink from "./MyLink";
 
 function Trash(props) {
     const [open, setOpen] = useState(false)

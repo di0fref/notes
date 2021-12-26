@@ -37,7 +37,7 @@ const Quill = (props) => {
             }
             NotesService.update(props.note.id, data).then((result) => {
                 setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
-                t("success", "Saved")
+                // t("success", "Saved")
             }).catch((err) => {
                 t("error", "Could not save note")
                 console.log(err);
@@ -132,8 +132,8 @@ const Quill = (props) => {
     }
     return (
         <div className={"flex flex-col"}>
-            <div className={"b_ flex items-center h-14 md:mt-0 mt-0 noprint"}>
-                <div className={" flex-grow"}>
+            <div className={"flex items-center h-14 md:mt-0 mt-0 noprint"}>
+                <div className={"flex-grow"}>
                     <div className={"flex justify-start items-center"}>
                         <Tooltip title={props.note.bookmark ? "Unfavorite this note" : "Favorite this note"}>
                             <button className={"flex items-center justify-between ml-4 noprint"}
@@ -144,9 +144,7 @@ const Quill = (props) => {
                                 }
                             </button>
                         </Tooltip>
-                        {/*<div className={"ml-4 text-muted bread-crumb_ text-s"}>*/}
                             <Breadcrumbs note={props.note} title={title} titleSaved={titleSaved}/>
-                        {/*</div>*/}
                         <div className={"ml-auto mr-4 text-s"}>
 
                             <DropdownMenu text={<MoreVertIcon/>} options={
@@ -167,15 +165,6 @@ const Quill = (props) => {
                                         icon: <HiOutlineTrash className={"text-normal"}/>,
                                         onClick: () => moveToTrash()
                                     },
-                                    // {
-                                    //     // divider: true,
-                                    //     label: "Log out",
-                                    //     icon: <HiO    const logOut = () => {
-                                    //         localStorage.clear();
-                                    //         navigate('/login')
-                                    //     }utlineTrash className={"text-normal"}/>,
-                                    //     onClick: () => logOut()
-                                    // },
                                 ]
                             }/>
                         </div>
@@ -211,6 +200,7 @@ const Quill = (props) => {
                         <input
                             type={"text"}
                             id={"title-input"}
+                            autoComplete={"off"}
                             readOnly={locked || deleted ? 1 : 0}
                             value={title} onChange={updateTitle} className={"p-0 truncate w-full title text-4xl font-bold bg-primary border-0 focus:outline-none focus:ring-0"} placeholder={"Give your note a title"}/>
                     </div>

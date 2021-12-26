@@ -13,9 +13,7 @@ const ITEM_HEIGHT = 48;
 export default function DropdownMenu(props) {
 
 	const [options, setOptions] = useState(props.options);
-
 	const [anchorEl, setAnchorEl] = useState(null);
-
 	const open = Boolean(anchorEl);
 
 	const handleClick = (event) => {
@@ -32,19 +30,7 @@ export default function DropdownMenu(props) {
 
 	return (
 		<div>
-			{1 || props.icon?
-				(<IconButton
-				aria-label="more"
-				id="long-button"
-				aria-controls="long-menu"
-				aria-expanded={open ? "true" : undefined}
-				aria-haspopup="true"
-				onClick={handleClick}
-			>
-				{/*<MoreVertIcon className={"text-normal"} />*/}
-				<span className={"text-normal"}>{props.icon}</span>
-			</IconButton>)
-			:null}
+
 
 				<Link to={"#"} className={"hover:text-accent text-sm"} onClick={handleClick}>{props.text}</Link>
 
