@@ -29,8 +29,8 @@ const Quill = (props) => {
     const [titleSaved, setTitleSaved] = useState(false);
 
     const saveToBackend = () => {
-        if(props.note.id) {
-            // console.log("saveToBackend")
+        if (props.note.id) {
+            console.log("saveToBackend")
             const data = {
                 text: JSON.stringify(el.current.editor.getContents()),
                 name: title
@@ -47,7 +47,7 @@ const Quill = (props) => {
 
     const saveTitle = () => {
         // console.log("saveTitle")
-        if(props.note.id) {
+        if (props.note.id) {
             NotesService.update(props.note.id, {name: title})
                 .then((result) => {
                     setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
@@ -126,20 +126,14 @@ const Quill = (props) => {
             console.log(err)
         })
     }
-    // const navigate = useNavigate();
-
-    // const logOut = () => {
-    //     localStorage.clear();
-    //     navigate('/login')
-    // }
 
     const downloadPDF = () => {
         console.log("downloadPDF")
     }
     return (
         <div className={"flex flex-col"}>
-            <div className={"flex items-center h-14 md:mt-0 mt-0 noprint"}>
-                <div className={"bg-secondary_ flex-grow"}>
+            <div className={"b_ flex items-center h-14 md:mt-0 mt-0 noprint"}>
+                <div className={" flex-grow"}>
                     <div className={"flex justify-start items-center"}>
                         <Tooltip title={props.note.bookmark ? "Unfavorite this note" : "Favorite this note"}>
                             <button className={"flex items-center justify-between ml-4 noprint"}
@@ -150,9 +144,9 @@ const Quill = (props) => {
                                 }
                             </button>
                         </Tooltip>
-                        <div className={"ml-4 text-muted bread-crumb_ text-s"}>
+                        {/*<div className={"ml-4 text-muted bread-crumb_ text-s"}>*/}
                             <Breadcrumbs note={props.note} title={title} titleSaved={titleSaved}/>
-                        </div>
+                        {/*</div>*/}
                         <div className={"ml-auto mr-4 text-s"}>
 
                             <DropdownMenu text={<MoreVertIcon/>} options={

@@ -43,6 +43,7 @@ import UserMenu from "./Menus/UserMenu";
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import NewFolderButton from "./NewFolderButton";
 import ThemeSwitcher from "./ThemeSwitcher";
+import Avatar from "./Avatar";
 
 
 let moment = require('moment');
@@ -282,9 +283,9 @@ function Sidebar(props) {
     }
     return (
         <>
-            <div
-                onClick={() => setOpenSm(false)}
-                className={`${openSm ? "w-full h-full" : "w-0 h-0"} overlay`}/>
+            {/*<div*/}
+            {/*    onClick={() => setOpenSm(false)}*/}
+            {/*    className={`${openSm ? "w-full h-full" : "w-0 h-0"} overlay_`}/>*/}
             <div
                 className={`
             sidebar 
@@ -302,14 +303,14 @@ function Sidebar(props) {
             ease-on-out
             duration-300
             noprint
+       
                 ${openSm ? "ml-0" : "-ml-full"}`
                 }>
                 <div className={"p-3 z-10"}>
-                    <div className={"flex items-center justify-start"}>
-                        <UserMenu/>
-                        <span className={"ml-auto"}><ThemeSwitcher/></span>
-                    </div>
-                    <div className={`flex-shrink-0 h-14 flex flex-row items-center justify-between `}>
+
+                    <Avatar/>
+
+                    <div className={`flex-shrink-0 h-12 mb-2 flex flex-row items-center justify-between `}>
                         <Search clickHandle={clickHandle} text={"Search"}/>
                         <Tooltip title={"Toggle menu"}>
                             <button className={`p-2 bg-secondary fixed top-2 right-12 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
@@ -325,9 +326,9 @@ function Sidebar(props) {
                 flex-grow 
                 md:block 
                 md:pb-0 
-                md:overflow-y-auto`
+                _md:overflow-y-auto`
                         }>
-                        <div className={""}>
+                        <div>
                             <div className={"flex items-center justify-start w-full mb-3"}>
                                 <Tooltip title={"New note"}>
                                     <button onClick={props.createNote} className={"h-10 text-sm rounded bg-accent-blue flex-grow"}>
@@ -400,9 +401,6 @@ function Sidebar(props) {
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </>
     );

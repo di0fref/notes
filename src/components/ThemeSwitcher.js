@@ -24,7 +24,7 @@ function ThemeSwitcher() {
         };
     }, [theme])
     return (
-        <button id="theme-toggle" className={"noprint"} type="button">
+        <button id="theme-toggle" className={"noprint mr-4"} type="_button">
             <Tooltip title={"Dark theme"}>
                 <span className="d-block-light d-none hover:text-hover-accent"><FaMoon/></span>
             </Tooltip>
