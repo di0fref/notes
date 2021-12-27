@@ -1,20 +1,14 @@
 import React, {useState} from "react";
 import {
     ListItemText,
-    MenuList,
     MenuItem,
     Divider,
-    Button,
     Menu,
     ListItemIcon,
-    IconButton,
-    dividerClasses
 } from "@mui/material";
 import {HiChevronDown, HiCog, HiLogout, HiQuestionMarkCircle, HiUser, HiUserCircle} from "react-icons/all";
 import {menuItemStyle} from "./style";
 import {Link, useNavigate} from "react-router-dom";
-import Avatar from "../Avatar";
-import ThemeSwitcher from "../ThemeSwitcher";
 
 function UserMenu() {
     const navigate = useNavigate();

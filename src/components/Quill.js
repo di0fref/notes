@@ -8,7 +8,7 @@ import {
     FaRegClock, FaRegFilePdf,
     FaRegStar,
     FaStar, FaSun,
-    HiOutlineTrash
+    HiOutlineTrash, HiShare
 } from "react-icons/all";
 import Breadcrumbs from "./BreadCrumbs"
 import Moment from "react-moment";
@@ -127,6 +127,10 @@ const Quill = (props) => {
         })
     }
 
+
+    const shareNote = () => {
+        console.log("shareNote");
+    }
     const downloadPDF = () => {
         console.log("downloadPDF")
     }
@@ -158,6 +162,11 @@ const Quill = (props) => {
                                         label: locked ? "Unlock editing" : "Lock for editing",
                                         icon: <BiLockAlt className={"text-normal"}/>,
                                         onClick: () => lockForEditing()
+                                    },
+                                                {
+                                        label: "Share note",
+                                        icon: <HiShare className={"text-normal"}/>,
+                                        onClick: () => shareNote()
                                     },
                                     {
                                         // divider: true,

@@ -166,11 +166,6 @@ function SidebarItem(props, {isDragging, tool}) {
                               onClick={() => {
                                   handleClick(props.items.type, props.items.id);
                               }}
-                              style={{
-                                  // paddingLeft: "4px",
-                                  //     // marginLeft:"1.4rem",
-                                  //     // width:"calc(100% - 1.4rem)"
-                              }}
                               key={`bb-${props.items.id}`}
                               selected={
                                   // (props.items.id === props.note_id && props.items.type === "note")

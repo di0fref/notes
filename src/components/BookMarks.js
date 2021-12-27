@@ -4,6 +4,7 @@ import {Collapse, List, ListItem, ListItemText} from "@mui/material";
 import {Link} from "react-router-dom";
 import ArrowTooltips from "./Tooltip";
 import moment from "moment";
+import MyLink from "./MyLink";
 
 function BookMarks(props) {
 
@@ -20,29 +21,20 @@ function BookMarks(props) {
     return (
         <div className={"my-1"}>
             <List disablePadding dense>
-                <ListItem button dense
+                <ListItem button
                           selected={!open}
-                        disableRipple disableTouchRipple
-                        key={"head"}
-                        onClick={() => setOpen(!open)}
-                        className={"hover:cursor-pointer"}
-                        sx={{
-                        paddingLeft: "4px"
-                }}>
+                          key={"head"}
+                          onClick={() => setOpen(!open)}
+                          className={"hover:cursor-pointer"}
+                          sx={{
+                              paddingLeft: "4px"
+                          }}>
                     <ListItemText>
                         <div className={'flex justify-start items-center'}>
-                            {/*<div className={""}>*/}
-                            {/*    {bookMarks.length*/}
-                            {/*        ? open*/}
-                            {/*            ? <FaCaretDown className={"icon-caret"}/>*/}
-                            {/*            : <FaCaretRight className={"icon-caret"}/>*/}
-                            {/*        : ""}*/}
-                            {/*</div>*/}
-                            {/*<div><FaRegStar className={"icon icon-accent ml-2"}/></div>*/}
                             <div><span className={"mt-4 ml-2"}>Favourites</span></div>
                             <div><HiStar className={"icon-accent ml-1"}/></div>
                             <div className={"text-muted text-xs ml-2"}>
-                                {!open?(`(${bookMarks.length} hidden)`):""}
+                                {!open ? (`(${bookMarks.length} hidden)`) : ""}
                             </div>
                         </div>
                     </ListItemText>
@@ -50,7 +42,7 @@ function BookMarks(props) {
                 {bookMarks.length
                     ? <Collapse in={open} timeout="auto" unmountOnExit key={`collapse-bookmark`}>
                         {bookMarks.map((bookmark, index) => (
-                            <Link to={`/note/${bookmark.id}`} key={`link-${bookmark.id}`}>
+                            <MyLink to={`/note/${bookmark.id}`} key={`link-${bookmark.id}`}>
                                 <ArrowTooltips
                                     placement={"right"}
                                     arrow
@@ -60,11 +52,13 @@ function BookMarks(props) {
                                             <p>Created at: {formatDate(bookmark.date_created)}</p>
                                         </div>
                                     }>
-                                    <ListItem disableRipple disableTouchRipple button dense key={`bookmark-${bookmark.id}`} className={"hover:cursor-pointer pl-3"}>
-                                        <ListItemText style={{paddingLeft: "10px"}}>
+                                    <ListItem disableRipple disableTouchRipple button key={`bookmark-${bookmark.id}`} className={"hover:cursor-pointer pl-3"}>
+                                        <ListItemText key={`cc-${bookmark.id}`}>
                                             <div className={'flex justify-start items-center'}>
-                                                <CgFileDocument className={`icon icon-muted`}/>
-                                                <div className={`ml-2 text-sm truncate text-sm`}>
+                                                <div>
+                                                    <CgFileDocument className={`icon`}/>
+                                                </div>
+                                                <div className={`ml-2 text-s ${props.class} truncate`}>
                                                     {bookmark.name
                                                         ? bookmark.name
                                                         : "Untitled"
@@ -74,7 +68,7 @@ function BookMarks(props) {
                                         </ListItemText>
                                     </ListItem>
                                 </ArrowTooltips>
-                            </Link>
+                            </MyLink>
                         ))}
                     </Collapse>
                     : ""}

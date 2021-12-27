@@ -2,7 +2,7 @@ import {Collapse, List, ListItem, ListItemText, MenuItem} from "@mui/material";
 import {
     CgFileDocument,
     FaCaretDown,
-    FaCaretRight,
+    FaCaretRight, FiShare,
     HiInboxIn,
     HiOutlineShare,
     HiOutlineTrash,
@@ -15,7 +15,7 @@ import MyLink from "./MyLink";
 function Shared() {
 
     const [shared, setShared] = useState([])
-    const [open, setOpen] = useState([])
+    const [open, setOpen] = useState(false)
 
     return (
 
@@ -23,6 +23,7 @@ function Shared() {
             <ListItem
                 button dense
                 disableRipple disableTouchRipple
+                disablePadding={true}
                 key={"thead"}
                 onClick={() => setOpen(!open)}
                 style={{
@@ -37,7 +38,7 @@ function Shared() {
                             }
                         </div>
                         <div>
-                            <HiInboxIn className={`icon`}/>
+                            <HiShare className={`icon`}/>
                         </div>
                         <div className={`ml-2 text-s truncate`}>
                             Shared with me
@@ -72,7 +73,7 @@ function Shared() {
                     ))}
                 <ListItem>
                     <ListItemText>
-                        <div className={" p-3 text-sm rounded bg-secondary-alt"}>Notes shared with wou will be sent here.</div>
+                        <div className={" p-3 text-sm rounded bg-secondary-alt"}>Notes shared with you will be sent here.</div>
                     </ListItemText>
                 </ListItem>
             </Collapse>

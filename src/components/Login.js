@@ -22,7 +22,6 @@ function Login(props) {
             }
         ).then((result) => {
             localStorage.setItem("api_token", result.data.api_token)
-            console.log("localStorage")
             navigate('/')
         }).catch((err) => {
 
@@ -63,7 +62,7 @@ function Login(props) {
                     console.log(result)
                     localStorage.setItem("api_token", result.data.api_token)
                     localStorage.setItem("user", JSON.stringify(user))
-                    navigate('/')
+                    // navigate('/')
                 })
             }).catch((error) => {
             // Handle Errors here.
