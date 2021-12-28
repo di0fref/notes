@@ -2,27 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-display: swap;
+    font-family: UniversalSans;
+    font-weight: 400;
+    src:
+            url(/src/assets/fonts/UniversalSansGX-Regular.woff2) format("woff2"),
+            url(/src/assets/fonts/UniversalSansGX-Regular.woff) format("woff"),
+            url(/src/assets/fonts/UniversalSansGX-Regular.ttf) format("truetype")
+}
 
-    @font-face {
-        font-display: swap;
-        font-family: UniversalSans;
-        font-weight: 400;
-        src: url(/src/assets/fonts/UniversalSansGX-Regular.woff2) format("woff2"), url(/src/assets/fonts/UniversalSansGX-Regular.woff) format("woff"), url(/src/assets/fonts/UniversalSansGX-Regular.ttf) format("truetype")
-    }
+@font-face {
+    font-display: swap;
+    font-family: UniversalSans;
+    font-weight: 500;
+    src:
+            url(/src/assets/fonts/UniversalSansGX-Medium.woff2) format("woff2"),
+            url(/src/assets/fonts/UniversalSansGX-Medium.woff) format("woff"),
+            url(/src/assets/fonts/UniversalSansGX-Medium.ttf) format("truetype")
+}
 
-    @font-face {
-        font-display: swap;
-        font-family: UniversalSans;
-        font-weight: 500;
-        src: url(/src/assets/fonts/UniversalSansGX-Medium.woff2) format("woff2"), url(/src/assets/fonts/UniversalSansGX-Medium.woff) format("woff"), url(/src/assets/fonts/UniversalSansGX-Medium.ttf) format("truetype")
-    }
+@font-face {
+    font-display: swap;
+    font-family: UniversalSans;
+    font-weight: 700;
+    src:
+            url(/src/assets/fonts/UniversalSansGX-Bold.woff2) format("woff2"),
+            url(/src/assets/fonts/UniversalSansGX-Bold.woff) format("woff"),
+            url(/src/assets/fonts/UniversalSansGX-Bold.ttf) format("truetype")
+}
 
-    @font-face {
-        font-display: swap;
-        font-family: UniversalSans;
-        font-weight: 700;
-        src: url(/src/assets/fonts/UniversalSansGX-Bold.woff2) format("woff2"), url(/src/assets/fonts/UniversalSansGX-Bold.woff) format("woff"), url(/src/assets/fonts/UniversalSansGX-Bold.ttf) format("truetype")
-    }
+
 
 
 html[data-theme='dark'] {
@@ -147,7 +157,7 @@ html[data-theme='light'] {
     --editor-line-height: calc(var(--note-editor-font-size) * var(--note-editor-line-height));
 }
 
-.b{
+.b {
     background-color: #293547;
 }
 
@@ -177,7 +187,7 @@ html[data-theme='light'] {
 
 
 body {
-    /*font-family: var(--font-family-system) !important;*/
+    font-family: var(--font-family-system) !important;
     color: var(--text-normal);
     background: var(--background-primary);
     /*font-family: 'Poppins', sans-serif;*/
@@ -274,9 +284,9 @@ html[data-theme='dark'] .d-block-dark {
     background: var(--background-primary);
 }
 
-.css-cveggr-MuiListItemIcon-root {
-    min-width: 25px !important;
-}
+/*.css-cveggr-MuiListItemIcon-root {*/
+/*    min-width: 25px !important;*/
+/*}*/
 
 button:hover {
     cursor: pointer !important;
@@ -291,10 +301,10 @@ button:hover {
     font-weight: 800;
 }
 
-.css-tlelie-MuiListItemText-root {
-    margin-top: 2px !important;
-    margin-bottom: 2px !important;
-}
+/*.css-tlelie-MuiListItemText-root {*/
+/*    margin-top: 2px !important;*/
+/*    margin-bottom: 2px !important;*/
+/*}*/
 
 /* Toggle B */
 input:checked ~ .dot {
@@ -323,26 +333,27 @@ input:checked ~ .dot {
 [type='week'],
 [multiple],
 textarea,
-select{
+select {
     background-color: var(--shade-100);
-    border-color:var(--shade-50)
+    border-color: var(--shade-50)
 }
 
-#google-login{
+#google-login {
     background-color: var(--shade-100);
-    border-color:var(--shade-20)
+    border-color: var(--shade-20)
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
-input[type="search"]:focus{
+input[type="search"]:focus {
     @apply focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
 }
 
-#new-folder, #search-input{
+#new-folder, #search-input {
     background-color: var(--shade-50);
 }
+
 .sidebar-avatar {
     border-top: 1px solid var(--background-modifier-border);
 }
@@ -355,6 +366,7 @@ input[type="search"]:focus{
 .text-normal {
     color: var(--text-normal);
 }
+
 .sidebar-active {
     background-color: var(--text-accent-hover) !important;
     @apply rounded
@@ -443,11 +455,13 @@ input::placeholder {
     line-height: 1.6em;
     font-size: 1rem;
 }
+
 .ql-bubble .ql-editor p,
 .ql-bubble .ql-editor pre,
-.ql-bubble .ql-editor code{
+.ql-bubble .ql-editor code {
     @apply mb-4
 }
+
 .ql-editor a {
     color: var(--editor-url-color) !important;
 }
@@ -588,13 +602,13 @@ input:checked + .toggle-bg {
     background-color: black;
     opacity: 0.7;
     z-index: 2;
-    transition : opacity 500ms ease-out;
-    -webkit-transition : opacity 500ms ease-out;
-    -moz-transition : opacity 500ms ease-out;
-    -o-transition : opacity 500ms ease-out;
+    transition: opacity 500ms ease-out;
+    -webkit-transition: opacity 500ms ease-out;
+    -moz-transition: opacity 500ms ease-out;
+    -o-transition: opacity 500ms ease-out;
 }
 
-.trash{
+.trash {
     width: 275px;
 }
 

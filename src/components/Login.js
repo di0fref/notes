@@ -50,7 +50,7 @@ function Login(props) {
             .then((result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const user = result.user;
-
+                console.log(user.uid)
                 /* Validate user */
                 NotesService.login({
                     uid: user.uid,
@@ -59,10 +59,11 @@ function Login(props) {
                     accessToken: credential.accessToken,
                     user: user
                 }).then((result) => {
-                    console.log(result)
-                    localStorage.setItem("api_token", result.data.api_token)
+                    localStorage.setItem("api_token", result.data.user.api_token)
                     localStorage.setItem("user", JSON.stringify(user))
-                    // navigate('/')
+                    localStorage.setItem("uid", user.uid)
+                    localStorage.setItem("teams", JSON.stringify(result.data.teams))
+                    navigate('/')
                 })
             }).catch((error) => {
             // Handle Errors here.

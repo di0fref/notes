@@ -30,7 +30,9 @@ class FolderService {
         return http.get(`/notes/folder/${id}`);
     }
 
-
+    tree(){
+        return http.get(`/tree`);
+    }
 
     /**************************************** */
 
@@ -39,6 +41,7 @@ class FolderService {
         headers: {
             "Content-type": "application/json",
             "token": localStorage.getItem("api_token"),
+            "uid":  localStorage.getItem("uid"),
         }
 
 

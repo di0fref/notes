@@ -45,9 +45,8 @@ function UserMenu() {
 
     return (
         <div className={"hover:shade-100 rounded"}>
-            {/*<Avatar/>*/}
             <Link to={"#"} onClick={handleClick} className={""}>
-                <div className={"flex items-center mb-4 p-1"}>
+                <div className={"flex items-center p-1"}>
                     <div className="avatar w-10 h-10 mr-1">
                         <img src={user.photoURL} className="rounded-full p-1 bg-darker border-1" alt={"Avatar"}/>
                     </div>

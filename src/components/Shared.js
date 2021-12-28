@@ -19,11 +19,19 @@ function Shared() {
 
     return (
 
-        <List>
+        <List
+            style={{
+                marginTop: "2em"
+            }}
+            disableRipple
+            disableTouchRipple
+            dense
+            disablePadding
+            button>
             <ListItem
-                button dense
-                disableRipple disableTouchRipple
-                disablePadding={true}
+                button
+                disableRipple
+                disableTouchRipple
                 key={"thead"}
                 onClick={() => setOpen(!open)}
                 style={{
@@ -71,7 +79,11 @@ function Shared() {
                         </ListItem>
                     </MyLink>
                     ))}
-                <ListItem>
+                <ListItem
+                    style={{
+                        padding:0
+                    }}
+                >
                     <ListItemText>
                         <div className={" p-3 text-sm rounded bg-secondary-alt"}>Notes shared with you will be sent here.</div>
                     </ListItemText>

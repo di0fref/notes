@@ -13,7 +13,7 @@ export const Context = createContext(null)
 
 function App() {
     return (
-        <div className={"antialiased"}>
+        <div className={"antialiased_"}>
             <GlobalProvider>
                 <DndProvider backend={HTML5Backend} debugMode={true}>
                     <ToastContainer

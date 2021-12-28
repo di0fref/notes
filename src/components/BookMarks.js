@@ -19,19 +19,25 @@ function BookMarks(props) {
         return moment(date).format("YYYY-M-d H:m")
     }
     return (
-        <div className={"my-1"}>
-            <List disablePadding dense>
-                <ListItem button
-                          selected={!open}
+            <List
+                dense
+                disableRipple
+                disableTouchRipple
+                disablePadding
+                button>
+                <ListItem
+
+                          selected={true}
                           key={"head"}
                           onClick={() => setOpen(!open)}
                           className={"hover:cursor-pointer"}
                           sx={{
-                              paddingLeft: "4px"
+                              paddingLeft: "4px",
+                              marginTop: "2px",
                           }}>
                     <ListItemText>
                         <div className={'flex justify-start items-center'}>
-                            <div><span className={"mt-4 ml-2"}>Favourites</span></div>
+                            <div><span className={"mt-4 ml-2 text-s"}>Favourites</span></div>
                             <div><HiStar className={"icon-accent ml-1"}/></div>
                             <div className={"text-muted text-xs ml-2"}>
                                 {!open ? (`(${bookMarks.length} hidden)`) : ""}
@@ -52,7 +58,15 @@ function BookMarks(props) {
                                             <p>Created at: {formatDate(bookmark.date_created)}</p>
                                         </div>
                                     }>
-                                    <ListItem disableRipple disableTouchRipple button key={`bookmark-${bookmark.id}`} className={"hover:cursor-pointer pl-3"}>
+                                    <ListItem
+                                        disableRipple
+                                        disableTouchRipple
+                                        button
+                                        key={`bookmark-${bookmark.id}`}
+                                        className={"hover:cursor-pointer pl-3"}
+                                        style={{
+                                            marginTop: "2px",
+                                        }}>
                                         <ListItemText key={`cc-${bookmark.id}`}>
                                             <div className={'flex justify-start items-center'}>
                                                 <div>
@@ -73,7 +87,6 @@ function BookMarks(props) {
                     </Collapse>
                     : ""}
             </List>
-        </div>
     )
 }
 

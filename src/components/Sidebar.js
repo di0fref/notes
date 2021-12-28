@@ -168,8 +168,8 @@ function SidebarItem(props, {isDragging, tool}) {
                               }}
                               key={`bb-${props.items.id}`}
                               selected={
-                                  // (props.items.id === props.note_id && props.items.type === "note")
-                                  (props.items.id === props.clicked_id)
+                                  (props.items.id === props.note_id && props.items.type === "note")
+                                  // (props.items.id === props.clicked_id)
 
                               }
                               disableRipple disableTouchRipple
@@ -299,103 +299,177 @@ function Sidebar(props) {
             ease-on-out
             duration-300
             noprint
-       
                 ${openSm ? "ml-0" : "-ml-full"}`
                 }>
-                <div className={"p-3 z-10"}>
-
-                    <UserMenu/>
-
-                    <div className={`flex-shrink-0 h-12 mb-2 flex flex-row items-center justify-between `}>
-                        <Search clickHandle={clickHandle} text={"Search"}/>
-                        <Tooltip title={"Toggle menu"}>
-                            <button className={`p-2 bg-secondary fixed top-2 right-12 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
-                                {!openSm
-                                    ? <FaBars className={"w-6 h-6"}/>
-                                    : <FaTimes className={"w-6 h-6"}/>
+                {/*<div className={"px-3 z-10"}>*/}
+                {/*    <UserMenu/>*/}
+                {/*    <div className={`flex-shrink-0 h-12 mb-2 flex flex-row items-center justify-between `}>*/}
+                {/*        <Search clickHandle={clickHandle} text={"Search"}/>*/}
+                {/*        <Tooltip title={"Toggle menu"}>*/}
+                {/*            <button className={`p-2 bg-secondary fixed top-2 right-12 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>*/}
+                {/*                {!openSm*/}
+                {/*                    ? <FaBars className={"w-6 h-6"}/>*/}
+                {/*                    : <FaTimes className={"w-6 h-6"}/>*/}
+                {/*                }*/}
+                {/*            </button>*/}
+                {/*        </Tooltip>*/}
+                {/*    </div>*/}
+                {/*    <div className={"flex items-center justify-start w-full mb-3"}>*/}
+                {/*        <Tooltip title={"New note"}>*/}
+                {/*            <button onClick={props.createNote} className={"h-10 text-sm rounded bg-accent-blue flex-grow"}>*/}
+                {/*                <div className={"flex items-center"}>*/}
+                {/*                    <span className={"ml-2"}><HiPlus className={"font-thin"}/></span>*/}
+                {/*                    <span className={"ml-2 text-sm font-medium"}>New note</span>*/}
+                {/*                </div>*/}
+                {/*            </button>*/}
+                {/*        </Tooltip>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+                {/*    <div className={"overflow-y-auto h-screen px-3"}>*/}
+                {/*        <div*/}
+                {/*            className={`*/}
+                {/*    flex-grow */}
+                {/*    md:block */}
+                {/*    md:pb-0 */}
+                {/*    _md:overflow-y-auto`*/}
+                {/*            }>*/}
+                {/*            <div>*/}
+                {/*                <BookMarks bookmarks={props.bookmarks} open={props.open}/>*/}
+                {/*                <List dense key={props.depthStep}>*/}
+                {/*                    /!*<Link to={"#"}>*!/*/}
+                {/*                    <ListItem*/}
+                {/*                        onClick={*/}
+                {/*                            () => {*/}
+                {/*                                setOpen(!open);*/}
+                {/*                                props.folderClicked(0)*/}
+                {/*                            }*/}
+                {/*                        }*/}
+                {/*                        className={"text-lg"}*/}
+                {/*                        selected={true}*/}
+                {/*                        button*/}
+                {/*                        disableRipple*/}
+                {/*                        disableTouchRipple*/}
+                {/*                        sx={{*/}
+                {/*                            paddingLeft: "4px",*/}
+                {/*                            paddingRight: 0*/}
+                {/*                        }}>*/}
+                {/*                        <ListItemText className={""} key={`cc-${props.items.id}`}>*/}
+                {/*                            <div className={'flex justify-start items-center'}>*/}
+                {/*                                <div className={""}>*/}
+                {/*                                    {open*/}
+                {/*                                        ? <FaCaretDown className={"icon-caret"}/>*/}
+                {/*                                        : <FaCaretRight className={"icon-caret"}/>*/}
+                {/*                                    }*/}
+                {/*                                </div>*/}
+                {/*                                <HiUser className={`icon ml-2`}/>*/}
+                {/*                                <div className={`ml-2 text-s ${props.class} truncate`}>*/}
+                {/*                                    My notes*/}
+                {/*                                </div>*/}
+                {/*                            </div>*/}
+                {/*                        </ListItemText>*/}
+                {/*                        /!*<ListItemSecondaryAction>*!/*/}
+                {/*                        /!*    <NewFolderButton text={"Notebooks"} createFolder={props.createFolder} folder={props.clicked_id}/>*!/*/}
+                {/*                        /!*</ListItemSecondaryAction>*!/*/}
+                {/*                    </ListItem>*/}
+                {/*                    /!*</Link>*!/*/}
+                {/*                    <Collapse in={open} timeout="auto" unmountOnExit>*/}
+                {/*                        {props.items.map((sidebarItem, index) => (*/}
+                {/*                            <SidebarItem*/}
+                {/*                                key={`${sidebarItem.name}${index}`}*/}
+                {/*                                depthStep={1}*/}
+                {/*                                depth={1}*/}
+                {/*                                // noteClicked={props.noteClicked}*/}
+                {/*                                items={sidebarItem}*/}
+                {/*                                clicked_id={props.clicked_id}*/}
+                {/*                                droppedHandler={props.droppedHandler}*/}
+                {/*                                class={""}*/}
+                {/*                                icon={true}*/}
+                {/*                                note_id={props.note_id}*/}
+                {/*                                clickHandle={clickHandle}*/}
+                {/*                                folderClicked={props.folderClicked}*/}
+                {/*                            />*/}
+                {/*                        ))}</Collapse>*/}
+                {/*                </List>*/}
+                {/*            </div>*/}
+                {/*            <div className={""}>*/}
+                {/*                <Shared/>*/}
+                {/*                <Trash trash={props.trash}/>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                <div className={"menu px-3 my-2"}><UserMenu/></div>
+                <div className={"search px-3"}><Search clickHandle={clickHandle} text={"Search"}/></div>
+                <div className={"new-note p-3"}>
+                    <Tooltip title={"New note"}>
+                        <button onClick={props.createNote} className={"h-10 text-sm rounded bg-accent-blue flex-grow w-full"}>
+                            <div className={"flex items-center"}>
+                                <span className={"ml-2"}><HiPlus className={"font-thin"}/></span>
+                                <span className={"ml-2 text-sm font-medium"}>New note</span>
+                            </div>
+                        </button>
+                    </Tooltip>
+                </div>
+                <div className={"flex flex-col flex-grow bg-gray-800_ overflow-y-auto p-3"}>
+                    <BookMarks bookmarks={props.bookmarks} open={props.open}/>
+                    <List dense key={props.depthStep}>
+                        {/*<Link to={"#"}>*/}
+                        <ListItem
+                            onClick={
+                                () => {
+                                    setOpen(!open);
+                                    props.folderClicked(0)
                                 }
-                            </button>
-                        </Tooltip>
-                    </div>
-                    <div
-                        className={`
-                flex-grow 
-                md:block 
-                md:pb-0 
-                _md:overflow-y-auto`
-                        }>
-                        <div>
-                            <div className={"flex items-center justify-start w-full mb-3"}>
-                                <Tooltip title={"New note"}>
-                                    <button onClick={props.createNote} className={"h-10 text-sm rounded bg-accent-blue flex-grow"}>
-                                        <div className={"flex items-center"}>
-                                            <span className={"ml-2"}><HiPlus className={"font-thin"}/></span>
-                                            <span className={"ml-2 text-sm font-semibold"}>New note</span>
-                                        </div>
-                                    </button>
-                                </Tooltip>
-                            </div>
-                            <BookMarks bookmarks={props.bookmarks} open={props.open}/>
-                            <List disablePadding dense key={props.depthStep}>
-                                {/*<Link to={"#"}>*/}
-                                <ListItem
-                                    onClick={
-                                        () => {
-                                            setOpen(!open);
-                                            props.folderClicked(0)
+                            }
+                            className={"text-lg"}
+                            selected={true}
+                            button
+                            disableRipple
+                            disableTouchRipple
+                            sx={{
+                                paddingLeft: "4px",
+                                paddingRight: 0
+                            }}>
+                            <ListItemText className={""} key={`cc-${props.items.id}`}>
+                                <div className={'flex justify-start items-center'}>
+                                    <div className={""}>
+                                        {open
+                                            ? <FaCaretDown className={"icon-caret"}/>
+                                            : <FaCaretRight className={"icon-caret"}/>
                                         }
-                                    }
-                                    className={"text-lg"}
-                                    selected={!open}
-                                    button
-                                    disableRipple
-                                    disableTouchRipple
-                                    sx={{
-                                        paddingLeft: "4px",
-                                        paddingRight: 0
-                                    }}>
-                                    <ListItemText className={""} key={`cc-${props.items.id}`}>
-                                        <div className={'flex justify-start items-center'}>
-                                            <div className={""}>
-                                                {open
-                                                    ? <FaCaretDown className={"icon-caret"}/>
-                                                    : <FaCaretRight className={"icon-caret"}/>
-                                                }
-                                            </div>
-                                            <HiUser className={`icon ml-2`}/>
-                                            <div className={`ml-2 text-s ${props.class} truncate`}>
-                                                My notes
-                                            </div>
-                                        </div>
-                                    </ListItemText>
-                                    <ListItemSecondaryAction>
-                                        <NewFolderButton text={"Notebooks"} createFolder={props.createFolder} folder={props.clicked_id}/>
-                                    </ListItemSecondaryAction>
-                                </ListItem>
-                                {/*</Link>*/}
-                                <Collapse in={open} timeout="auto" unmountOnExit>
-                                    {props.items.map((sidebarItem, index) => (
-                                        <SidebarItem
-                                            key={`${sidebarItem.name}${index}`}
-                                            depthStep={1}
-                                            depth={1}
-                                            // noteClicked={props.noteClicked}
-                                            items={sidebarItem}
-                                            clicked_id={props.clicked_id}
-                                            droppedHandler={props.droppedHandler}
-                                            class={""}
-                                            icon={true}
-                                            note_id={props.note_id}
-                                            clickHandle={clickHandle}
-                                            folderClicked={props.folderClicked}
-                                        />
-                                    ))}</Collapse>
-                            </List>
-                            <div className={"absolute w-70 bottom-10 trash"}>
-                                <Shared/>
-                                <Trash trash={props.trash}/>
-                            </div>
-                        </div>
+                                    </div>
+                                    <HiUser className={`icon ml-2`}/>
+                                    <div className={`ml-2 text-s ${props.class} truncate`}>
+                                        My notes
+                                    </div>
+                                </div>
+                            </ListItemText>
+                            <ListItemSecondaryAction>
+                                <NewFolderButton text={"Notebooks"} createFolder={props.createFolder} folder={props.clicked_id}/>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                        {/*</Link>*/}
+                        <Collapse in={open} timeout="auto" unmountOnExit>
+                            {props.items.map((sidebarItem, index) => (
+                                <SidebarItem
+                                    key={`${sidebarItem.name}${index}`}
+                                    depthStep={1}
+                                    depth={1}
+                                    // noteClicked={props.noteClicked}
+                                    items={sidebarItem}
+                                    clicked_id={props.clicked_id}
+                                    droppedHandler={props.droppedHandler}
+                                    class={""}
+                                    icon={true}
+                                    note_id={props.note_id}
+                                    clickHandle={clickHandle}
+                                    folderClicked={props.folderClicked}
+                                />
+                            ))}</Collapse>
+                    </List>
+
+                    <div className={"mt-auto mb-4"}>
+                        <Shared/>
+                        <Trash trash={props.trash}/>
                     </div>
                 </div>
             </div>

@@ -17,11 +17,17 @@ function Trash(props) {
     }, [props.trash])
 
     return (
-        <List key={"thead"} className={"hover:cursor-pointer"}>
+        <List key={"thead"} className={"hover:cursor-pointer"}
+              disableRipple
+              disableTouchRipple
+              dense
+              button
+              disablePadding
+        >
             <ListItem
-                // selected={true}
-                button dense
-                disableRipple disableTouchRipple
+                disableRipple
+                disableTouchRipple
+                button
                 key={"thead"}
                 onClick={() => setOpen(!open)}
                 style={{

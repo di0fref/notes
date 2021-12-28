@@ -168,7 +168,8 @@ function Search(props) {
         const res = await fetch(`${api_config.url}/search/${term}`,{
             headers: {
                 "Content-type": "application/json",
-                "Authorization": `Bearer ${api_config.token}`
+                "api_token": localStorage.getItem("api_token"),
+                "uid": localStorage.getItem("uid")
             }
         });
         const result = await res.json();

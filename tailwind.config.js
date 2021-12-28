@@ -9,7 +9,7 @@ module.exports = {
             },
             width: {
                 "76": "18.75rem"
-            }
+            },
         },
     },
     variants: {

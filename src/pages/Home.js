@@ -40,9 +40,10 @@ function Home() {
         // console.log("useEffect");
         (async () => {
 
-            let response = await FolderService.getResult(0);
-            let notesWithoutFolder = await FolderService.notesByFolderId(0);
-            setTreeData(response.concat(notesWithoutFolder.data));
+            let response = await FolderService.tree(0);
+            setTreeData(response.data)
+            // let notesWithoutFolder = await FolderService.notesByFolderId(0);
+            // setTreeData(response.data.concat(notesWithoutFolder.data));
 
             let bookmarks = await NotesService.getBookMarks();
             setBookMarks(bookmarks.data);
@@ -99,8 +100,9 @@ function Home() {
                 .catch((err) => {
                     console.log(err);
                 });
-
         }
+
+
     };
     const moveTrash = (id) => {
         setTrashed(!trashed)
