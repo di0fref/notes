@@ -85,11 +85,12 @@ const Quill = (props) => {
 
     const modules = {
         toolbar: [
-            // [{'header': 1}, {'header': 2}, {'header': 3}],
-            [{'header': [1, 2, 3]}],
+            [{'header': 1}, {'header': 2}],
+            [{'header': [3, 4, 5]}],
             ['bold', 'italic'],
             ['blockquote', 'code-block'],
             [{'list': 'ordered'}, {'list': 'bullet'}],
+            ["link"]
         ],
     }
     const formats = [
@@ -148,7 +149,7 @@ const Quill = (props) => {
                                 }
                             </button>
                         </Tooltip>
-                            <Breadcrumbs note={props.note} title={title} titleSaved={titleSaved}/>
+                        <Breadcrumbs note={props.note} title={title} titleSaved={titleSaved}/>
                         <div className={"ml-auto mr-4 text-s"}>
 
                             <DropdownMenu text={<MoreVertIcon/>} options={
@@ -163,7 +164,7 @@ const Quill = (props) => {
                                         icon: <BiLockAlt className={"text-normal"}/>,
                                         onClick: () => lockForEditing()
                                     },
-                                                {
+                                    {
                                         label: "Share note",
                                         icon: <HiShare className={"text-normal"}/>,
                                         onClick: () => shareNote()
@@ -205,13 +206,22 @@ const Quill = (props) => {
                             </Tooltip>
                         </div>
                     </div>
-                    <div className={"h-16 flex _mt-6 mb-4_ px-4 md:px-4 "}>
-                        <input
-                            type={"text"}
-                            id={"title-input"}
-                            autoComplete={"off"}
-                            readOnly={locked || deleted ? 1 : 0}
-                            value={title} onChange={updateTitle} className={"p-0 truncate w-full title text-4xl font-bold bg-primary border-0 focus:outline-none focus:ring-0"} placeholder={"Give your note a title"}/>
+                    <div className={"h-16_ flex px-4 md:px-4 mt-2"}>
+                        {/*<input*/}
+                        {/*    type={"text"}*/}
+                        {/*    id={"title-input"}*/}
+                        {/*    autoComplete={"off"}*/}
+                        {/*    readOnly={locked || deleted ? 1 : 0}*/}
+                        {/*    value={title} onChange={updateTitle} className={"p-0 truncate w-full title text-4xl font-bold bg-primary border-0 focus:outline-none focus:ring-0"} placeholder={"Give your note a title"}/>*/}
+
+
+                        <textarea readOnly={locked || deleted ? 1 : 0}
+                                  maxLength="100"
+                                  defaultValue={title}
+                                  onChange={updateTitle}
+                                  placeholder={"Give your note a title"}
+                                  className={"p-0 w-full title text-4xl font-bold bg-primary border-0 focus:outline-none focus:ring-0"}/>
+
                     </div>
                     <ReactQuill
                         placeholder="Click here to start writing"

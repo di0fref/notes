@@ -8,33 +8,39 @@ import {GlobalProvider} from "./components/contexts/GlobalContext";
 import Login from "./components/Login";
 
 import {PrivateRoute} from "./helpers/PrivateRoute";
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 
 export const Context = createContext(null)
 
 function App() {
+    const theme = createTheme({
+        components: {
+            MuiButtonBase: {
+                defaultProps: {
+                    disableRipple: true,
+                },
+            },
+        },
+    });
     return (
         <div className={"antialiased_"}>
-            <GlobalProvider>
-                <DndProvider backend={HTML5Backend} debugMode={true}>
-                    <ToastContainer
-                        hideProgressBar={true}
-                        className={"text-s"}
-                        position="bottom-right"/>
-                    <Routes>
-                        {/*<Route path={"/:type/:id"} element={<Home/>}/>*/}
-                        {/*<Route exact path={"/"} element={<Home/>}/>*/}
-
-                        {/*<PrivateRoute exact component={<Home/>} path={"/:type/:id"} />*/}
-
-                        <Route exact path={'/'} element={<PrivateRoute/>}>
-                            <Route path={"/:type/:id"} element={<Home/>}/>
-                            <Route exact path={"/"} element={<Home/>}/>
-                        </Route>
-                        <Route exact path={"/login"} element={<Login/>}/>
-                        {/*<Route exact path="/signup" element={<Signup/>}  />*/}
-                    </Routes>
-                </DndProvider>
-            </GlobalProvider>
+            <ThemeProvider theme={theme}>
+                <GlobalProvider>
+                    <DndProvider backend={HTML5Backend} debugMode={true}>
+                        <ToastContainer
+                            hideProgressBar={true}
+                            className={"text-s"}
+                            position="bottom-right"/>
+                        <Routes>
+                            <Route exact path={'/'} element={<PrivateRoute/>}>
+                                <Route path={"/:type/:id"} element={<Home/>}/>
+                                <Route exact path={"/"} element={<Home/>}/>
+                            </Route>
+                            <Route exact path={"/login"} element={<Login/>}/>
+                        </Routes>
+                    </DndProvider>
+                </GlobalProvider>
+            </ThemeProvider>
         </div>
     )
 

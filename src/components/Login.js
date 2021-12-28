@@ -59,10 +59,10 @@ function Login(props) {
                     accessToken: credential.accessToken,
                     user: user
                 }).then((result) => {
-                    localStorage.setItem("api_token", result.data.user.api_token)
+                    console.log(result)
+                    localStorage.setItem("api_token", result.data.api_token)
                     localStorage.setItem("user", JSON.stringify(user))
                     localStorage.setItem("uid", user.uid)
-                    localStorage.setItem("teams", JSON.stringify(result.data.teams))
                     navigate('/')
                 })
             }).catch((error) => {

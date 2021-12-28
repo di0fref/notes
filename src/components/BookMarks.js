@@ -20,13 +20,10 @@ function BookMarks(props) {
     }
     return (
             <List
-                dense
-                disableRipple
-                disableTouchRipple
-                disablePadding
-                button>
+                dense={true}
+                disablePadding={true}
+                button={true}>
                 <ListItem
-
                           selected={true}
                           key={"head"}
                           onClick={() => setOpen(!open)}
@@ -59,9 +56,9 @@ function BookMarks(props) {
                                         </div>
                                     }>
                                     <ListItem
-                                        disableRipple
-                                        disableTouchRipple
-                                        button
+
+                                        button={true}
+
                                         key={`bookmark-${bookmark.id}`}
                                         className={"hover:cursor-pointer pl-3"}
                                         style={{

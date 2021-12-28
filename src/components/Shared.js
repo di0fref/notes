@@ -23,15 +23,11 @@ function Shared() {
             style={{
                 marginTop: "2em"
             }}
-            disableRipple
-            disableTouchRipple
-            dense
-            disablePadding
-            button>
+            dense={true}
+            disablePadding={true}
+            button={true}        >
             <ListItem
-                button
-                disableRipple
-                disableTouchRipple
+                button={true}
                 key={"thead"}
                 onClick={() => setOpen(!open)}
                 style={{
@@ -58,8 +54,8 @@ function Shared() {
                 {shared.map((t, index) => (
                    <MyLink type={"note"} id={t.id} key={`tlink-${index}`}>
                         <ListItem key={`trash-${index}`}
-                                  button dense
-                                  disableRipple disableTouchRipple
+                                  dense={true}
+                                  button={true}
                                   className={"hover:cursor-pointer"}
                                   style={
                                       {

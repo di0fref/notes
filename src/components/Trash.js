@@ -18,16 +18,12 @@ function Trash(props) {
 
     return (
         <List key={"thead"} className={"hover:cursor-pointer"}
-              disableRipple
-              disableTouchRipple
-              dense
-              button
-              disablePadding
+              dense={true}
+              disablePadding={true}
+              button={true}
         >
             <ListItem
-                disableRipple
-                disableTouchRipple
-                button
+                button={true}
                 key={"thead"}
                 onClick={() => setOpen(!open)}
                 style={{
@@ -58,8 +54,8 @@ function Trash(props) {
                     <MyLink type={"note"} id={t.id} key={`tlink-${index}`}>
 
                     <ListItem key={`trash-${index}`}
-                              button dense
-                              disableRipple disableTouchRipple
+                              dense={true}
+                              button={true}
                               className={"hover:cursor-pointer"}
                               style={
                                   {

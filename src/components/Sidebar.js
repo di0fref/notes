@@ -123,7 +123,9 @@ function SidebarItem(props, {isDragging, tool}) {
         setOpen(!open);
         if (type === "folder") {
             props.folderClicked(id)
-        }
+        } else (
+            props.clickHandle()
+        )
     };
 
 
@@ -158,35 +160,32 @@ function SidebarItem(props, {isDragging, tool}) {
                             )
                             : ""
                     }>
-                    <ListItem button dense
-                              id={`item-${props.items.id}`}
-                              ref={attacheRef}
-                        // style={{opacity}}
-                              role="card"
-                              onClick={() => {
-                                  handleClick(props.items.type, props.items.id);
-                              }}
-                              key={`bb-${props.items.id}`}
-                              selected={
-                                  (props.items.id === props.note_id && props.items.type === "note")
-                                  // (props.items.id === props.clicked_id)
+                    <ListItem
+                        dense={true}
+                        button={true}
+                        id={`item-${props.items.id}`}
+                        ref={attacheRef}
+                        role="card"
+                        onClick={() => {
+                            handleClick(props.items.type, props.items.id);
+                        }}
+                        key={`bb-${props.items.id}`}
+                        selected={
+                            (props.items.id === props.note_id && props.items.type === "note")
+                            // (props.items.id === props.clicked_id)
 
-                              }
-                              disableRipple disableTouchRipple
-                              className={`${isActive ? "sidebar-active" : ""} pointer`}
-                              style={
-                                  {
-                                      marginLeft: props.depth * props.depthStep + ".25rem",
-                                      // // width: "inherit",
-                                      marginTop: "2px",
-                                      width: `calc(100% - ${props.depth * props.depthStep + ".25rem"})`,
-                                      paddingLeft: "4px",
-                                      paddingRight: 0
-                                      // // paddingLeft:0
-                                  }
-                              }>
+                        }
+                        className={`${isActive ? "sidebar-active" : ""} pointer`}
+                        style={
+                            {
+                                marginLeft: props.depth * props.depthStep + ".25rem",
+                                marginTop: "2px",
+                                width: `calc(100% - ${props.depth * props.depthStep + ".25rem"})`,
+                                paddingLeft: "4px",
+                                paddingRight: 0
+                            }
+                        }>
                         <ListItemText
-                            // style={{marginLeft: props.depth * props.depthStep*1.5+"rem"}}
                             key={`cc-${props.items.id}`}>
                             <div className={'flex justify-start items-center'}>
                                 <div className={""}>
@@ -231,11 +230,8 @@ function SidebarItem(props, {isDragging, tool}) {
             {(props.items.items && props.items.items.length > 0) ? (
                 <div key={`er-${props.items.id}`}>
                     <Collapse in={open} timeout="auto" unmountOnExit key={`ee-${props.items.id}`}>
-                        <List disablePadding dense
+                        <List dense={true}
                               key={`ff-${props.items.id}`}
-                            // style={{
-                            //     marginLeft:"2rem"
-                            // }}
                         >
                             {props.items.items.map((subItem, index) => (
                                 <div key={`ok-${index}`}>
@@ -264,6 +260,17 @@ function SidebarItem(props, {isDragging, tool}) {
 
 
 function Sidebar(props) {
+    const [{canDrop, isOver}, drop] = useDrop(() => ({
+        accept: ItemTypes.CARD,
+        drop: () => ({name: "NotebookHeader", id: 0}),
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop(),
+        }),
+    }));
+    const isActive = canDrop && isOver;
+
+
     const [open, setOpen] = useState(false); // Open or closed sidebar menu
 
     const logout = () => {
@@ -301,103 +308,17 @@ function Sidebar(props) {
             noprint
                 ${openSm ? "ml-0" : "-ml-full"}`
                 }>
-                {/*<div className={"px-3 z-10"}>*/}
-                {/*    <UserMenu/>*/}
-                {/*    <div className={`flex-shrink-0 h-12 mb-2 flex flex-row items-center justify-between `}>*/}
-                {/*        <Search clickHandle={clickHandle} text={"Search"}/>*/}
-                {/*        <Tooltip title={"Toggle menu"}>*/}
-                {/*            <button className={`p-2 bg-secondary fixed top-2 right-12 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>*/}
-                {/*                {!openSm*/}
-                {/*                    ? <FaBars className={"w-6 h-6"}/>*/}
-                {/*                    : <FaTimes className={"w-6 h-6"}/>*/}
-                {/*                }*/}
-                {/*            </button>*/}
-                {/*        </Tooltip>*/}
-                {/*    </div>*/}
-                {/*    <div className={"flex items-center justify-start w-full mb-3"}>*/}
-                {/*        <Tooltip title={"New note"}>*/}
-                {/*            <button onClick={props.createNote} className={"h-10 text-sm rounded bg-accent-blue flex-grow"}>*/}
-                {/*                <div className={"flex items-center"}>*/}
-                {/*                    <span className={"ml-2"}><HiPlus className={"font-thin"}/></span>*/}
-                {/*                    <span className={"ml-2 text-sm font-medium"}>New note</span>*/}
-                {/*                </div>*/}
-                {/*            </button>*/}
-                {/*        </Tooltip>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
-                {/*    <div className={"overflow-y-auto h-screen px-3"}>*/}
-                {/*        <div*/}
-                {/*            className={`*/}
-                {/*    flex-grow */}
-                {/*    md:block */}
-                {/*    md:pb-0 */}
-                {/*    _md:overflow-y-auto`*/}
-                {/*            }>*/}
-                {/*            <div>*/}
-                {/*                <BookMarks bookmarks={props.bookmarks} open={props.open}/>*/}
-                {/*                <List dense key={props.depthStep}>*/}
-                {/*                    /!*<Link to={"#"}>*!/*/}
-                {/*                    <ListItem*/}
-                {/*                        onClick={*/}
-                {/*                            () => {*/}
-                {/*                                setOpen(!open);*/}
-                {/*                                props.folderClicked(0)*/}
-                {/*                            }*/}
-                {/*                        }*/}
-                {/*                        className={"text-lg"}*/}
-                {/*                        selected={true}*/}
-                {/*                        button*/}
-                {/*                        disableRipple*/}
-                {/*                        disableTouchRipple*/}
-                {/*                        sx={{*/}
-                {/*                            paddingLeft: "4px",*/}
-                {/*                            paddingRight: 0*/}
-                {/*                        }}>*/}
-                {/*                        <ListItemText className={""} key={`cc-${props.items.id}`}>*/}
-                {/*                            <div className={'flex justify-start items-center'}>*/}
-                {/*                                <div className={""}>*/}
-                {/*                                    {open*/}
-                {/*                                        ? <FaCaretDown className={"icon-caret"}/>*/}
-                {/*                                        : <FaCaretRight className={"icon-caret"}/>*/}
-                {/*                                    }*/}
-                {/*                                </div>*/}
-                {/*                                <HiUser className={`icon ml-2`}/>*/}
-                {/*                                <div className={`ml-2 text-s ${props.class} truncate`}>*/}
-                {/*                                    My notes*/}
-                {/*                                </div>*/}
-                {/*                            </div>*/}
-                {/*                        </ListItemText>*/}
-                {/*                        /!*<ListItemSecondaryAction>*!/*/}
-                {/*                        /!*    <NewFolderButton text={"Notebooks"} createFolder={props.createFolder} folder={props.clicked_id}/>*!/*/}
-                {/*                        /!*</ListItemSecondaryAction>*!/*/}
-                {/*                    </ListItem>*/}
-                {/*                    /!*</Link>*!/*/}
-                {/*                    <Collapse in={open} timeout="auto" unmountOnExit>*/}
-                {/*                        {props.items.map((sidebarItem, index) => (*/}
-                {/*                            <SidebarItem*/}
-                {/*                                key={`${sidebarItem.name}${index}`}*/}
-                {/*                                depthStep={1}*/}
-                {/*                                depth={1}*/}
-                {/*                                // noteClicked={props.noteClicked}*/}
-                {/*                                items={sidebarItem}*/}
-                {/*                                clicked_id={props.clicked_id}*/}
-                {/*                                droppedHandler={props.droppedHandler}*/}
-                {/*                                class={""}*/}
-                {/*                                icon={true}*/}
-                {/*                                note_id={props.note_id}*/}
-                {/*                                clickHandle={clickHandle}*/}
-                {/*                                folderClicked={props.folderClicked}*/}
-                {/*                            />*/}
-                {/*                        ))}</Collapse>*/}
-                {/*                </List>*/}
-                {/*            </div>*/}
-                {/*            <div className={""}>*/}
-                {/*                <Shared/>*/}
-                {/*                <Trash trash={props.trash}/>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                <div className={"menu px-3 my-2"}><UserMenu/></div>
+                <div className={"menu px-3 my-2"}>
+                    <UserMenu/>
+                    <Tooltip title={"Toggle menu"}>
+                        <button className={`p-2 bg-secondary fixed top-2 right-12 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
+                            {!openSm
+                                ? <FaBars className={"w-6 h-6"}/>
+                                : <FaTimes className={"w-6 h-6"}/>
+                            }
+                        </button>
+                    </Tooltip>
+                </div>
                 <div className={"search px-3"}><Search clickHandle={clickHandle} text={"Search"}/></div>
                 <div className={"new-note p-3"}>
                     <Tooltip title={"New note"}>
@@ -409,22 +330,22 @@ function Sidebar(props) {
                         </button>
                     </Tooltip>
                 </div>
-                <div className={"flex flex-col flex-grow bg-gray-800_ overflow-y-auto p-3"}>
+                <div className={"flex flex-col flex-grow overflow-y-auto p-3"}>
                     <BookMarks bookmarks={props.bookmarks} open={props.open}/>
                     <List dense key={props.depthStep}>
-                        {/*<Link to={"#"}>*/}
                         <ListItem
+                            className={`${isActive ? "sidebar-active" : ""} pointer`}
+                            ref={drop}
+                            role="card"
                             onClick={
                                 () => {
                                     setOpen(!open);
                                     props.folderClicked(0)
                                 }
                             }
-                            className={"text-lg"}
+                            // className={"text-lg"}
                             selected={true}
                             button
-                            disableRipple
-                            disableTouchRipple
                             sx={{
                                 paddingLeft: "4px",
                                 paddingRight: 0
@@ -447,7 +368,6 @@ function Sidebar(props) {
                                 <NewFolderButton text={"Notebooks"} createFolder={props.createFolder} folder={props.clicked_id}/>
                             </ListItemSecondaryAction>
                         </ListItem>
-                        {/*</Link>*/}
                         <Collapse in={open} timeout="auto" unmountOnExit>
                             {props.items.map((sidebarItem, index) => (
                                 <SidebarItem
