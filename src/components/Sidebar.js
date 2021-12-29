@@ -133,7 +133,6 @@ function SidebarItem(props, {isDragging, tool}) {
         function handleResize() {
             setWindowSize(window.innerWidth)
         }
-
         window.addEventListener('resize', handleResize)
     })
 
@@ -161,7 +160,6 @@ function SidebarItem(props, {isDragging, tool}) {
                             : ""
                     }>
                     <ListItem
-                        dense={true}
                         button={true}
                         id={`item-${props.items.id}`}
                         ref={attacheRef}
@@ -230,7 +228,8 @@ function SidebarItem(props, {isDragging, tool}) {
             {(props.items.items && props.items.items.length > 0) ? (
                 <div key={`er-${props.items.id}`}>
                     <Collapse in={open} timeout="auto" unmountOnExit key={`ee-${props.items.id}`}>
-                        <List dense={true}
+                        <List dense
+                              disablePadding={true}
                               key={`ff-${props.items.id}`}
                         >
                             {props.items.items.map((subItem, index) => (
@@ -332,7 +331,8 @@ function Sidebar(props) {
                 </div>
                 <div className={"flex flex-col flex-grow overflow-y-auto p-3"}>
                     <BookMarks bookmarks={props.bookmarks} open={props.open}/>
-                    <List dense key={props.depthStep}>
+                    <List dense
+                          key={props.depthStep}>
                         <ListItem
                             className={`${isActive ? "sidebar-active" : ""} pointer`}
                             ref={drop}
