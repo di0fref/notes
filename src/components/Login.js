@@ -3,7 +3,7 @@ import {useState} from "react";
 import NotesService from "../service/NotesService";
 import {Link, useNavigate} from "react-router-dom";
 import ThemeSwitcher from "./ThemeSwitcher";
-import {getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "firebase/auth";
+import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import {signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import app from "../firebase"
 
@@ -15,24 +15,21 @@ function Login(props) {
     const navigate = useNavigate();
     const submitHandler = (e) => {
         e.preventDefault()
-        /* Call backend to validate user */
-        NotesService.login({
-                username: username,
-                password: password
-            }
-        ).then((result) => {
-            localStorage.setItem("api_token", result.data.api_token)
-            navigate('/')
-        }).catch((err) => {
-
-        })
         const auth = getAuth();
         signInWithEmailAndPassword(auth, username, password)
             .then((userCredential) => {
+                console.log("signInWithEmailAndPassword")
                 // Signed in
                 const user = userCredential.user;
                 console.log(userCredential)
-                // ...
+                // NotesService.login({
+                //     idToken: credential.idToken,
+                //     user: user,
+                //     provider: credential.providerId
+                // }).then((result) => {
+                //     localStorage.setItem("api_token", result.data.api_token)
+                //     navigate('/')
+                // })
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -41,8 +38,7 @@ function Login(props) {
 
     }
 
-    const google = (e) => {
-        e.preventDefault()
+    const google = () => {
         const provider = new GoogleAuthProvider();
         const auth = getAuth();
 
@@ -52,15 +48,11 @@ function Login(props) {
                 const user = result.user;
                 /* Validate user */
                 NotesService.login({
-                    uid: user.uid,
                     idToken: credential.idToken,
-                    accessToken: credential.accessToken,
-                    user: user
+                    user: user,
+                    provider: credential.providerId
                 }).then((result) => {
-                    console.log(result)
                     localStorage.setItem("api_token", result.data.api_token)
-                    localStorage.setItem("user", JSON.stringify(user))
-                    localStorage.setItem("uid", user.uid)
                     navigate('/')
                 })
             }).catch((error) => {
@@ -95,7 +87,6 @@ function Login(props) {
                         <div className={"uppercase text-muted text-xs"}>Or</div>
                     </div>
                     <form className="mt-4" action="#" method="POST" onSubmit={submitHandler}>
-
 
                         <div className="">
                             <div className={"mt-2 relative"}>

@@ -8,6 +8,7 @@
     "@craco/craco": "^6.4.2",
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
+    "@hookform/resolvers": "^2.8.5",
     "@mui/icons-material": "^5.2.1",
     "@mui/material": "^5.2.3",
     "@mui/styles": "^5.2.3",
@@ -34,7 +35,7 @@
     "react-dnd-html5-backend": "^14.0.2",
     "react-dom": "^17.0.2",
     "react-firebase-hooks": "^4.0.1",
-    "react-hook-form": "^7.22.4",
+    "react-hook-form": "^7.22.5",
     "react-hot-toast": "^2.1.1",
     "react-icons": "^3.6.0-beta2",
     "react-moment": "^1.1.1",
@@ -45,7 +46,8 @@
     "react-scripts": "^5.0.0-next.58",
     "react-toastify": "^8.1.0",
     "remirror": "^1.0.48",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

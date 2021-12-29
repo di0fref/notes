@@ -1,5 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import {getAuth, setPersistence, signInWithPopup, browserLocalPersistence, GoogleAuthProvider} from "firebase/auth";
+import NotesService from "./service/NotesService";
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -14,6 +16,20 @@ const firebaseConfig = {
     messagingSenderId: "71711370142",
     appId: "1:71711370142:web:dc53314b44a9140c4d848f"
 };
-
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+const auth = getAuth()
+
+export const signOutFireBAse = () => {
+    auth.signOut().then((res) =>{})
+}
+
+setPersistence(auth, browserLocalPersistence)
+    .then(() => {})
+    .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+    });
+
+
