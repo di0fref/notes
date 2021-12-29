@@ -9,6 +9,7 @@ import Login from "./components/Login";
 
 import {PrivateRoute} from "./helpers/PrivateRoute";
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import SignUp from "./components/SignUp";
 
 export const Context = createContext(null)
 
@@ -37,6 +38,8 @@ function App() {
                                 <Route exact path={"/"} element={<Home/>}/>
                             </Route>
                             <Route exact path={"/login"} element={<Login/>}/>
+                            <Route exact path={"/signup"} element={<SignUp/>}/>
+
                         </Routes>
                     </DndProvider>
                 </GlobalProvider>

@@ -612,3 +612,6 @@ input:checked + .toggle-bg {
     width: 275px;
 }
 
+a.link{
+    color: var(--text-accent);
+}
