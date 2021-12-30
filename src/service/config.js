@@ -1,9 +1,8 @@
 import {env} from "tailwindcss/lib/lib/sharedState";
 
 const api_config = {
-    url: "http://localhost:8000/api",
-    // url: "http://backend.loc/api",
-    token: process.env.TOKEN
+    // url: "http://localhost:8000/api",
+    url: "http://backend.loc/api",
 }
 
 

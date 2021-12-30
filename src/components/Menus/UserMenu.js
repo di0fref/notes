@@ -49,14 +49,13 @@ function UserMenu() {
         <div className={"hover:shade-100 rounded"}>
             <Link to={"#"} onClick={handleClick} className={""}>
                 <div className={"flex items-center p-1"}>
-                    menu
-                    {/*<div className="avatar w-10 h-10 mr-1">*/}
-                    {/*    <img src={user.photoURL} className="rounded-full p-1 bg-darker border-1" alt={"Avatar"}/>*/}
-                    {/*</div>*/}
-                    {/*<div className={""}>*/}
-                    {/*    <p className={"text-sm font-bold"}>{user.displayName}</p>*/}
-                    {/*    <p className={"text-muted text-xs"}>{user.email}</p>*/}
-                    {/*</div>*/}
+                    <div className="avatar w-10 h-10 mr-1">
+                        <img src={user.photoURL} className="rounded-full p-1 bg-darker border-1" alt={"Avatar"}/>
+                    </div>
+                    <div className={""}>
+                        <p className={"text-sm font-bold"}>{user.displayName}</p>
+                        <p className={"text-muted text-xs"}>{user.email}</p>
+                    </div>
                 </div>
             </Link>
             <Menu

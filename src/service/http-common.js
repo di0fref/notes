@@ -13,8 +13,6 @@ const http = axios.create({
 http.interceptors.request.use(function (config) {
 
     config.headers.token = localStorage.getItem("api_token")
-    config.headers.uid = getAuth().currentUser.uid
-
     return config;
 }, function (error) {
     return Promise.reject(error);

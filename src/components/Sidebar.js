@@ -207,7 +207,7 @@ function SidebarItem(props, {isDragging, tool}) {
                                         : null}
                                 </div>
                                 <div className={`ml-2 text-s ${props.class} truncate`}>
-                                    {props.items.name.length
+                                    {props.items.name
                                         ? props.items.name
                                         : "Untitled"
                                     }
@@ -225,7 +225,7 @@ function SidebarItem(props, {isDragging, tool}) {
                     </ListItem>
                 </ArrowTooltips>
             </MyLink>
-            {(props.items.items && props.items.items.length > 0) ? (
+            {(props.items.items && props.items.items) ? (
                 <div key={`er-${props.items.id}`}>
                     <Collapse in={open} timeout="auto" unmountOnExit key={`ee-${props.items.id}`}>
                         <List dense

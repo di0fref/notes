@@ -28,7 +28,7 @@ function App() {
 
             // ...
         } else {
-            localStorage.removeItem("api_key")
+            localStorage.removeItem("api_token")
             localStorage.removeItem('expectSignIn')
             setUser(null)
         }

@@ -46,14 +46,17 @@ function Login(props) {
             .then((result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const user = result.user;
+                console.log(credential);
+
                 /* Validate user */
                 NotesService.login({
                     idToken: credential.idToken,
                     user: user,
-                    provider: credential.providerId
+                    provider: credential.providerId,
+                    credential: credential
                 }).then((result) => {
                     localStorage.setItem("api_token", result.data.api_token)
-                    navigate('/')
+                    // navigate('/')
                 })
             }).catch((error) => {
             // Handle Errors here.
