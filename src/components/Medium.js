@@ -2,6 +2,8 @@ import ReactQuill from 'react-quill';
 import {useEffect, useRef, useState} from "react";
 import NotesService from "../service/NotesService";
 import t from "./CustomToast"
+import Editor from 'react-medium-editor';
+
 import {Button, TextareaAutosize, Tooltip} from "@mui/material";
 import {
     BiLockAlt,
@@ -16,9 +18,11 @@ import moment from "moment";
 import DropdownMenu from "./DropdownMenu";
 import * as React from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import NoteMenu from "./Menus/NoteMenu";
 
-const Quill = (props) => {
+require('medium-editor/dist/css/medium-editor.css');
+require('medium-editor/dist/css/themes/beagle.css');
+
+const Medium = (props) => {
 
     const [value, setValue] = useState(null);
     const [title, setTitle] = useState("")
@@ -34,7 +38,7 @@ const Quill = (props) => {
         setSaving(true)
         if (props.note.id) {
             const data = {
-                text: JSON.stringify(el.current.editor.getContents()),
+                text: value,
                 name: title
             }
             NotesService.update(props.note.id, data).then((result) => {
@@ -66,7 +70,7 @@ const Quill = (props) => {
 
     useEffect(() => {
         if (props.note.id) {
-            setValue(JSON.parse(props.note.text))
+            setValue(props.note.text)
             setTitle(props.note.name)
             setDateModified(props.note.updated_at)
             setLocked(props.note.locked)
@@ -154,17 +158,39 @@ const Quill = (props) => {
                         </Tooltip>
                         <Breadcrumbs note={props.note} title={title} titleSaved={titleSaved}/>
                         <div className={"ml-auto mr-4 text-s"}>
-                        <NoteMenu
-                        motoTrash={moveToTrash}
-                        lockForEditing={lockForEditing}
-                        downloadPDF={downloadPDF}/>
+
+                            <DropdownMenu text={<MoreVertIcon/>} options={
+                                [
+                                    {
+                                        label: "Download PDF",
+                                        icon: <FaRegFilePdf className={"text-normal"}/>,
+                                        onClick: () => downloadPDF()
+                                    },
+                                    {
+                                        label: locked ? "Unlock editing" : "Lock for editing",
+                                        icon: <BiLockAlt className={"text-normal"}/>,
+                                        onClick: () => lockForEditing()
+                                    },
+                                    {
+                                        label: "Share note",
+                                        icon: <HiShare className={"text-normal"}/>,
+                                        onClick: () => shareNote()
+                                    },
+                                    {
+                                        // divider: true,
+                                        label: "Send to trash",
+                                        icon: <HiOutlineTrash className={"text-normal"}/>,
+                                        onClick: () => moveToTrash()
+                                    },
+                                ]
+                            }/>
                         </div>
                     </div>
                 </div>
             </div>
             <div className={"flex justify-between editor overflow-y-auto"}>
                 <div className={"mx-auto px-2"}>
-                    <div className={"text-sm pl-4 text-muted mt-4 italic noprint"}>
+                    <div className={"text-sm pl-4_ text-muted mt-4 italic noprint"}>
                         <div className={"flex items-center"}>
                             <Tooltip title={"Locked for editing"}>
                                 <span>
@@ -187,30 +213,27 @@ const Quill = (props) => {
                             <div className={"ml-2 text-xs italic"}>{saving?"Saving...":"Saved"}</div>
                         </div>
                     </div>
-                    <div className={"h-16_ flex px-4 md:px-4 my-3"}>
+                    <div className={"flex mt-2"}>
                         <TextareaAutosize
-                            readOnly={locked || deleted ? true : false}
                             maxLength="100"
                             onChange={updateTitle}
                             placeholder={"Give your note a title"}
                             value={title || ""}
-                            className={"title p-0 w-full title text-4xl font-bold bg-primary border-0 focus:outline-none focus:ring-0"}
+                            className={"mb-3 title p-0 w-full title text-4xl font-bold bg-primary border-0 focus:outline-none focus:ring-0"}
                         />
                     </div>
-                    <ReactQuill
+                    <div className={"prose"}>
+                    <Editor
                         placeholder="Click here to start writing"
                         readOnly={locked || deleted ? true : false}
-                        theme="bubble"
-                        value={value}
+                        text={value}
                         onChange={setValue}
-                        ref={el}
-                        modules={modules}
-                        formats={formats}
-                        bounds={".quill"}/>
+                        options={{ toolbar: { buttons: ["h1", "h2", "h3", 'bold', 'italic', 'underline'] } }}/>
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Quill;
+export default Medium;

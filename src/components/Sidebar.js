@@ -22,7 +22,7 @@ import {
     CgFileDocument,
     FaPlus,
     FaPlusCircle,
-    BiLock, HiLogout, HiCog, FaUserCircle, HiUser, HiPlus
+    BiLock, HiLogout, HiCog, FaUserCircle, HiUser, HiPlus, FaEdit, FaPen
 } from "react-icons/all";
 import '@themesberg/flowbite';
 
@@ -45,6 +45,7 @@ import NewFolderButton from "./NewFolderButton";
 import ThemeSwitcher from "./ThemeSwitcher";
 import Avatar from "./Avatar";
 import Shared from "./Shared";
+import FolderMenu from "./Menus/FolderMenu";
 
 
 let moment = require('moment');
@@ -119,6 +120,8 @@ function SidebarItem(props, {isDragging, tool}) {
     const context = useContext(GlobalContext);
     const [windowSize, setWindowSize] = useState(window.innerWidth);
 
+    const [editable, setContentEditable] = useState(false)
+
     const handleClick = (type, id) => {
         setOpen(!open);
         if (type === "folder") {
@@ -127,12 +130,14 @@ function SidebarItem(props, {isDragging, tool}) {
             props.clickHandle()
         )
     };
-
+    const handleOpen = () => {
+    }
 
     useEffect(() => {
         function handleResize() {
             setWindowSize(window.innerWidth)
         }
+
         window.addEventListener('resize', handleResize)
     })
 
@@ -140,6 +145,10 @@ function SidebarItem(props, {isDragging, tool}) {
         return moment(date).format("YYYY-M-D H:m")
     }
 
+    const setEditable = (e) => {
+        setContentEditable(true)
+        console.log(e)
+    }
     return (
         <>
             <MyLink type={props.items.type} id={props.items.id}>
@@ -173,7 +182,7 @@ function SidebarItem(props, {isDragging, tool}) {
                             // (props.items.id === props.clicked_id)
 
                         }
-                        className={`${isActive ? "sidebar-active" : ""} pointer`}
+                        className={`${isActive ? "sidebar-active" : ""} pointer listitem`}
                         style={
                             {
                                 marginLeft: props.depth * props.depthStep + ".25rem",
@@ -220,8 +229,21 @@ function SidebarItem(props, {isDragging, tool}) {
                                     )
                                     : null
                                 }
+
                             </div>
                         </ListItemText>
+                        {(props.items.type === "folder")
+                            ?
+                            (
+                                <ListItemSecondaryAction className={`secondary-action`}>
+                                    <FolderMenu folder={{
+                                        id: props.items.id,
+                                        name: props.items.name
+                                    }}/>
+                                </ListItemSecondaryAction>
+                            )
+                            : ""
+                        }
                     </ListItem>
                 </ArrowTooltips>
             </MyLink>
@@ -344,7 +366,7 @@ function Sidebar(props) {
                                 }
                             }
                             // className={"text-lg"}
-                            selected={true}
+                            selected={!open ? true : false}
                             button
                             sx={{
                                 paddingLeft: "4px",

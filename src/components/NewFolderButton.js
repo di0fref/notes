@@ -2,16 +2,29 @@ import React, {useContext, useEffect, useState} from "react";
 import {GlobalContext} from "./contexts/GlobalContext";
 import {useDrop} from "react-dnd";
 import {ItemTypes} from "./Constants";
-import {Box, IconButton, Modal, Tooltip, Typography} from "@mui/material";
-import {FaPlus} from "react-icons/all";
+import {
+    Box,
+    IconButton,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    Modal,
+    Tooltip,
+    Typography
+} from "@mui/material";
+import {FaAccessibleIcon, FaPlus} from "react-icons/all";
 import {button, style_folder} from "./styles";
 import CloseIcon from "@mui/icons-material/Close";
+import {menuItemStyle} from "./Menus/style";
 
 function NewFolderButton(props) {
 
     const context = useContext(GlobalContext);
     const [folderName, setFolderName] = useState("");
     const [open, setOpen] = useState(false);
+
     const handleOpen = () => {
         setOpen(true)
     };
@@ -19,14 +32,6 @@ function NewFolderButton(props) {
         setOpen(false);
         setFormError(null)
     }
-    const [{canDrop, isOver}, drop] = useDrop(() => ({
-        accept: ItemTypes.CARD,
-        drop: () => ({name: "NotebookHeader", id: 0}),
-        collect: (monitor) => ({
-            isOver: monitor.isOver(),
-            canDrop: monitor.canDrop(),
-        }),
-    }));
 
     const userInputNewFolder = () => {
         if (folderName === "") {
@@ -60,7 +65,7 @@ function NewFolderButton(props) {
         )
     }
 
-    const isActive = canDrop && isOver;
+
     return (
         <>
             <IconButton onClick={() => handleOpen(true)} edge="end" aria-label="New folder">
@@ -95,9 +100,6 @@ function NewFolderButton(props) {
                         </div>
                         <div className={"text-s h-4 error ml-2"}><FormError error={formError}/></div>
                         <div className={"flex items-center justify-end mt-6 mr-6"}>
-                            {/*{context.folder.name*/}
-                            {/*? <div className={"ml-2 mr-auto text-s"}>In {context.folder.name}</div>*/}
-                            {/*    : ""}*/}
                             <button onClick={handleClose} className={"mr-4 shadow bg-gray-700 hover:bg-gray-800 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>Cancel</button>
                             <button
                                 onClick={userInputNewFolder}

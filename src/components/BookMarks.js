@@ -20,6 +20,9 @@ function BookMarks(props) {
     }
     return (
             <List
+                style={{
+                    marginBottom: "0.5em"
+                }}
                 dense={true}
                 disablePadding={true}
                 button={true}>

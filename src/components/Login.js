@@ -56,7 +56,7 @@ function Login(props) {
                     credential: credential
                 }).then((result) => {
                     localStorage.setItem("api_token", result.data.api_token)
-                    // navigate('/')
+                    navigate('/')
                 })
             }).catch((error) => {
             // Handle Errors here.
@@ -102,7 +102,7 @@ function Login(props) {
                                     type="email"
                                     autoComplete="email"
                                     className="pl-10 pr-3 rounded relative block w-full px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 _focus:z-10 sm:text-sm" placeholder="Email"/>
-                                <div className="absolute inset-y-0 left-0 flex items-center px-2 pointer-events-none bg-gray-200">
+                                <div className="m-px rounded absolute inset-y-0 left-0 flex items-center px-2 pointer-events-none  bg-secondary-alt">
                                     <HiMail/>
                                 </div>
                             </div>
@@ -118,7 +118,7 @@ function Login(props) {
                                     type="password"
                                     autoComplete="off"
                                     className="pl-10 pr-3 rounded relative block w-full px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 _focus:z-10 sm:text-sm" placeholder="Password"/>
-                                <div className="absolute inset-y-0 left-0 flex items-center px-2 pointer-events-none bg-gray-200">
+                                <div className="m-px rounded absolute inset-y-0 left-0 flex items-center px-2 pointer-events-none bg-secondary-alt">
                                     <FaLock/>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@ function Login(props) {
 
                         <div>
                             <button type="submit" className="mt-4  mb-8 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                              <span className="m-px rounded absolute left-0 inset-y-0 flex items-center pl-3">
                                   <HiLockClosed/>
                               </span>
                                 Sign in

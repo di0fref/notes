@@ -5,6 +5,7 @@ import Tooltip from "./Tooltip";
 import {BiSearch, CgFileDocument, FaMoon, FaSun} from "react-icons/all";
 import Search from "./Search";
 import ThemeSwitcher from "./ThemeSwitcher";
+import Medium from "./Medium";
 
 function Content(props) {
 
@@ -19,6 +20,7 @@ function Content(props) {
     }
     return (
         <div className={"w-full z-10_"}>
+
             {props.note.id
                 ? <Quill
                     note={note}
@@ -26,6 +28,7 @@ function Content(props) {
                     titleChange={props.titleChange}
                     lockChanged={props.lockChanged}
                     moveTrash={props.moveTrash}/>
+
                 : (
                     <div className={"flex flex-col justify-center items-center h-96"}>
                         <div className={"font-bold text-shade-20 text-3xl mb-4"}>No note is open</div>

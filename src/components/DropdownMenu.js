@@ -32,7 +32,7 @@ export default function DropdownMenu(props) {
 		<div>
 
 
-				<Link to={"#"} className={"hover:text-accent text-sm"} onClick={handleClick}>{props.text}</Link>
+				<Link to={"#"} className={"text-sm"} onClick={handleClick}>{props.text}</Link>
 
 			<Menu
 				dense
@@ -64,7 +64,7 @@ export default function DropdownMenu(props) {
 								},
 							]}
 						>
-							<ListItemIcon>{option.icon}</ListItemIcon>
+							<ListItemIcon className={"hover:button-hover "}>{option.icon}</ListItemIcon>
 							<ListItemText>
 								<span className={"text-sm"}>{option.label}</span>
 							</ListItemText>

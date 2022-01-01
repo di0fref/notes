@@ -1,6 +1,5 @@
 import axios from "axios";
 import api_config from "./config";
-import {getAuth} from "firebase/auth";
 
 const http = axios.create({
     baseURL: api_config.url,
@@ -11,7 +10,6 @@ const http = axios.create({
 
 
 http.interceptors.request.use(function (config) {
-
     config.headers.token = localStorage.getItem("api_token")
     return config;
 }, function (error) {

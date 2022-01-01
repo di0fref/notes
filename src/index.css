@@ -215,6 +215,10 @@ body {
     background: var(--text-accent-hover);
 }
 
+.hover\:button-hover:hover{
+    background-color: var(--shade-50);
+}
+
 .hover\:blue-hover:hover {
     color: var(--bg-accent);
     background-color: white;
@@ -336,6 +340,9 @@ textarea,
 select {
     background-color: var(--shade-100);
     border-color: var(--shade-50)
+}
+textarea.title {
+    resize: none;
 }
 
 #google-login {
@@ -510,7 +517,7 @@ input::placeholder {
 }
 
 @media only screen and (max-width: 1023.94px) {
-    .quill {
+    .quill{
         width: 100%;
     }
 }
@@ -615,3 +622,29 @@ input:checked + .toggle-bg {
 a.link{
     color: var(--text-accent);
 }
+
+
+.prose{
+    color: var(--text-normal);
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--shade-100) inset !important;
+    -webkit-text-fill-color: white !important;
+}
+
+
+/*.listitem ~ .secondary-action{*/
+/*    opacity: 0;*/
+/*}*/
+
+/*.listitem:hover  ~ .secondary-action{*/
+/*    opacity: 100;*/
+/*}*/
+
+/*.secondary-action:hover{*/
+/*    opacity: 100;*/
+/*}*/
+
