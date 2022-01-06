@@ -8,7 +8,7 @@ function Avatar(props) {
                 <img src={user.photoURL} className="rounded-full p-1 bg-darker border-1" alt={"Avatar"}/>
             </div>
             <div className={""}>
-                <p className={"text-sm font-bold"}>{user.displayName}</p>
+                <p className={"text-sm font-medium"}>{user.displayName}</p>
                 <p className={"text-muted text-xs"}>{user.email}</p>
             </div>
         </div>

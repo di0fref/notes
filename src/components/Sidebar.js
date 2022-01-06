@@ -46,6 +46,8 @@ import ThemeSwitcher from "./ThemeSwitcher";
 import Avatar from "./Avatar";
 import Shared from "./Shared";
 import FolderMenu from "./Menus/FolderMenu";
+import New from "./New";
+import Side from "./Side";
 
 
 let moment = require('moment');
@@ -147,50 +149,51 @@ function SidebarItem(props, {isDragging, tool}) {
 
     const setEditable = (e) => {
         setContentEditable(true)
-        console.log(e)
     }
     return (
         <>
             <MyLink type={props.items.type} id={props.items.id}>
-                <ArrowTooltips
-                    placement={windowSize < 768 ? "top" : "right"}
-                    arrow
-                    title={
-                        (props.items.type === "note")
-                            ? (
-                                <div className={"text-center"}>
-                                    <p>Modified at: {formatDate(props.items.updated_at)}</p>
-                                    <p>Created at: {formatDate(props.items.created_at)}</p>
-                                    {props.items.locked
-                                        ? <p>Locked for editing</p> : null
-                                    }
-                                </div>
-                            )
-                            : ""
-                    }>
-                    <ListItem
-                        button={true}
-                        id={`item-${props.items.id}`}
-                        ref={attacheRef}
-                        role="card"
-                        onClick={() => {
-                            handleClick(props.items.type, props.items.id);
-                        }}
-                        key={`bb-${props.items.id}`}
-                        selected={
-                            (props.items.id === props.note_id && props.items.type === "note")
-                            // (props.items.id === props.clicked_id)
 
+                <ListItem
+                    dense={true}
+                    button={true}
+                    id={`item-${props.items.id}`}
+                    ref={attacheRef}
+                    role="card"
+                    onClick={() => {
+                        handleClick(props.items.type, props.items.id);
+                    }}
+                    key={`bb-${props.items.id}`}
+                    selected={
+                        (props.items.id === props.note_id && props.items.type === "note")
+                        // (props.items.id === props.clicked_id)
+
+                    }
+                    className={`${isActive ? "sidebar-active" : ""} pointer listitem`}
+                    style={
+                        {
+                            marginLeft: props.depth * props.depthStep + ".25rem",
+                            marginTop: "2px",
+                            width: `calc(100% - ${props.depth * props.depthStep + ".25rem"})`,
+                            paddingLeft: "4px",
+                            paddingRight: 0
                         }
-                        className={`${isActive ? "sidebar-active" : ""} pointer listitem`}
-                        style={
-                            {
-                                marginLeft: props.depth * props.depthStep + ".25rem",
-                                marginTop: "2px",
-                                width: `calc(100% - ${props.depth * props.depthStep + ".25rem"})`,
-                                paddingLeft: "4px",
-                                paddingRight: 0
-                            }
+                    }>
+                    <ArrowTooltips
+                        placement={windowSize < 768 ? "top" : "right"}
+                        arrow
+                        title={
+                            (props.items.type === "note")
+                                ? (
+                                    <div className={"text-center"}>
+                                        <p>Modified at: {formatDate(props.items.updated_at)}</p>
+                                        <p>Created at: {formatDate(props.items.created_at)}</p>
+                                        {props.items.locked
+                                            ? <p>Locked for editing</p> : null
+                                        }
+                                    </div>
+                                )
+                                : ""
                         }>
                         <ListItemText
                             key={`cc-${props.items.id}`}>
@@ -232,27 +235,32 @@ function SidebarItem(props, {isDragging, tool}) {
 
                             </div>
                         </ListItemText>
-                        {(props.items.type === "folder")
-                            ?
-                            (
-                                <ListItemSecondaryAction className={`secondary-action`}>
-                                    <FolderMenu folder={{
+                    </ArrowTooltips>
+                    {(props.items.type === "folder")
+                        ?
+                        (
+                            <ListItemSecondaryAction className={`secondary-action`}>
+                                <FolderMenu
+                                    editFolder={props.editFolder}
+                                    createFolder={props.createFolder}
+                                    folder_id={props.items.id}
+                                    folder={{
                                         id: props.items.id,
                                         name: props.items.name
                                     }}/>
-                                </ListItemSecondaryAction>
-                            )
-                            : ""
-                        }
-                    </ListItem>
-                </ArrowTooltips>
+                            </ListItemSecondaryAction>
+                        )
+                        : ""
+                    }
+                </ListItem>
             </MyLink>
             {(props.items.items && props.items.items) ? (
                 <div key={`er-${props.items.id}`}>
-                    <Collapse in={open} timeout="auto" unmountOnExit key={`ee-${props.items.id}`}>
-                        <List dense
-                              disablePadding={true}
-                              key={`ff-${props.items.id}`}
+                    <Collapse in={open} timeout="auto" key={`ee-${props.items.id}`}>
+                        <List
+                            // dense
+                            disablePadding={true}
+                            key={`ff-${props.items.id}`}
                         >
                             {props.items.items.map((subItem, index) => (
                                 <div key={`ok-${index}`}>
@@ -281,6 +289,7 @@ function SidebarItem(props, {isDragging, tool}) {
 
 
 function Sidebar(props) {
+
     const [{canDrop, isOver}, drop] = useDrop(() => ({
         accept: ItemTypes.CARD,
         drop: () => ({name: "NotebookHeader", id: 0}),
@@ -332,7 +341,7 @@ function Sidebar(props) {
                 <div className={"menu px-3 my-2"}>
                     <UserMenu/>
                     <Tooltip title={"Toggle menu"}>
-                        <button className={`p-2 bg-secondary fixed top-2 right-12 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
+                        <button className={`p-2 fixed top-2 right-12 rounded md:hidden rounded-lg focus:outline-none focus:shadow-outline`} onClick={clickHandle}>
                             {!openSm
                                 ? <FaBars className={"w-6 h-6"}/>
                                 : <FaTimes className={"w-6 h-6"}/>
@@ -342,19 +351,18 @@ function Sidebar(props) {
                 </div>
                 <div className={"search px-3"}><Search clickHandle={clickHandle} text={"Search"}/></div>
                 <div className={"new-note p-3"}>
-                    <Tooltip title={"New note"}>
-                        <button onClick={props.createNote} className={"h-10 text-sm rounded bg-accent-blue flex-grow w-full"}>
-                            <div className={"flex items-center"}>
-                                <span className={"ml-2"}><HiPlus className={"font-thin"}/></span>
-                                <span className={"ml-2 text-sm font-medium"}>New note</span>
-                            </div>
-                        </button>
-                    </Tooltip>
+                    {/*<Tooltip title={"Add new"}>*/}
+                    <div>
+                        <New
+                            createNote={props.createNote}/>
+                    </div>
+                    {/*</Tooltip>*/}
                 </div>
                 <div className={"flex flex-col flex-grow overflow-y-auto p-3"}>
                     <BookMarks bookmarks={props.bookmarks} open={props.open}/>
-                    <List dense
-                          key={props.depthStep}>
+                    <List
+                        // dense
+                        key={props.depthStep}>
                         <ListItem
                             className={`${isActive ? "sidebar-active" : ""} pointer`}
                             ref={drop}
@@ -365,12 +373,12 @@ function Sidebar(props) {
                                     props.folderClicked(0)
                                 }
                             }
-                            // className={"text-lg"}
-                            selected={!open ? true : false}
+                            // selected={!open ? true : false}
                             button
+                            dense={true}
                             sx={{
                                 paddingLeft: "4px",
-                                paddingRight: 0
+                                paddingRight: 0,
                             }}>
                             <ListItemText className={""} key={`cc-${props.items.id}`}>
                                 <div className={'flex justify-start items-center'}>
@@ -382,12 +390,20 @@ function Sidebar(props) {
                                     </div>
                                     <HiUser className={`icon ml-2`}/>
                                     <div className={`ml-2 text-s ${props.class} truncate`}>
-                                        My notes
+                                        My documents
                                     </div>
                                 </div>
                             </ListItemText>
-                            <ListItemSecondaryAction>
-                                <NewFolderButton text={"Notebooks"} createFolder={props.createFolder} folder={props.clicked_id}/>
+                            <ListItemSecondaryAction className={`secondary-action`}>
+                                <FolderMenu
+                                    type={"root"}
+                                    editFolder={props.editFolder}
+                                    createFolder={props.createFolder}
+                                    folder_id={props.items.id}
+                                    folder={{
+                                        id: props.items.id,
+                                        name: props.items.name
+                                    }}/>
                             </ListItemSecondaryAction>
                         </ListItem>
                         <Collapse in={open} timeout="auto" unmountOnExit>
@@ -405,6 +421,8 @@ function Sidebar(props) {
                                     note_id={props.note_id}
                                     clickHandle={clickHandle}
                                     folderClicked={props.folderClicked}
+                                    editFolder={props.editFolder}
+                                    createFolder={props.createFolder}
                                 />
                             ))}</Collapse>
                     </List>

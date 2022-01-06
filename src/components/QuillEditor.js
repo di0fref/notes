@@ -1,10 +1,10 @@
-import ReactQuill from 'react-quill';
+import ReactQuill, {Quill} from 'react-quill';
 import {useEffect, useRef, useState} from "react";
 import NotesService from "../service/NotesService";
 import t from "./CustomToast"
-import {Button, TextareaAutosize, Tooltip} from "@mui/material";
+import {TextareaAutosize, Tooltip} from "@mui/material";
 import {
-    BiLockAlt,
+    BiLockAlt, FaMinus,
     FaRegClock, FaRegFilePdf,
     FaRegStar,
     FaStar, FaSun,
@@ -13,13 +13,12 @@ import {
 import Breadcrumbs from "./BreadCrumbs"
 import Moment from "react-moment";
 import moment from "moment";
-import DropdownMenu from "./DropdownMenu";
 import * as React from "react";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NoteMenu from "./Menus/NoteMenu";
+import debounce from "lodash/debounce";
 
-const Quill = (props) => {
 
+const QuillEditor = (props) => {
     const [value, setValue] = useState(null);
     const [title, setTitle] = useState("")
     let timer = setTimeout(null)
@@ -30,12 +29,14 @@ const Quill = (props) => {
     const [titleSaved, setTitleSaved] = useState(false);
     const [saving, setSaving] = useState(false);
 
+    const [note, setNote] = useState([])
+
     const saveToBackend = () => {
-        setSaving(true)
         if (props.note.id) {
+            setSaving(true)
             const data = {
                 text: JSON.stringify(el.current.editor.getContents()),
-                name: title
+                name: title,
             }
             NotesService.update(props.note.id, data).then((result) => {
                 setDateModified(moment().format("YYYY-MM-DD HH:mm:ss"))
@@ -60,12 +61,13 @@ const Quill = (props) => {
         }
     }
 
+
     const updateTitle = (e) => {
         setTitle(e.target.value)
     }
-
     useEffect(() => {
         if (props.note.id) {
+            setNote(props.note)
             setValue(JSON.parse(props.note.text))
             setTitle(props.note.name)
             setDateModified(props.note.updated_at)
@@ -75,34 +77,9 @@ const Quill = (props) => {
     }, [props.note.id, props.note.locked, props.note.deleted])
 
     useEffect(() => {
-        const timer = setTimeout(() => saveToBackend(), 500);
+        const timer = setTimeout(() => saveToBackend(), 1000);
         return () => clearTimeout(timer);
     }, [value])
-
-    useEffect(() => {
-        const timer = setTimeout(() => saveTitle(), 500);
-        return () => clearTimeout(timer);
-
-    }, [title])
-
-
-    const modules = {
-        toolbar: [
-            [{'header': 1}, {'header': 2}],
-            [{'header': [3, 4, 5]}],
-            ['bold', 'italic'],
-            ['blockquote', 'code-block'],
-            [{'list': 'ordered'}, {'list': 'bullet'}],
-            ["link"]
-        ],
-    }
-    const formats = [
-        'header',
-        'bold', 'italic',
-        'blockquote', 'code-block',
-        'list', 'bullet',
-        'link', 'image'
-    ];
 
     const lockForEditing = () => {
         NotesService.update(props.note.id, {
@@ -131,16 +108,33 @@ const Quill = (props) => {
         })
     }
 
-
     const shareNote = () => {
         console.log("shareNote");
     }
     const downloadPDF = () => {
         console.log("downloadPDF")
     }
+
+    const modules = {
+        toolbar: [
+            [{'header': 1}, {'header': 2}, {'header': 3}],
+            // [{'header': [3, 4, 5]}],
+            ['bold', 'italic'],
+            ['blockquote'],
+            [{'list': 'ordered'}, {'list': 'bullet'}],
+            ["link"],
+        ],
+    }
+    const formats = [
+        'header',
+        'bold', 'italic',
+        'blockquote', 'code-block',
+        'list', 'bullet',
+        'link', 'image'
+    ];
     return (
         <div className={"flex flex-col"}>
-            <div className={"flex items-center h-14 md:mt-0 mt-0 noprint"}>
+            <div className={"flex items-center h-14 md:mt-0 mt-0 _noprint"}>
                 <div className={"flex-grow"}>
                     <div className={"flex justify-start items-center"}>
                         <Tooltip title={props.note.bookmark ? "Unfavorite this note" : "Favorite this note"}>
@@ -153,18 +147,20 @@ const Quill = (props) => {
                             </button>
                         </Tooltip>
                         <Breadcrumbs note={props.note} title={title} titleSaved={titleSaved}/>
-                        <div className={"ml-auto mr-4 text-s"}>
-                        <NoteMenu
-                        motoTrash={moveToTrash}
-                        lockForEditing={lockForEditing}
-                        downloadPDF={downloadPDF}/>
+                        <div className={"ml-auto mr-4 text-s noprint"}>
+                            <NoteMenu
+                                moveToTrash={moveToTrash}
+                                lockForEditing={lockForEditing}
+                                downloadPDF={downloadPDF}
+                                locked={locked}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
             <div className={"flex justify-between editor overflow-y-auto"}>
                 <div className={"mx-auto px-2"}>
-                    <div className={"text-sm pl-4 text-muted mt-4 italic noprint"}>
+                    <div className={"text-sm pl-4 text-muted mt-4 "}>
                         <div className={"flex items-center"}>
                             <Tooltip title={"Locked for editing"}>
                                 <span>
@@ -173,38 +169,42 @@ const Quill = (props) => {
                             </Tooltip>
                             <Tooltip title={"This note is in trash"}>
                                    <span>
-                                    {deleted ? <HiOutlineTrash className={"mr-2 h-4 w-4 text-red-500"}/> : ""}
+                                    {deleted ? <HiOutlineTrash className={"mr-2 h-4 w-4 text-red-500 noprint"}/> : ""}
                                 </span>
                             </Tooltip>
                             <span>
-                                <FaRegClock className={"mr-2"}/>
+                                <FaRegClock className={"mr-2 text-normal"}/>
                             </span>
                             <Tooltip title={"Date modified"}>
                                 <span>
                                     <Moment date={dateModified} format={"D MMMM YYYY [at] HH:mm"}/>
                                 </span>
                             </Tooltip>
-                            <div className={"ml-2 text-xs italic"}>{saving?"Saving...":"Saved"}</div>
+                            <div className={"ml-2 text-xs italic noprint"}>{saving ? "Saving..." : "Saved"}</div>
                         </div>
                     </div>
-                    <div className={"h-16_ flex px-4 md:px-4 my-3"}>
+                    <div className={"h-16_ flex px-4 md:px-4 mt-4 mb-4"}>
                         <TextareaAutosize
                             readOnly={locked || deleted ? true : false}
                             maxLength="100"
                             onChange={updateTitle}
-                            placeholder={"Give your note a title"}
+                            placeholder={"Give your document a title"}
                             value={title || ""}
-                            className={"title p-0 w-full title text-4xl font-bold bg-primary border-0 focus:outline-none focus:ring-0"}
+                            id={"title-input"}
+                            className={"title p-0 w-full title text-4xl font-bold border-0 focus:outline-none focus:ring-0"}
                         />
                     </div>
                     <ReactQuill
                         placeholder="Click here to start writing"
                         readOnly={locked || deleted ? true : false}
                         theme="bubble"
+                        // theme={"snow"}
                         value={value}
+                        // initialValue={value}
                         onChange={setValue}
                         ref={el}
                         modules={modules}
+                        debug={false}
                         formats={formats}
                         bounds={".quill"}/>
                 </div>
@@ -213,4 +213,4 @@ const Quill = (props) => {
     )
 }
 
-export default Quill;
+export default QuillEditor;

@@ -23,11 +23,13 @@ function Shared() {
             style={{
                 marginTop: "2em"
             }}
-            dense={true}
+            // dense={true}
             disablePadding={true}
-            button={true}        >
+            // button={true}
+        >
             <ListItem
                 button={true}
+                dense={true}
                 key={"thead"}
                 onClick={() => setOpen(!open)}
                 style={{
@@ -55,7 +57,7 @@ function Shared() {
                    <MyLink type={"note"} id={t.id} key={`tlink-${index}`}>
                         <ListItem key={`trash-${index}`}
                                   dense={true}
-                                  button={true}
+                                  // button={true}
                                   className={"hover:cursor-pointer"}
                                   style={
                                       {
@@ -81,7 +83,7 @@ function Shared() {
                     }}
                 >
                     <ListItemText>
-                        <div className={" p-3 text-sm rounded bg-secondary-alt"}>Notes shared with you will be sent here.</div>
+                        <div className={" p-3 text-sm rounded bg-secondary-alt"}>Documents shared with you will be sent here.</div>
                     </ListItemText>
                 </ListItem>
             </Collapse>

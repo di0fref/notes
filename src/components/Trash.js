@@ -18,11 +18,12 @@ function Trash(props) {
 
     return (
         <List key={"thead"} className={"hover:cursor-pointer"}
-              dense={true}
+              // dense={true}
               disablePadding={true}
-              button={true}
+              // button={true}
         >
             <ListItem
+                dense={true}
                 button={true}
                 key={"thead"}
                 onClick={() => setOpen(!open)}
@@ -55,7 +56,7 @@ function Trash(props) {
 
                     <ListItem key={`trash-${index}`}
                               dense={true}
-                              button={true}
+                              // button={true}
                               className={"hover:cursor-pointer"}
                               style={
                                   {

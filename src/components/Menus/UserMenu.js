@@ -46,32 +46,33 @@ function UserMenu() {
    const user = getAuth().currentUser
 
     return (
-        <div className={"hover:shade-100 rounded"}>
+        <div className={"hover:secondary-alt rounded"}>
             <Link to={"#"} onClick={handleClick} className={""}>
                 <div className={"flex items-center p-1"}>
                     <div className="avatar w-10 h-10 mr-1">
                         <img src={user.photoURL} className="rounded-full p-1 bg-darker border-1" alt={"Avatar"}/>
                     </div>
                     <div className={""}>
-                        <p className={"text-sm font-bold"}>{user.displayName}</p>
+                        <p className={"text-sm font-medium"}>{user.displayName}</p>
                         <p className={"text-muted text-xs"}>{user.email}</p>
                     </div>
                 </div>
             </Link>
             <Menu
-                dense
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                // dense
                 id="user-menu"
                 aria-labelledby="user-button"
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                PaperProps={{
-                    style: {
-                        backgroundColor: "var(--shade-50)",
-                        color: "var(--text-normal)",
-                        minWidth: "200px",
-                    },
-                }}
             >
                 {menuItems.map((item, index) => {
                     return (

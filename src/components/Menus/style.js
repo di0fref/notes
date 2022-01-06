@@ -1,8 +1,7 @@
 export const menuItemStyle = [
     {
         "&:hover": {
-            backgroundColor:
-                "var(--background-secondary-alt)",
+            backgroundColor: "var(--menuitem-hover)",
         },
     },
 ]

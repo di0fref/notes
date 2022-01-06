@@ -41,7 +41,6 @@ class FolderService {
         headers: {
             "Content-type": "application/json",
             "token": localStorage.getItem("api_token"),
-            "uid":  localStorage.getItem("uid"),
         }
 
 

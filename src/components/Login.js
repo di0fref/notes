@@ -1,4 +1,4 @@
-import {FaLock, FaUser, FcGoogle, HiLockClosed, HiMail} from "react-icons/all";
+import {FaLock, FcGoogle, HiLockClosed, HiMail} from "react-icons/all";
 import {useState} from "react";
 import NotesService from "../service/NotesService";
 import {Link, useNavigate} from "react-router-dom";
@@ -126,7 +126,7 @@ function Login(props) {
 
 
                         <div>
-                            <button type="submit" className="mt-4  mb-8 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            <button type="submit" className="mt-4 mb-8 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                               <span className="m-px rounded absolute left-0 inset-y-0 flex items-center pl-3">
                                   <HiLockClosed/>
                               </span>

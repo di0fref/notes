@@ -33,8 +33,8 @@ class NotesService {
         return http.get(`/notes/bookmarks`);
     }
 
-    search(val, options) {
-        return http.get(`/search/${val}`)
+    search(data) {
+        return http.post(`/search`, data)
     }
 
     addRecent(data) {

@@ -1,9 +1,32 @@
-import {Box, IconButton, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, Modal, Typography} from "@mui/material";
+import {
+    Box,
+    Divider,
+    IconButton,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    Modal,
+    Typography
+} from "@mui/material";
 import React, {useEffect, useState} from "react";
-import {FaEdit, FaPen, FaTrash, HiOutlineTrash, HiPencil} from "react-icons/all";
+import {
+    FaEdit,
+    FaFolder,
+    FaPen,
+    FaTrash,
+    HiFolderAdd,
+    HiFolderDownload,
+    HiOutlineTrash,
+    HiPencil
+} from "react-icons/all";
 import {button, style_folder} from "../styles";
 import CloseIcon from "@mui/icons-material/Close";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ButtonIconSmall from "../styled/ButtonIconSmall";
+import {menuItemStyle} from "./style";
+import NewFolderButton from "../NewFolderButton";
 
 function FolderMenu(props) {
     const [anchorEl, setAnchorEl] = useState(false);
@@ -16,6 +39,8 @@ function FolderMenu(props) {
         setAnchorEl(null);
     };
 
+    const [newOpen, setNewOpen] = useState(false);
+
     const [folderName, setFolderName] = useState(props.folder.name)
     const [folderId, setFolderId] = useState(props.folder.id)
 
@@ -25,7 +50,6 @@ function FolderMenu(props) {
         setOpenModal(false)
     }
     const handleOpenModal = () => {
-        console.log(folderName)
         setOpenModal(true)
     };
     // const handleCloseModal = () => {
@@ -34,15 +58,15 @@ function FolderMenu(props) {
     // }
 
     const userInputEditFolder = () => {
-        // if (folderName === "") {
-        //     // console.log("Error")
-        //     setFormError("Please input a folder name")
-        // } else {
-        //     props.createFolder(folderName);
-        //     handleClose()
-        //     setFolderName("")
-        //     setFormError(null)
-        // }
+        if (folderName === "") {
+            // console.log("Error")
+            setFormError("Please input a folder name")
+        } else {
+            props.editFolder(folderName, folderId);
+            handleClose()
+            handleCloseModal()
+            setFormError(null)
+        }
     }
 
     const [formError, setFormError] = useState(null)
@@ -67,37 +91,61 @@ function FolderMenu(props) {
 
     return (
         <>
-            <IconButton
+            <ButtonIconSmall
                 onClick={handleClick}>
-                <MoreVertIcon className={"text-normal h-5 w-5 hover:button-hover rounded p-1"}/>
-            </IconButton>
+                <MoreVertIcon style={{
+                    fontSize: "1.2em"
+                }}/>
+            </ButtonIconSmall>
             <Menu
-                dense
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                // dense={true}
                 id="user-menu"
                 aria-labelledby="folder-button"
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                PaperProps={{
-                    style: {
-                        backgroundColor: "var(--shade-50)",
-                        color: "var(--text-normal)",
-                        minWidth: "200px",
-                    },
-                }}>
+            >
+                {!props.type
+                    ? (
+                        <MenuItem onClick={() => {
+                            handleOpenModal()
+                            handleClose()
+                        }} sx={menuItemStyle}>
+                            <ListItemIcon><HiPencil className={"text-muted"}/></ListItemIcon>
+                            <ListItemText><span className={"text-sm"}>Rename</span></ListItemText>
+                        </MenuItem>
+                    )
+                    : null}
+
                 <MenuItem onClick={() => {
-                    handleOpenModal()
+                    setNewOpen(true)
                     handleClose()
-                }}>
-                    <ListItemIcon><HiPencil className={"text-muted"}/></ListItemIcon>
-                    <ListItemText><span className={"text-sm"}>Edit</span></ListItemText>
+                }} sx={menuItemStyle}>
+                    <ListItemIcon><HiFolderAdd className={"text-muted"}/></ListItemIcon>
+                    <ListItemText><span className={"text-sm"}>New folder below</span></ListItemText>
                 </MenuItem>
-                <MenuItem onClick={() => {
-                    handleClose()
-                }}>
-                    <ListItemIcon><HiOutlineTrash className={"text-normal"}/></ListItemIcon>
-                    <ListItemText><span className={"text-sm"}>Send to trash</span></ListItemText>
-                </MenuItem>
+
+                {!props.type
+                    ? (
+                        <div>
+                            <Divider/>
+                            <MenuItem onClick={() => {
+                                handleClose()
+                            }} sx={menuItemStyle}>
+                                <ListItemIcon><HiOutlineTrash className={"text-normal"}/></ListItemIcon>
+                                <ListItemText><span className={"text-sm"}>Send to trash</span></ListItemText>
+                            </MenuItem>
+                        </div>
+                    )
+                    : null}
             </Menu>
             <Modal
                 open={openModal}
@@ -105,8 +153,12 @@ function FolderMenu(props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description">
                 <Box sx={style_folder} className={"modal-box-folder rounded rounded-lg"}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        <label htmlFor={"new-folder"} className={"ml-2 text-s"}>Folder name</label>
+                    <div className={"high modal-title rounded rounded-t-lg modal-title py-3 px-4 bg-secondary flex items-center justify-between"}>
+                        Rename folder
+                    </div>
+                    <div className={"modal-body p-4"}>
+
+                        {/*<label htmlFor={"new-folder"} className={"ml-2 text-s"}>Folder name</label>*/}
                         <div className={"flex justify-start items-center overflow-y-auto"}>
                             <input
                                 value={folderName}
@@ -127,15 +179,18 @@ function FolderMenu(props) {
                             <button onClick={handleCloseModal} className={"mr-4 shadow bg-gray-700 hover:bg-gray-800 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>Cancel</button>
                             <button
                                 onClick={userInputEditFolder}
-                                className={"shadow bg-accent-blue hover:bg-hover focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>Save
+                                className={"shadow bg-indigo-500 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>Save
                             </button>
                         </div>
-                    </Typography>
-                    <IconButton sx={button} onClick={handleCloseModal}>
-                        <CloseIcon/>
-                    </IconButton>
+                        <IconButton sx={button} onClick={handleCloseModal}>
+                            <CloseIcon/>
+                        </IconButton>
+                    </div>
+                    <div className={"modal-footer"}></div>
                 </Box>
             </Modal>
+            {newOpen ?
+                <NewFolderButton folder_id={props.folder_id} open={newOpen} setNewOpen={setNewOpen} createFolder={props.createFolder}/> : null}
         </>
     )
 }

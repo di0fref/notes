@@ -37,9 +37,8 @@
 
 html[data-theme='dark'] {
     --background-primary: #232529;
-    /*--background-secondary: #161616;*/
     --background-secondary: rgba(29, 31, 35, 1);
-    --text-accent: #7f6df2;
+    --text-accent: #6366f1;
     --background-primary-alt: #1a1a1a;
     --background-secondary-alt: #282a2f;
     --background-modifier-border: #333;
@@ -88,6 +87,9 @@ html[data-theme='dark'] {
     --code-background: var(--shade-45);
     --code-border-color: var(--shade-40);
     --editor-url-color: #92b5f3;
+    --box-shadow: rgb(255 255 255 / 10%);
+
+    --menuitem-hover: rgb(64,67, 73)
 }
 
 :root,
@@ -144,7 +146,15 @@ html[data-theme='light'] {
     --code-background: var(--shade-45);
     --code-border-color: var(--shade-40);
     --editor-url-color: #3970cd;
+    --box-shadow: rgb(0 0 0 / 10%);
+
+    --menuitem-hover: var(--background-secondary-alt)
+
 }
+
+
+
+
 
 :root {
     background-color: var(--background-primary);
@@ -155,6 +165,9 @@ html[data-theme='light'] {
     --font-family-system: "UniversalSans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     --scrollbar-color-hover: var(--shade-20);
     --editor-line-height: calc(var(--note-editor-font-size) * var(--note-editor-line-height));
+
+    --bg-indigo: rgb(99 102 241);
+    --text-indigo: rgb(99 102 241);
 }
 
 .b {
@@ -296,6 +309,10 @@ button:hover {
     cursor: pointer !important;
 }
 
+.hover\:secondary-alt:hover{
+    background: var(--background-secondary-alt);
+}
+
 .MuiListItem-button:not(.Mui-selected):hover {
     background: var(--background-secondary-alt) !important;
     @apply rounded  !important
@@ -338,8 +355,9 @@ input:checked ~ .dot {
 [multiple],
 textarea,
 select {
-    background-color: var(--shade-100);
-    border-color: var(--shade-50)
+    background-color: var(--shade-50);
+    /*border-color: var(--shade-50);*/
+    @apply ring-indigo-500 border-indigo-500 border-opacity-30;
 }
 textarea.title {
     resize: none;
@@ -347,19 +365,19 @@ textarea.title {
 
 #google-login {
     background-color: var(--shade-100);
-    border-color: var(--shade-20)
+    border-color: var(--shade-05)
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
-input[type="search"]:focus {
-    @apply focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
+input[type="search"]:focus,
+select:focus{
+    @apply focus:outline-none focus:ring-indigo-500 focus:border-indigo-500;
+    box-shadow: none;
 }
 
-#new-folder, #search-input {
-    background-color: var(--shade-50);
-}
+
 
 .sidebar-avatar {
     border-top: 1px solid var(--background-modifier-border);
@@ -381,6 +399,15 @@ input[type="search"]:focus {
 
 .sidebar {
     background-color: var(--background-secondary);
+    /*@apply bg-gray-900*/
+}
+
+.title {
+    color: var(--shade-05);
+    background-color: var(--background-primary);
+}
+
+.content, .title{
 }
 
 .text-more-muted {
@@ -409,7 +436,8 @@ input::placeholder {
 .quill > .ql-container > .ql-editor.ql-blank::before {
     opacity: 0.5;
     color: var(--shade-20);
-    @apply text-base
+    @apply text-base;
+    font-style: normal;
 }
 
 .text-shade-20 {
@@ -465,7 +493,8 @@ input::placeholder {
 
 .ql-bubble .ql-editor p,
 .ql-bubble .ql-editor pre,
-.ql-bubble .ql-editor code {
+.ql-bubble .ql-editor code,
+.ql-bubble .ql-editor blockquote{
     @apply mb-4
 }
 
@@ -477,8 +506,8 @@ input::placeholder {
     @apply my-4
 }
 
-.content {
-    width: 680px;
+.ql-editor{
+    overflow-x: hidden;
 }
 
 .sidebar-open {
@@ -490,10 +519,17 @@ input::placeholder {
     width: 720px !important;
     background-color: var(--background-primary) !important;
     box-shadow: var(--background-modifier-box-shadow) !important;
+    padding: 0 !important;
+}
+
+.modal-box-shared{
+    color: var(--text-normal) !important;
+    width: 400px !important;
+    background-color: var(--background-primary) !important;
+    box-shadow: var(--background-modifier-box-shadow) !important;
     position: absolute;
     top: 50% !important;
     left: 50% !important;
-    padding: 0 !important;
 }
 
 .modal-box-folder {
@@ -512,9 +548,7 @@ input::placeholder {
     line-height: var(--editor-line-height);
 }
 
-.title {
-    color: var(--shade-05);
-}
+
 
 @media only screen and (max-width: 1023.94px) {
     .quill{
@@ -536,7 +570,7 @@ input::placeholder {
     }
 }
 
-._flex, ._quill, ._truncate, _div {
+._flex, ._quill, ._truncate, .DraftEditor-root {
     /*outline: #2e3338;*/
     outline: 1px dashed red;
 }
@@ -635,16 +669,12 @@ select:-webkit-autofill {
     -webkit-text-fill-color: white !important;
 }
 
+.high{
+    box-shadow: inset 0 1px 0 0 var(--box-shadow);
+}
+.modal-title{
+    @apply  text-base
+}
+.DraftEditor-root{
 
-/*.listitem ~ .secondary-action{*/
-/*    opacity: 0;*/
-/*}*/
-
-/*.listitem:hover  ~ .secondary-action{*/
-/*    opacity: 100;*/
-/*}*/
-
-/*.secondary-action:hover{*/
-/*    opacity: 100;*/
-/*}*/
-
+}

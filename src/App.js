@@ -37,8 +37,24 @@ function App() {
     useEffect(() => {
     }, [user])
 
+
     const theme = createTheme({
         components: {
+            MuiMenu: {
+                defaultProps: {
+                    // dense: true,
+                    MenuListProps: {
+                        disablePadding: true
+                    },
+                    PaperProps: {
+                        style: {
+                            backgroundColor: "var(--shade-50)",
+                            color: "var(--text-normal)",
+                            minWidth: "200px",
+                        },
+                    },
+                }
+            },
             MuiButtonBase: {
                 defaultProps: {
                     disableRipple: true,
@@ -62,7 +78,6 @@ function App() {
                             </Route>
                             <Route exact path={"/login"} element={<Login/>}/>
                             <Route exact path={"/signup"} element={<SignUp/>}/>
-
                         </Routes>
                     </DndProvider>
                 </GlobalProvider>

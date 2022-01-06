@@ -1,13 +1,20 @@
 import '@themesberg/flowbite';
-import {IconButton, ListItemIcon, ListItemText, Menu, MenuItem} from "@mui/material";
+import {Box, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Modal, Typography} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import React, {useState} from "react";
 import {BiLockAlt, FaRegFilePdf, HiOutlineTrash, HiShare} from "react-icons/all";
 import {menuItemStyle} from "./style";
+import ButtonIconSmall from "../styled/ButtonIconSmall";
+import ButtonIcon from "../styled/ButtonIcon";
+import {Link} from "react-router-dom";
+import {button, style_folder, style_share} from "../styles";
+import CloseIcon from "@mui/icons-material/Close";
 
 function NoteMenu(props) {
     const [anchorEl, setAnchorEl] = useState(false);
     const open = Boolean(anchorEl);
+
+    const [openModal, setModelOpen] = useState(false)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -25,11 +32,11 @@ function NoteMenu(props) {
     }
 
     function shareNote() {
-
+        setModelOpen(true)
     }
 
     function moveToTrash() {
-        props.motoTrash()
+        props.moveToTrash()
     }
 
     const options =
@@ -59,27 +66,23 @@ function NoteMenu(props) {
 
     return (
         <>
-            <IconButton
+            <Link to={"#"} onClick={() => setModelOpen(!openModal)}>OPEN</Link>
+            <ButtonIcon
                 onClick={handleClick}>
-                <MoreVertIcon className={"text-normal h-6 w-6 hover:button-hover rounded p-1"}/>
-            </IconButton>
+                <MoreVertIcon/>
+            </ButtonIcon>
             <Menu
-                dense
+                // dense
                 id="note-menu"
                 aria-labelledby="note-button"
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                PaperProps={{
-                    style: {
-                        backgroundColor: "var(--shade-50)",
-                        color: "var(--text-normal)",
-                        minWidth: "200px",
-                    },
-                }}>
+                >
                 {options.map((item, index) => {
                     return (
                         <MenuItem
+                            key={`${index}-notemenu`}
                             onClick={item.onClick}
                             sx={menuItemStyle}>
                             <ListItemIcon>{item.icon}</ListItemIcon>
@@ -91,6 +94,66 @@ function NoteMenu(props) {
                 })}
 
             </Menu>
+            <Modal
+                open={openModal}
+                // onClose={handleCloseModal}
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description">
+                <Box sx={style_share} className={"modal-box-shared rounded rounded-lg "}>
+                    <IconButton sx={button} onClick={() => setModelOpen(false)}>
+                        <CloseIcon/>
+                    </IconButton>
+                    <div className={""}>
+                        <div className={"high rounded rounded-t-lg modal-title py-3 px-4 bg-secondary flex items-center justify-between"}>
+                            <span>Share document</span>
+                        </div>
+
+                        <div className={"modal-body p-4"}>
+
+                            <div className={"flex flex-col items-center_ justify-start"}>
+                                <div className={"flex flex-col mr-4_"}>
+                                    <div className={"ml-1 mb-1"}>Email address</div>
+                                    <div>
+                                        <input
+                                            type={"text"}
+                                            className={"mr-6_ px-2 py-1 w-full font-medium ml-1 rounded rounded-lg"}
+                                            placeholder={"Input email address"}
+                                            id={"edit-folder"}
+                                            autoFocus
+                                            autoComplete="off"
+                                        />
+                                    </div>
+                                </div>
+                                <div className={"flex flex-col mt-4"}>
+                                    <div className={"ml-1 mb-1"}>Share as</div>
+                                    <div>
+                                        <select className={"rounded rounded-lg py-1 w-full"} id={"share-role"}>
+                                            <option></option>
+                                            <option>Writer</option>
+                                            <option>Reader</option>
+                                            <option>No access</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div className={"modal-footer p-4"}>
+                            <div className={"flex items-center justify-end"}>
+                                <button
+                                    onClick={() => {setModelOpen(false)}}
+                                    className={"mr-4 shadow bg-gray-700 hover:bg-gray-800 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>
+                                    Cancel
+                                </button>
+                                <button className={"shadow bg-indigo-500 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>
+                                    Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </Box>
+            </Modal>
         </>
     )
 }

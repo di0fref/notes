@@ -1,7 +1,6 @@
 import {
     Modal,
     Box,
-    Typography,
     IconButton,
     ListItem,
     ListItemText,
@@ -9,68 +8,78 @@ import {
 } from "@mui/material";
 import {useContext, useEffect, useState} from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import {button, style} from "./styles";
-import {BiSearch, FaFileAlt, FaStar} from "react-icons/all";
+import {button, style, style_folder} from "./styles";
+import {BiSearch, CgFileDocument, FaFileAlt, FaStar} from "react-icons/all";
 import {Link} from "react-router-dom";
-import {GlobalContext} from "./contexts/GlobalContext";
 import NotesService from "../service/NotesService";
-import api_config from "../service/config";
+
 function SearchResults(props) {
-    return props.data.length ? (
-        <div className={"p-4"}>
-            <List dense key={"tfy"}>
-                {props.data.map((res) => {
-                    return (
-                        <Link
-                            to={`/note/${res.id}`}
-                            key={`search-result-link-${res.id}`}
-                            onClick={props.handleClose}
-                        >
-                            <ListItem
-                                key={`search-result-${res.id}`}
-                                className={
-                                    "hover:search-list-hover rounded rounded-lg hover:cursor-pointer"
-                                }
-                            >
-                                <ListItemText key={`search-text-${res.id}`}>
-                                    <div
-                                        className={
-                                            "text-base flex items-start justify-between flex-col"
-                                        }
+
+    return (
+
+        (props.term)
+            ? (props.data.length
+                ? (
+                    <div className={"p-4"}>
+                        <List dense key={"tfy"}>
+                            {props.data.map((res) => {
+                                return (
+                                    <Link
+                                        to={`/note/${res.note_id}`}
+                                        key={`search-result-link-${res.note_id}`}
+                                        onClick={props.handleClose}
                                     >
-                                        <div className={"flex items-center w-full"}>
-                                            <div>
-                                                <FaFileAlt
-                                                    className={"text-muted"}
-                                                />
-                                            </div>
-                                            <div className={"ml-2"}>
-                                                {res.label}
-                                            </div>
-                                            <div className={"ml-auto"}>
-                                                {res.bookmark ? (
-                                                    <FaStar
-                                                        className={"icon-accent"}
-                                                    />
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </div>
-                                        </div>
-                                        <div className={"text-muted text-sm ml-6"}>
-                                            {res.folder}
-                                        </div>
-                                    </div>
-                                </ListItemText>
-                            </ListItem>
-                        </Link>
-                    );
-                })}
-            </List>
-        </div>
-    ) : (
-        <Recent/>
-    );
+                                        <ListItem
+                                            key={`search-result-${res.id}`}
+                                            className={
+                                                "hover:search-list-hover rounded rounded-lg hover:cursor-pointer"
+                                            }
+                                        >
+                                            <ListItemText key={`search-text-${res.note_id}`}>
+                                                <div
+                                                    className={
+                                                        "text-base flex items-start justify-between flex-col"
+                                                    }
+                                                >
+                                                    <div className={"flex items-center w-full"}>
+                                                        <div>
+                                                            <CgFileDocument
+                                                                className={""}
+                                                            />
+                                                        </div>
+                                                        <div className={"ml-2"}>
+                                                            {res.name?res.name:"Untitled"}
+                                                        </div>
+                                                        <div className={"ml-auto"}>
+                                                            {res.bookmark ? (
+                                                                <FaStar
+                                                                    className={"icon-accent"}
+                                                                />
+                                                            ) : (
+                                                                ""
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className={"text-muted text-sm ml-6"}>
+                                                        {res.folder}
+                                                    </div>
+                                                </div>
+                                            </ListItemText>
+                                        </ListItem>
+                                    </Link>
+                                );
+                            })}
+                        </List>
+                    </div>
+                )
+                : (
+                    <div className={"py-2_ pl-2 shade-50_ mt-4 mx-4"}>
+                        <h3 className={"text-muted_ font-medium"}>No results for {props.term}</h3>
+                    </div>
+                ))
+
+            : <Recent handleClose={props.handleClose}/>
+    )
 }
 
 function Recent(props) {
@@ -85,14 +94,17 @@ function Recent(props) {
 
     return (
         <div className={""}>
-            <div className={"py-2 pl-8 shade-50 mt-4"}>
-                <h3 className={"text-sm text-muted font-medium"}>Recent notes</h3>
+            <div className={"py-2_ pl-2 shade-50_ mt-4 mx-4"}>
+                <h3 className={"text-muted_ font-medium"}>Recent documents</h3>
             </div>
-            <div className={"p-4"}>
+            <div className={"px-4"}>
                 <List dense>
                     {recent.map((res, index) => {
                         return (
-                            <Link to={"#"}>
+                            <Link
+                                to={"/notes/"+res.note_id} key={`${index}-rec`}
+                                onClick={props.handleClose}
+                            >
                                 <ListItem
                                     className={
                                         "hover:search-list-hover rounded rounded-lg hover:cursor-pointer"
@@ -105,12 +117,12 @@ function Recent(props) {
                                         >
                                             <div className={"flex items-center w-full"}>
                                                 <div>
-                                                    <FaFileAlt
-                                                        className={"text-muted"}
+                                                    <CgFileDocument
+                                                        className={"text-muted_"}
                                                     />
                                                 </div>
                                                 <div className={"ml-2"}>
-                                                    {res.name}
+                                                    {res.note_name?res.note_name:"Untitled"}
                                                 </div>
                                                 <div className={"ml-auto"}>
                                                     {res.bookmark ? (
@@ -165,15 +177,10 @@ function Search(props) {
     }, [term]);
 
     const onSearchSubmit = async (term) => {
-        const res = await fetch(`${api_config.url}/search/${term}`,{
-            headers: {
-                "Content-type": "application/json",
-                "api_token": localStorage.getItem("api_token"),
-                "uid": localStorage.getItem("uid")
-            }
-        });
-        const result = await res.json();
-        setSearchResults(result);
+        NotesService.search({term:term})
+            .then((result) => {
+                setSearchResults(result.data);
+            })
     };
 
     const clearResults = () => setSearchResults([]);
@@ -184,7 +191,7 @@ function Search(props) {
                 onClick={() => handleOpen(true)}
                 placeholder={"Search"}
                 className={
-                    "hover:pointer search rounded rounded-lg w-full md:mr-0 px-2 py-1 text-muted_ bg-primary text-left"
+                    "hover:pointer hover:secondary-alt search rounded rounded-lg w-full md:mr-0 px-2 py-1 text-muted_ bg-primary text-left"
                 }
             >
                 <div className={"flex items-center"}>
@@ -204,45 +211,35 @@ function Search(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style} className={"modal-box rounded rounded-lg"}>
-                    <Typography
-                        id="modal-modal-title"
-                        variant="h6"
-                        component="h2"
-                    >
-                        <div
-                            className={
-                                "flex justify-start items-center overflow-y-auto m-4"
-                            }
-                        >
-                            <BiSearch
-                                className={"text-muted opacity-50 h-6 w-6"}
-                            />
+                    <div className={"high modal-title rounded rounded-t-lg modal-title py-3 px-4 bg-secondary flex items-center justify-between"}>Search</div>
+                    <div className={"flex justify-between items-center h-10 mr-4 ml-4 mt-4"}>
+                        <div className={"relative flex-grow"}>
+                            <label htmlFor="search" className="sr-only">Search</label>
                             <input
-                                autoComplete="off"
-                                type={"search"}
-                                className={
-                                    "mr-6 px-2 py-1 w-full font-medium ml-1 rounded"
-                                }
-                                placeholder={"Find anything"}
-                                onChange={(e) =>
-                                    setDebouncedTerm(e.target.value)
-                                }
                                 value={debouncedTerm}
-                                id={"search-input"}
+                                onChange={(e) => setDebouncedTerm(e.target.value)}
+                                id="search"
+                                name="search"
+                                type="search"
                                 autoFocus
-                            />
+                                autoComplete="off"
+                                className="bg-white pl-10 pr-3 rounded relative block w-full px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 _focus:z-10 sm:text-sm" placeholder="Search anything"/>
+                            <div className="m-px rounded absolute inset-y-0 left-0 flex items-center px-2 pointer-events-none bg-secondary-alt">
+                                <BiSearch/>
+                            </div>
                         </div>
-                    </Typography>
+                        <div>
+                            <IconButton sx={button} onClick={handleClose}>
+                                <CloseIcon/>
+                            </IconButton>
+                        </div>
+                    </div>
                     <SearchResults
                         data={searchResults}
                         term={term}
                         handleClose={handleClose}
                         clickHandle={props.clickHandle}
                     />
-                    {/*<Recent searchResults={searchResults}/>*/}
-                    <IconButton sx={button} onClick={handleClose}>
-                        <CloseIcon/>
-                    </IconButton>
                 </Box>
             </Modal>
         </div>

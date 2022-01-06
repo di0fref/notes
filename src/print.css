@@ -8,6 +8,10 @@
         height: 0 !important;
     }
 
+    .editor{
+        overflow-y: hidden!important;
+        height: fit-content;
+    }
     /*.sidebar{*/
     /*    margin-left: -20000px;*/
     /*}*/

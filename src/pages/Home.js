@@ -4,13 +4,9 @@ import Content from "../components/Content";
 import FolderService from "../service/FolderService";
 import NotesService from "../service/NotesService";
 import useUrl from "../components/hooks/useUrl";
-import {Router, useParams} from "react-router-dom";
+import {Router, useNavigate, useParams} from "react-router-dom";
 import t from "../components/CustomToast";
 import {GlobalContext} from "../components/contexts/GlobalContext";
-import {useAuth0} from "@auth0/auth0-react";
-import LoginButton from "../auth/login-button";
-
-// import {useWhatChanged} from "@simbathesailor/use-what-changed";
 
 function Home() {
     const [treeData, setTreeData] = useState([]);
@@ -23,16 +19,12 @@ function Home() {
     const [noteCreated, setNoteCreated] = useState(false);
     const [titleChanged, setTitleChanged] = useState(false);
     const [folderCreated, setFolderCreated] = useState(false);
-    const {setFolderContext, setRecentContext} = useContext(GlobalContext);
     const [locked, setLocked] = useState(false)
     const [trashed, setTrashed] = useState(false)
     const [trash, setTrash] = useState([])
 
+    const navigator = useNavigate()
     let params = useParams();
-
-    // useWhatChanged([dropped, noteCreated, titleChanged, folderCreated, locked, trashed]);
-
-    const context = useContext(GlobalContext)
 
 
     useEffect(() => {
@@ -42,8 +34,6 @@ function Home() {
 
             let response = await FolderService.tree(0);
             setTreeData(response.data)
-            // let notesWithoutFolder = await FolderService.notesByFolderId(0);
-            // setTreeData(response.data.concat(notesWithoutFolder.data));
 
             let bookmarks = await NotesService.getBookMarks();
             setBookMarks(bookmarks.data);
@@ -80,22 +70,19 @@ function Home() {
         // console.log("noteClicked::"+id)
         // console.log(type)
         setClickedId(id);
-        if (type === "note" && id) {
+        if ((type === "note" || type === "notes") && id) {
             NotesService.get(id)
                 .then((result) => {
                     setNote(result.data);
                     setFolder(result.data.folder_id);
-                    // addRecentContext(result.data.id)
-
                     /* Insert into recent */
-                    // NotesService.addRecent({
-                    //     id: id,
-                    //     name: result.data.name
-                    // }).then((result) => {
-                    //
-                    // }).catch((err) => {
-                    //     console.log(err);
-                    // });
+                    NotesService.addRecent({
+                        note_id: id,
+                    }).then((result) => {
+
+                    }).catch((err) => {
+                        console.log(err);
+                    });
                 })
                 .catch((err) => {
                     console.log(err);
@@ -111,15 +98,19 @@ function Home() {
     const folderClicked = (id) => {
         setClickedId(id);
         setFolder(id);
-        // FolderService.get(id).then((result) => {
-        //     setFolderContext(result.data[0]);
-        // });
     }
 
-    const createFolder = (name) => {
+    const editFolder = (name, id) => {
+        FolderService.update(id, {
+            name: name
+        }).then((result) => {
+            setFolderCreated(!folderCreated)
+        })
+    }
+    const createFolder = (name, folder_id) => {
         FolderService.create({
             name: name,
-            parent_id: folder || 0,
+            parent_id: folder_id || 0,
         })
             .then((result) => {
                 setFolderCreated(!folderCreated);
@@ -135,10 +126,10 @@ function Home() {
             folder_id: folder || 0,
             text: null,
         }).then((result) => {
-            console.log(result.data)
             setNote(result.data);
             setNoteCreated(!noteCreated);
             setClickedId(result.data.id);
+            navigator(`/notes/${result.data.id}`)
         });
     };
 
@@ -150,8 +141,7 @@ function Home() {
     };
 
     const setBookMark = async (note) => {
-        // console.log("setBookMark")
-        note.bookmark = !note.bookmark;
+        note.bookmark = note.bookmark?0:1;
         NotesService.update(note.id, {bookmark: note.bookmark}).then(
             (result) => {
                 setBookMarked(true);
@@ -182,6 +172,7 @@ function Home() {
                 createFolder={createFolder}
                 folderClicked={folderClicked}
                 trash={trash}
+                editFolder={editFolder}
             />
             <Content
                 noteClicked={noteClicked}
@@ -191,6 +182,7 @@ function Home() {
                 lockChanged={lockChanged}
                 moveTrash={moveTrash}
                 createNote={createNote}
+                tree={treeData}
             />
         </div>
     );
