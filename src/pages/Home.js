@@ -22,6 +22,7 @@ function Home() {
     const [locked, setLocked] = useState(false)
     const [trashed, setTrashed] = useState(false)
     const [trash, setTrash] = useState([])
+    const [folderData, setFolderData] = useState("")
 
     const navigator = useNavigate()
     let params = useParams();
@@ -88,8 +89,6 @@ function Home() {
                     console.log(err);
                 });
         }
-
-
     };
     const moveTrash = (id) => {
         setTrashed(!trashed)
@@ -98,6 +97,11 @@ function Home() {
     const folderClicked = (id) => {
         setClickedId(id);
         setFolder(id);
+        FolderService.get(id).then((result) => {
+            setFolderData(result.data);
+        }).catch((err) => {
+            console.log(err)
+        })
     }
 
     const editFolder = (name, id) => {
@@ -141,7 +145,7 @@ function Home() {
     };
 
     const setBookMark = async (note) => {
-        note.bookmark = note.bookmark?0:1;
+        note.bookmark = note.bookmark ? 0 : 1;
         NotesService.update(note.id, {bookmark: note.bookmark}).then(
             (result) => {
                 setBookMarked(true);
@@ -173,6 +177,7 @@ function Home() {
                 folderClicked={folderClicked}
                 trash={trash}
                 editFolder={editFolder}
+                folderData={folderData}
             />
             <Content
                 noteClicked={noteClicked}

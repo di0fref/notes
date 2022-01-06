@@ -354,6 +354,7 @@ function Sidebar(props) {
                     {/*<Tooltip title={"Add new"}>*/}
                     <div>
                         <New
+                            folderData={props.folderData}
                             createNote={props.createNote}/>
                     </div>
                     {/*</Tooltip>*/}
