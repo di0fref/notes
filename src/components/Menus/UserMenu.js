@@ -5,7 +5,7 @@ import {
     MenuItem,
     Divider,
     Menu,
-    ListItemIcon,
+    ListItemIcon, ToggleButton, Switch,
 } from "@mui/material";
 import {HiChevronDown, HiCog, HiLogout, HiQuestionMarkCircle, HiUser, HiUserCircle} from "react-icons/all";
 import {menuItemStyle} from "./style";

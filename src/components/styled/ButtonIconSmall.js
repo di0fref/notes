@@ -3,7 +3,7 @@ const {styled, IconButton} = require("@mui/material");
 
 const ButtonIconSmall = styled(IconButton)(({theme, color = 'primary'}) => ({
     ':hover': {
-        backgroundColor: 'var(--bg-indigo)',
+        backgroundColor: 'var(--bg-blue-600)',
         color:"white",
     },
     color:"var(--text-normal)",

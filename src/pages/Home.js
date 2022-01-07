@@ -27,7 +27,6 @@ function Home() {
     const navigator = useNavigate()
     let params = useParams();
 
-
     useEffect(() => {
 
         // console.log("useEffect");
@@ -94,13 +93,12 @@ function Home() {
         setTrashed(!trashed)
         setNote([])
     }
-    const folderClicked = (id) => {
+    const folderClicked = (id, name) => {
         setClickedId(id);
         setFolder(id);
-        FolderService.get(id).then((result) => {
-            setFolderData(result.data);
-        }).catch((err) => {
-            console.log(err)
+        setFolderData({
+            id: id,
+            name: name
         })
     }
 

@@ -14,7 +14,7 @@ function New(props) {
                 onMouseOver={() => setShow(true)}
                 onMouseOut={() => setShow(false)}
                 onClick={newDocument}
-                className={"h-10 text-sm rounded w-full text-white bg-indigo-600 hover:bg-indigo-700"}>
+                className={"button-apply w-full h-10"}>
                 <div className={"flex items-center justify-start ml-2"}>
                     <div><HiPlus className={"text-white mr-3"}/></div>
                     <div
@@ -22,7 +22,7 @@ function New(props) {
                         New doc
 
                         {show
-                            ?<span className={"ml-2 text-xs truncate "}>{`in ${props.folderData.name?props.folderData.name:"My documents"}`}</span>
+                            ?<span className={"ml-2 text-xs truncate font-normal"}>{`in ${props.folderData.name?props.folderData.name:"My documents"}`}</span>
                             :""}
 
                     </div>

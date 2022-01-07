@@ -168,8 +168,11 @@ html[data-theme='light'] {
 
     --bg-indigo: rgb(99 102 241);
     --text-indigo: rgb(99 102 241);
-}
 
+    --bg-blue-500: rgb(59 130 246);
+    --bg-blue-600: rgb(37 99 235);
+    --bg-blue-700: rgb(29 78 216);
+}
 .b {
     background-color: #293547;
 }
@@ -677,4 +680,24 @@ select:-webkit-autofill {
 }
 .DraftEditor-root{
 
+}
+.text-sm, .text-s{
+    @apply text-base
+}
+
+.button-apply{
+    /*@apply text-sm rounded text-white bg-indigo-600 hover:bg-indigo-700 py-1 px-2*/
+    @apply text-sm rounded text-white bg-blue-600 hover:bg-blue-700 py-1 px-2
+}
+
+.button-cancel{
+    @apply text-sm rounded text-white bg-gray-700 hover:bg-gray-800 py-1 px-2
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+select:focus{
+    @apply focus:outline-none focus:ring-blue-500 focus:border-blue-500;
+    box-shadow: none;
 }

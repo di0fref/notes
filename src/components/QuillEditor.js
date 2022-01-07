@@ -15,8 +15,6 @@ import Moment from "react-moment";
 import moment from "moment";
 import * as React from "react";
 import NoteMenu from "./Menus/NoteMenu";
-import debounce from "lodash/debounce";
-
 
 const QuillEditor = (props) => {
     const [value, setValue] = useState(null);
@@ -28,8 +26,6 @@ const QuillEditor = (props) => {
     const [deleted, setDeleted] = useState(props.note.deleted);
     const [titleSaved, setTitleSaved] = useState(false);
     const [saving, setSaving] = useState(false);
-
-    const [note, setNote] = useState([])
 
     const saveToBackend = () => {
         if (props.note.id) {
@@ -50,7 +46,6 @@ const QuillEditor = (props) => {
     }
 
     const saveTitle = () => {
-        // console.log("saveTitle")
         if (props.note.id) {
             NotesService.update(props.note.id, {name: title})
                 .then((result) => {
@@ -67,7 +62,6 @@ const QuillEditor = (props) => {
     }
     useEffect(() => {
         if (props.note.id) {
-            setNote(props.note)
             setValue(JSON.parse(props.note.text))
             setTitle(props.note.name)
             setDateModified(props.note.updated_at)
@@ -77,13 +71,18 @@ const QuillEditor = (props) => {
     }, [props.note.id, props.note.locked, props.note.deleted])
 
     useEffect(() => {
+        const timer = setTimeout(() => saveTitle(), 1000);
+        return () => clearTimeout(timer);
+    }, [title])
+
+    useEffect(() => {
         const timer = setTimeout(() => saveToBackend(), 1000);
         return () => clearTimeout(timer);
     }, [value])
 
     const lockForEditing = () => {
         NotesService.update(props.note.id, {
-            locked: !locked
+            locked: locked?0:1
         })
             .then((result) => {
                 setLocked(!locked);

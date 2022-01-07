@@ -1,5 +1,5 @@
 import '@themesberg/flowbite';
-import {Box, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Modal, Typography} from "@mui/material";
+import {Box, Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Modal, Typography} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import React, {useState} from "react";
 import {BiLockAlt, FaRegFilePdf, HiOutlineTrash, HiShare} from "react-icons/all";
@@ -51,10 +51,13 @@ function NoteMenu(props) {
                 icon: <BiLockAlt className={"text-normal"}/>,
                 onClick: () => lockForEditing()
             },
+            // {
+            //     label: "Share note",
+            //     icon: <HiShare className={"text-normal"}/>,
+            //     onClick: () => shareNote()
+            // },
             {
-                label: "Share note",
-                icon: <HiShare className={"text-normal"}/>,
-                onClick: () => shareNote()
+                label: "divider",
             },
             {
                 // divider: true,
@@ -65,8 +68,8 @@ function NoteMenu(props) {
         ]
 
     return (
-        <>
-            <Link to={"#"} onClick={() => setModelOpen(!openModal)}>OPEN</Link>
+        <div className={"flex"}>
+            <button className={"button-apply mr-2"} onClick={() => shareNote()}>Share</button>
             <ButtonIcon
                 onClick={handleClick}>
                 <MoreVertIcon/>
@@ -78,20 +81,25 @@ function NoteMenu(props) {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                >
+            >
                 {options.map((item, index) => {
-                    return (
-                        <MenuItem
-                            key={`${index}-notemenu`}
-                            onClick={item.onClick}
-                            sx={menuItemStyle}>
-                            <ListItemIcon>{item.icon}</ListItemIcon>
-                            <ListItemText onClick={handleClose}>
-                                <span className={"text-sm"}>{item.label}</span>
-                            </ListItemText>
-                        </MenuItem>
-                    )
-                })}
+                        if (item.label == "divider") {
+                            return <Divider/>;
+                        } else {
+                            return (<MenuItem
+                                    key={`${index}-notemenu`}
+                                    onClick={item.onClick}
+                                    sx={menuItemStyle}>
+                                    <ListItemIcon>{item.icon}</ListItemIcon>
+                                    <ListItemText onClick={handleClose}>
+                                        <span className={"text-sm"}>{item.label}</span>
+                                    </ListItemText>
+                                </MenuItem>
+                            )
+                        }
+                    }
+                )
+                }
 
             </Menu>
             <Modal
@@ -142,11 +150,13 @@ function NoteMenu(props) {
                         <div className={"modal-footer p-4"}>
                             <div className={"flex items-center justify-end"}>
                                 <button
-                                    onClick={() => {setModelOpen(false)}}
-                                    className={"mr-4 shadow bg-gray-700 hover:bg-gray-800 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>
+                                    onClick={() => {
+                                        setModelOpen(false)
+                                    }}
+                                    className={"mr-2 button-cancel"}>
                                     Cancel
                                 </button>
-                                <button className={"shadow bg-indigo-500 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>
+                                <button className={"button-apply"}>
                                     Share
                                 </button>
                             </div>
@@ -154,7 +164,7 @@ function NoteMenu(props) {
                     </div>
                 </Box>
             </Modal>
-        </>
+        </div>
     )
 }
 

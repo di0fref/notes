@@ -176,10 +176,10 @@ function FolderMenu(props) {
                         </div>
                         <div className={"text-s h-4 error ml-2"}><FormError error={formError}/></div>
                         <div className={"flex items-center justify-end mt-6 mr-6"}>
-                            <button onClick={handleCloseModal} className={"mr-4 shadow bg-gray-700 hover:bg-gray-800 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>Cancel</button>
+                            <button onClick={handleCloseModal} className={"button-cancel"}>Cancel</button>
                             <button
                                 onClick={userInputEditFolder}
-                                className={"shadow bg-indigo-500 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>Save
+                                className={"button-apply ml-2 "}>Save
                             </button>
                         </div>
                         <IconButton sx={button} onClick={handleCloseModal}>

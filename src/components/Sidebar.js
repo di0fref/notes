@@ -124,10 +124,10 @@ function SidebarItem(props, {isDragging, tool}) {
 
     const [editable, setContentEditable] = useState(false)
 
-    const handleClick = (type, id) => {
+    const handleClick = (type, id, name) => {
         setOpen(!open);
         if (type === "folder") {
-            props.folderClicked(id)
+            props.folderClicked(id, name)
         } else (
             props.clickHandle()
         )
@@ -161,7 +161,7 @@ function SidebarItem(props, {isDragging, tool}) {
                     ref={attacheRef}
                     role="card"
                     onClick={() => {
-                        handleClick(props.items.type, props.items.id);
+                        handleClick(props.items.type, props.items.id, props.items.name);
                     }}
                     key={`bb-${props.items.id}`}
                     selected={
@@ -351,7 +351,6 @@ function Sidebar(props) {
                 </div>
                 <div className={"search px-3"}><Search clickHandle={clickHandle} text={"Search"}/></div>
                 <div className={"new-note p-3"}>
-                    {/*<Tooltip title={"Add new"}>*/}
                     <div>
                         <New
                             folderData={props.folderData}

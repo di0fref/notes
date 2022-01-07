@@ -98,10 +98,10 @@ function NewFolderButton(props) {
                         </div>
                         <div className={"text-s h-4 error ml-2"}><FormErrorFolder error={formErrorFolder}/></div>
                         <div className={"flex items-center justify-end mt-6 mr-6"}>
-                            <button onClick={handleCloseFolder} className={"mr-4 shadow bg-gray-700 hover:bg-gray-800 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>Cancel</button>
+                            <button onClick={handleCloseFolder} className={"button-cancel"}>Cancel</button>
                             <button
                                 onClick={userInputNewFolder}
-                                className={"shadow bg-indigo-500 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-s py-1 px-2 rounded"}>Create
+                                className={"button-apply ml-2 "}>Create
                             </button>
                         </div>
                     </div>
